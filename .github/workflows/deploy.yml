@@ -13,37 +13,37 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - name: 🚀 Serverda Papkani Tayyorlash va Deploy
+      - name: 🚀 Tozalash va Qayta O'rnatish
         run: |
-          # 1. Loyiha joylashishi kerak bo'lgan manzil
-          # Yangi disk manzili: /media/user/disc/euphoria-landings
-          TARGET_DIR="/media/user/disc/euphoria-landings"
+          # 1. Manzillarni belgilaymiz
+          # SIZDA ESKI PAPKA NOMI 'euphoria-lands' EDI, YANGI REPO NOMI ESA 'euphoria-landings'
+          PARENT_DIR="/media/user/disc"
+          TARGET_DIR="$PARENT_DIR/euphoria-landings"
           REPO_URL="https://github.com/Euphoria-Landings/euphoria-landings.git"
 
-          # 2. Agar papka mavjud bo'lmasa, noldan clone qiladi
-          if [ ! -d "$TARGET_DIR/.git" ]; then
-            echo "🔄 Papka topilmadi. Yangi diskda loyiha yaratilmoqda..."
-            sudo mkdir -p $TARGET_DIR
-            sudo chown -R $USER:$USER $TARGET_DIR
-            git clone $REPO_URL $TARGET_DIR
-          fi
+          # 2. Eski konteynerlarni to'xtatish (agar bo'lsa)
+          # 'euphoria-lands' nomli barcha konteynerlarni o'chiradi
+          docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker stop
+          docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker rm
 
-          # 3. Loyiha papkasiga kiramiz
+          # 3. Agar eski papka bo'lsa, uni butunlay o'chiramiz (Noldan boshlash uchun)
+          # DIQQAT: Agar papka nomi 'euphoria-lands' bo'lsa shuni o'chiramiz
+          rm -rf $PARENT_DIR/euphoria-lands
+          rm -rf $TARGET_DIR
+
+          # 4. Yangi Super-Repo-ni clone qilamiz
+          cd $PARENT_DIR
+          git clone $REPO_URL
+
+          # 5. Loyiha papkasiga kirib, Docker-ni ishga tushiramiz
           cd $TARGET_DIR
 
-          # 4. Kodni yangilaymiz (pull)
-          echo "📥 Yangi kodni yuklanmoqda..."
-          git fetch --all
-          git reset --hard origin/${{ github.ref_name }}
-
-          # 5. Docker orqali loyihani ko'taramiz
-          # '-p euphoria-lands' buni alohida loyiha sifatida ajratadi (Teamlead loyihalariga tegmaydi)
           echo "🏗️ Docker konteynerlar build qilinmoqda..."
           docker compose -p euphoria-lands up -d --build
 
           # 6. Tozalash (eski buildlar diskni to'ldirmasligi uchun)
           echo "🧹 Eski keraksiz image-larni tozalash..."
-          docker image prune -f
+          docker image prune -af
 
       - name: ✅ Holatni tekshirish
         run: docker ps | grep euphoria-lands
