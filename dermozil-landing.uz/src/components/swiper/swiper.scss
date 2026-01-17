@@ -1,0 +1,296 @@
+@import "../../styles/mixins.scss";
+
+$max-mobile-width: 500px;
+$primary-color: #28a745;
+
+body,
+html {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper__form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper__form__text {
+  right: 45px;
+}
+
+.sale {
+  --card-gap: 20px;
+
+  @include display();
+  @include paddingD(30px);
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__span {
+    color: #ff7070 !important;
+  }
+
+  &__form {
+    width: auto;
+    margin-top: 50px;
+  }
+}
+
+.sale__swiper-wrapper {
+  overflow: hidden;
+  width: 100%;
+
+  @media (max-width: 1100px) {
+    padding-top: 50px;
+  }
+  @media (max-width: 500px) {
+    padding-top: 20px;
+  }
+}
+
+.sale__cards {
+  @include display();
+  gap: var(--card-gap);
+  position: relative;
+  flex-wrap: nowrap;
+  overflow-x: visible !important;
+}
+
+.sale__items {
+  @include display();
+  position: relative;
+  flex-shrink: 0;
+  width: 571px;
+  gap: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  overflow: hidden;
+
+  & .sale__item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  @media (max-width: 1100px) {
+    width: 90vw;
+    min-height: 350px;
+  }
+  @media (max-width: 500px) {
+    width: 85vw;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .sale {
+    --card-gap: 20px;
+
+    &__cards {
+      gap: var(--card-gap);
+      justify-content: flex-start;
+      margin-top: 0;
+    }
+
+    &__items {
+      margin-top: 0;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .sale {
+    @include paddingP(0px);
+    --card-gap: 70px;
+  }
+
+  .sale__item-image {
+    transform: scale(1.2);
+  }
+
+  .swiper__form__text {
+    right: -25px;
+  }
+
+  .swiper__title {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .sale__swiper-wrapper .sale__cards {
+    display: none;
+  }
+}
+
+.mobile__swiper {
+  max-width: 500px;
+  border: 15px solid #b6e0d8;
+  width: 300px;
+
+  height: 350px;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.mobile__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mobile__top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+
+  .smile {
+    position: relative;
+    bottom: -10px;
+    width: 25%;
+  }
+
+  & div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.mobile__title {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13.2173px;
+  line-height: 16px;
+
+  color: #000000;
+  margin-bottom: 5px;
+}
+
+.mobile__text {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11.11px;
+  line-height: 14px;
+
+  color: #000000;
+  width: 90%;
+}
+
+.mobile__bottom {
+  position: relative;
+}
+
+.collapse {
+  position: relative;
+  width: 100%;
+  bottom: 10;
+  z-index: 1;
+}
+
+.flacon {
+  position: absolute;
+  right: -65;
+  top: -70;
+}
+
+// **********************************************
+// MOBILE SWIPER KONTEYNER VA NAVIGATSIYA STILLARI
+// **********************************************
+
+.mobile-swiper-container {
+  @media (min-width: $max-mobile-width + 1) {
+    display: none;
+  }
+
+  @media (max-width: $max-mobile-width) {
+    display: block;
+    max-width: $max-mobile-width;
+    margin: 20px auto;
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+.swiper-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 400px;
+  display: flex; // Olib tashlandi, chunki har bir kartochka absolute bo'ladi
+  align-items: center; // Olib tashlandi
+  justify-content: center; // Olib tashlandi
+
+  .mobile__swiper {
+    position: absolute; /* MUAMMONI HAL QILISH UCHUN QAYTA QO'SHILDI */
+    top: 0;
+    transform: translateX(-50%); /* Markazga joylash */
+    width: 100%; /* Kartochka kengligini berish */
+    max-width: 350px;
+  }
+}
+
+.swiper-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+  z-index: 10;
+
+  .nav-btn {
+    background-color: #ff7070;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    line-height: 1;
+    width: 45px;
+    height: 45px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      background-color: #ee7979;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+
+  .pagination {
+    display: flex;
+    gap: 8px;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #ccc;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+
+      &.active {
+        background-color: #ff7070;
+      }
+    }
+  }
+}

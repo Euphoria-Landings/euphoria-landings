@@ -1,0 +1,283 @@
+@import "../../styles/mixins.scss";
+
+.order-section {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 40px;
+  background-color: #fcf9f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  height: auto;
+}
+
+.order-header {
+  text-align: center;
+
+  h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.4;
+  }
+}
+
+.order-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  min-height: 500px;
+}
+
+.gift-box {
+  max-width: 30%;
+  position: relative;
+
+  .tag {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #ff5733;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    transform: rotate(10deg);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 350px;
+  width: 100%;
+  position: relative;
+
+  label {
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 10px 15px;
+    background-color: white;
+
+    i {
+      margin-right: 10px;
+      font-size: 18px;
+      color: #ff5733;
+    }
+
+    input {
+      border: none;
+      outline: none;
+      flex-grow: 1;
+      font-size: 16px;
+    }
+  }
+
+  .submit-button {
+    background-color: #ff5733;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover:not(:disabled) {
+      background-color: #e3342f;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+
+  .discount-tag {
+    position: absolute;
+    bottom: -5px;
+    right: 0px;
+    background-color: #ffd700;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    transform: rotate(-10deg);
+  }
+}
+
+.notification-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  width: 100%;
+  max-width: 320px;
+}
+
+.notification {
+  color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+
+  p {
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  &--success {
+    background-color: #38c172;
+  }
+
+  &--warning {
+    background-color: #ffc107;
+  }
+
+  &--error {
+    background-color: #e3342f;
+  }
+}
+
+@media (max-width: 890px) {
+  .order-content {
+    flex-wrap: wrap;
+    min-height: 360px;
+    padding: 30px 0 !important;
+  }
+
+  .products-image,
+  .gift-box {
+    display: block;
+    max-width: 40%;
+    min-width: unset;
+    height: 250px;
+  }
+
+  .products-image {
+    img:nth-child(1) {
+      max-width: 120px;
+      display: none;
+    }
+    img:nth-child(2) {
+      max-width: 120px;
+    }
+  }
+
+  .order-form {
+    max-width: 350px; // Kattaroq mobil qurilmalar uchun
+  }
+}
+
+@media (max-width: 768px) {
+  .order-section {
+    max-width: 100%;
+    padding: 20px 10px;
+    margin: 10px auto;
+    padding-bottom: 40px;
+    border-radius: 10px;
+  }
+
+  .order-header {
+    h1 {
+      font-size: 20px;
+    }
+  }
+
+  .order-content {
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .products-image,
+  .gift-box {
+    display: none;
+  }
+
+  .order-form {
+    max-width: 100%;
+    width: 90%;
+    box-sizing: border-box;
+  }
+
+  .order-form .discount-tag {
+    bottom: -15px;
+    right: 15px;
+    transform: none;
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+}
+
+.btn {
+  width: 200px !important;
+}
+
+.products-image {
+  max-width: 30%;
+  position: relative;
+  height: 350px;
+  min-width: 200px;
+
+  img {
+    position: absolute;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  img:nth-child(1) {
+    top: 100px;
+    left: 0;
+    z-index: 44;
+    max-width: 200px;
+  }
+
+  img:nth-child(2) {
+    top: -60px;
+    right: 0;
+    transform: rotate(5deg);
+    z-index: 2;
+    max-width: 150px;
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+}

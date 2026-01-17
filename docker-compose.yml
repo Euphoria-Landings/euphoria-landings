@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  artrowell:
+    build: ./artrowell-landing.uz
+    ports: ["3001:80"]
+    restart: always
+
+  cardio-balance:
+    build: ./cardio-balance-landing.uz
+    ports: ["3002:80"]
+    restart: always
+
+  dermozil:
+    build: ./dermozil-landing.uz
+    ports: ["3003:80"]
+    restart: always
+
+  diabetikforte:
+    build: ./diabetikforte-landing.uz
+    ports: ["3004:80"]
+    restart: always
+
+  diastop:
+    build: ./diastop-landing.uz
+    ports: ["3005:80"]
+    restart: always
+
+  fatality:
+    build: ./fatality-landing.uz
+    ports: ["3006:80"]
+    restart: always
+
+  gemo-plus:
+    build: ./gemo-plus-landing.uz
+    ports: ["3007:80"]
+    restart: always
+
+  gipertofort:
+    build: ./gipertofort-landing.uz
+    ports: ["3008:80"]
+    restart: always
+
+  parazit-off:
+    build: ./parazit-off-landing.uz
+    ports: ["3009:80"]
+    restart: always
+
+  slimfit:
+    build: ./slimfit-landing.uz
+    ports: ["3010:80"]
+    restart: always
+
+  sustaflex:
+    build: ./sustaflex-landing.uz
+    ports: ["3011:80"]
+    restart: always
+
+  urion:
+    build: ./urion-landing.uz
+    ports: ["3012:80"]
+    restart: always
+
+  uro-pro:
+    build: ./uro-pro-landing.uz
+    ports: ["3013:80"]
+    restart: always
+
+  visucaps:
+    build: ./visucaps-landing.uz
+    ports: ["3014:80"]
+    restart: always

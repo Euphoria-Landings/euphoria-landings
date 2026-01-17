@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+/* 1. BRAUZER STANDARTLARINI TOZALASH */
+@layer base {
+  html {
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    /* Oq dizayn uchun fon va matn rangi */
+    background-color: #ffffff;
+    color: #1a2b3c; /* To'q ko'k-kulrang matn */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* 2. FULL-BLEED MUAMMOSINI TUZATISH */
+.full-bleed {
+  width: 100%;
+  position: relative;
+  left: 0;
+  right: 0;
+}
+
+/* 3. SCROLLBAR (Oq fonga moslangan qizil) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  /* Scrollbar yo'lagi endi qora emas, oq/och kulrang */
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  /* UroPro asosiy qizil rangi */
+  background: #e31e24;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* Hover bo'lganda bir oz to'qroq qizil */
+  background: #c1121f;
+}
+
+/* 4. ANIMATSIYALAR */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 5. LIGHT GRADIENT (Premium oq ko'rinish uchun) */
+/* Qora gradient o'rniga juda mayin kulrang/ko'kish gradient */
+.bg-light-gradient {
+  background: radial-gradient(circle at center, #ffffff 0%, #f1f5f9 100%);
+}
+
+/* 6. MATN SELEKSIYASI (Matnni belgilaganda qizil bo'lishi uchun) */
+::selection {
+  background-color: #e31e24;
+  color: #ffffff;
+}
