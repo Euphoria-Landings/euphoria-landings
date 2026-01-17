@@ -15,36 +15,29 @@ jobs:
     steps:
       - name: 🚀 Tozalash va Qayta O'rnatish
         run: |
-          # 1. Manzillarni belgilaymiz
           PARENT_DIR="/media/user/disc"
           TARGET_DIR="$PARENT_DIR/euphoria-landings"
           REPO_URL="https://github.com/Euphoria-Landings/euphoria-landings.git"
 
-          # 2. Eski konteynerlarni to'xtatish
-          echo "🛑 Eski konteynerlarni to'xtatish..."
+          echo "🛑 Eski konteynerlarni o'chirish..."
           docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker stop
           docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker rm
 
-          # 3. Papkani tozalash
-          echo "🗑️ Eski papkani o'chirish..."
+          echo "🗑️ Papkalarni yangilash..."
           rm -rf $PARENT_DIR/euphoria-lands
           rm -rf $TARGET_DIR
 
-          # 4. Yangi Super-Repo-ni clone qilish
           cd $PARENT_DIR
           git clone $REPO_URL
           cd $TARGET_DIR
 
-          # 5. Docker build (Barqaror usul)
-          # --parallel=1 server RAM va Diskiga og'irlik tushirmaslik uchun bittadan build qiladi
-          echo "🏗️ Docker konteynerlar bittadan build qilinmoqda..."
+          echo "🏗️ Bittadan build qilish (RAM tejash)..."
           docker compose -p euphoria-lands build --parallel=1
 
           echo "🚀 Konteynerlarni ishga tushirish..."
           docker compose -p euphoria-lands up -d
 
-          # 6. Tozalash
-          echo "🧹 Eski keraksiz qatlamlarni tozalash..."
+          echo "🧹 Tozalash..."
           docker image prune -af
 
       - name: ✅ Holatni tekshirish
