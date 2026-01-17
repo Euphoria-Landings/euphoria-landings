@@ -16,34 +16,38 @@ jobs:
       - name: 🚀 Tozalash va Qayta O'rnatish
         run: |
           # 1. Manzillarni belgilaymiz
-          # SIZDA ESKI PAPKA NOMI 'euphoria-lands' EDI, YANGI REPO NOMI ESA 'euphoria-landings'
           PARENT_DIR="/media/user/disc"
           TARGET_DIR="$PARENT_DIR/euphoria-landings"
           REPO_URL="https://github.com/Euphoria-Landings/euphoria-landings.git"
 
-          # 2. Eski konteynerlarni to'xtatish (agar bo'lsa)
-          # 'euphoria-lands' nomli barcha konteynerlarni o'chiradi
+          # 2. Eski konteynerlarni to'xtatish
+          echo "🛑 Eski konteynerlarni to'xtatish..."
           docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker stop
           docker ps -a --format '{{.Names}}' | grep euphoria-lands | xargs -r docker rm
 
-          # 3. Agar eski papka bo'lsa, uni butunlay o'chiramiz (Noldan boshlash uchun)
-          # DIQQAT: Agar papka nomi 'euphoria-lands' bo'lsa shuni o'chiramiz
+          # 3. Papkani tozalash
+          echo "🗑️ Eski papkani o'chirish..."
           rm -rf $PARENT_DIR/euphoria-lands
           rm -rf $TARGET_DIR
 
-          # 4. Yangi Super-Repo-ni clone qilamiz
+          # 4. Yangi Super-Repo-ni clone qilish
           cd $PARENT_DIR
           git clone $REPO_URL
-
-          # 5. Loyiha papkasiga kirib, Docker-ni ishga tushiramiz
           cd $TARGET_DIR
 
-          echo "🏗️ Docker konteynerlar build qilinmoqda..."
-          docker compose -p euphoria-lands up -d --build
+          # 5. Docker build (Barqaror usul)
+          # --parallel=1 server RAM va Diskiga og'irlik tushirmaslik uchun bittadan build qiladi
+          echo "🏗️ Docker konteynerlar bittadan build qilinmoqda..."
+          docker compose -p euphoria-lands build --parallel=1
 
-          # 6. Tozalash (eski buildlar diskni to'ldirmasligi uchun)
-          echo "🧹 Eski keraksiz image-larni tozalash..."
+          echo "🚀 Konteynerlarni ishga tushirish..."
+          docker compose -p euphoria-lands up -d
+
+          # 6. Tozalash
+          echo "🧹 Eski keraksiz qatlamlarni tozalash..."
           docker image prune -af
 
       - name: ✅ Holatni tekshirish
-        run: docker ps | grep euphoria-lands
+        run: |
+          sleep 5
+          docker ps | grep euphoria-lands
