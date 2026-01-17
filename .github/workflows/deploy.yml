@@ -1,0 +1,49 @@
+name: Deploy All Euphoria Lands
+
+on:
+  push:
+    branches: ["main", "master"]
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, Linux, X64]
+
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: 🚀 Serverda Papkani Tayyorlash va Deploy
+        run: |
+          # 1. Loyiha joylashishi kerak bo'lgan manzil
+          # Yangi disk manzili: /media/user/disc/euphoria-landings
+          TARGET_DIR="/media/user/disc/euphoria-landings"
+          REPO_URL="https://github.com/Euphoria-Landings/euphoria-landings.git"
+
+          # 2. Agar papka mavjud bo'lmasa, noldan clone qiladi
+          if [ ! -d "$TARGET_DIR/.git" ]; then
+            echo "🔄 Papka topilmadi. Yangi diskda loyiha yaratilmoqda..."
+            sudo mkdir -p $TARGET_DIR
+            sudo chown -R $USER:$USER $TARGET_DIR
+            git clone $REPO_URL $TARGET_DIR
+          fi
+
+          # 3. Loyiha papkasiga kiramiz
+          cd $TARGET_DIR
+
+          # 4. Kodni yangilaymiz (pull)
+          echo "📥 Yangi kodni yuklanmoqda..."
+          git fetch --all
+          git reset --hard origin/${{ github.ref_name }}
+
+          # 5. Docker orqali loyihani ko'taramiz
+          # '-p euphoria-lands' buni alohida loyiha sifatida ajratadi (Teamlead loyihalariga tegmaydi)
+          echo "🏗️ Docker konteynerlar build qilinmoqda..."
+          docker compose -p euphoria-lands up -d --build
+
+          # 6. Tozalash (eski buildlar diskni to'ldirmasligi uchun)
+          echo "🧹 Eski keraksiz image-larni tozalash..."
+          docker image prune -f
+
+      - name: ✅ Holatni tekshirish
+        run: docker ps | grep euphoria-lands
