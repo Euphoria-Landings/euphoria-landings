@@ -5,7 +5,7 @@ export default function Purchase() {
   const cards = [
     {
       title: "KOMPLEKS HARAKAT",
-      desc: "Glyukozamin sulfat va xondroitin sulfat optimal dozalarda bo'g'imlar va umurtqa pog'onasining tog'ay to'qimasini qo'llab-quvvatlash va himoya qilishga yordam beradi",
+      desc: "Kalsiy va magniy suyaklar uchun juda muhim, chunki ular suyak to'qimasining asosiy qismini tashkil etadi, suyak zichligini oshiradi, mineralizatsiyani ta'minlaydi va ularning mustahkamligi, egiluvchanligini nazorat qiladi.",
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -27,8 +27,8 @@ export default function Purchase() {
       ),
     },
     {
-      title: "OSON HAZM BO'LADIGAN TARKIB",
-      desc: "Sulfat shaklidagi glyukozamin organizm tomonidan glyukozamin gidroxloridga qaraganda yaxxorq so'riladi.",
+      title: "Kalsiyning suyaklarga ta'siri",
+      desc: "Suyak va tishlar mustahkamligini ta'minlaydi. Suyak to'qimasini mustahkam qiluvchi mineral tarkibni shakllantiradi. ",
       icon: (
         <svg
           viewBox="0 0 24 24"
@@ -60,7 +60,7 @@ export default function Purchase() {
     },
     {
       title: "TABIIY FORMULA",
-      desc: "Xaftaga to'qimasining tabiiy komponentlarini o'z ichiga oladi",
+      desc: "Xaftaga to'qimasining tabiiy komponentlarini o'z ichiga oladi.Magniy D vitamini metabolizmini boshqarish orqali kalsiy almashinuviga yordam berad",
       icon: (
         <svg
           viewBox="0 0 24 24"

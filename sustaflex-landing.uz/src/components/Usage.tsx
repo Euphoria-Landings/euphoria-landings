@@ -19,8 +19,8 @@ export default function Usage() {
           />
         </svg>
       ),
-      title: "1 TA KAPSULA",
-      desc: "kuniga",
+      title: "2 TA KAPSULA",
+      desc: "kuniga 2 maxal",
     },
     {
       icon: (

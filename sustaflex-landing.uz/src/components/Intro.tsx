@@ -88,7 +88,7 @@ export default function Intro() {
                   Kuniga
                 </span>
                 <span className="text-4xl md:text-6xl font-black italic leading-none my-1">
-                  1
+                  4
                 </span>
                 <span className="text-[12px] md:text-[14px] font-black uppercase tracking-tighter">
                   Kapsula

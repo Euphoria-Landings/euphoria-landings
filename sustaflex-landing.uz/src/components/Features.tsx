@@ -9,7 +9,7 @@ export default function Features() {
       text: "BO'G'IMLARNING HARAKATCHANLIGINI SAQLASHGA YORDAM BERADI",
     },
     {
-      text: "HAR BIR PAKET UCHUN QULAY NARX",
+      text: "SERTIFIKATLANGAN VA XAVFSIZ",
     },
   ];
 

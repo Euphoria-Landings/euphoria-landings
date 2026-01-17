@@ -9,18 +9,14 @@ export default function Composition() {
       "Bo'g'imlar atrofidagi yallig'lanishni kamaytiradi",
     ],
     // 2-Karta uchun yangi ma'lumotlar
-    extracts: [
-      "Bosveliya ekstrakti — yallig'lanishga qarshi xususiyatlarga ega",
-      "Vitamin C va maral ildizi — umumiy immunitetni rag'batlantiradi",
-      "To'qimalarda tiklanish jarayonlarini faollashtiradi",
-    ],
+    extracts: ["kaltsiy", "fosfor", "magniy", "temir"],
   };
 
   const minerals = [
-    { name: "MSM", desc: "Metilsulfonilmetan" },
-    { name: "Bosveliya", desc: "Tabiiy ekstrakt" },
-    { name: "Vitamin C", desc: "Immunitet va tiklanish" },
-    { name: "Maral ildizi", desc: "Energizer va regeneratsiya" },
+    { name: "kalsiy", desc: "Suyaklarni mustahkamlaydi" },
+    { name: "magniy", desc: "tinchlantiradi" },
+    { name: "Vitamin d3", desc: "Immunitet va tiklanish" },
+    { name: "rux", desc: "Energizer va regeneratsiya" },
   ];
 
   return (
@@ -41,10 +37,10 @@ export default function Composition() {
           <div className="w-full lg:w-[400px] bg-white rounded-[40px] p-8 md:p-10 shadow-xl border border-gray-100 relative z-10 transition-all hover:-translate-y-2">
             <div className="mb-8">
               <h3 className="text-[#FF9F43] text-2xl font-black uppercase italic">
-                MSM
+                asosiy
               </h3>
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
-                Metilsulfonilmetan
+                tasir doirasi
               </p>
               <div className="h-1 w-12 bg-[#FF9F43] mt-2 rounded-full" />
             </div>
@@ -97,10 +93,10 @@ export default function Composition() {
           <div className="w-full lg:w-[400px] bg-white rounded-[40px] p-8 md:p-10 shadow-xl border border-gray-100 relative z-10 transition-all hover:-translate-y-2">
             <div className="mb-8">
               <h3 className="text-[#FF9F43] text-2xl font-black uppercase italic">
-                KOMPLEKS
+                Tarkibi
               </h3>
               <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">
-                Ekstraktlar va Vitamin C
+                tabiiy bo‘lgan biologik faol komponentlar kiradi{" "}
               </p>
               <div className="h-1 w-12 bg-[#FF9F43] mt-2 rounded-full" />
             </div>
