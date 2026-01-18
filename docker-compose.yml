@@ -80,10 +80,11 @@ services:
     ports: ["3014:80"]
     <<: *default-deploy
 
-dashboard:
-  image: nginx:alpine
-  ports: ["8080:80"] # Dashboard 8080 portda ochiladi
-  volumes:
-    - /home/deploy/euphoria-landings/index.html:/usr/share/nginx/html/index.html:ro
-    - /home/deploy/euphoria-landings/data.json:/usr/share/nginx/html/data.json:ro
-  restart: always
+  # DASHBOARD ENDI SERVICES ICHIDA (2 ta bo'sh joy surilgan)
+  dashboard:
+    image: nginx:alpine
+    ports: ["8080:80"]
+    volumes:
+      - /home/deploy/euphoria-landings/index.html:/usr/share/nginx/html/index.html:ro
+      - /home/deploy/euphoria-landings/data.json:/usr/share/nginx/html/data.json:ro
+    restart: always
