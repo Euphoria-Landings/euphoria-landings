@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Euphoria Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Public Sans', sans-serif; transition: all 0.3s ease; }
+        
+        /* MUI Joy ranglar palitrasi */
+        :root {
+            --bg-body: #F0F4F8;
+            --bg-surface: #FFFFFF;
+            --text-main: #171A1C;
+            --border: #CDD7E1;
+            --primary: #0B6BCB;
+        }
+
+        .dark {
+            --bg-body: #0B0D0E;
+            --bg-surface: #171A1C;
+            --text-main: #FBFCFD;
+            --border: #32383E;
+            --primary: #3391FF;
+        }
+
+        body { background-color: var(--bg-body); color: var(--text-main); }
+        .surface { background-color: var(--bg-surface); border: 1px solid var(--border); }
+        .sidebar { border-right: 1px solid var(--border); background-color: var(--bg-surface); }
+    </style>
+</head>
+<body class="light" id="app-body">
+    <div class="flex min-h-screen">
+        <aside class="w-64 sidebar hidden md:flex flex-col p-6 shadow-sm">
+            <div class="flex items-center gap-2 mb-10">
+                <div class="w-8 h-8 bg-[#0B6BCB] rounded-lg flex items-center justify-center text-white font-bold">E</div>
+                <span class="text-xl font-bold tracking-tight">Euphoria Ops</span>
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md bg-[#E3EFFB] text-[#185EA5] dark:bg-[#0B2240] dark:text-[#99C8FF] font-medium">
+                    <span>🏠</span> Dashboard
+                </a>
+                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-all text-gray-600 dark:text-gray-400">
+                    <span>📦</span> Deployments
+                </a>
+            </nav>
+            
+            <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800 text-xs text-gray-400">
+                v1.0.4 • 2026 Stable
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col">
+            <header class="h-16 surface border-t-0 border-x-0 flex items-center justify-between px-8 shadow-sm">
+                <h2 class="font-semibold text-lg">Tizim Monitoringi</h2>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleTheme()" class="p-2 rounded-full border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500"></div>
+                </div>
+            </header>
+
+            <div class="p-6 md:p-10 max-w-6xl mx-auto w-full">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="surface p-5 rounded-xl shadow-sm">
+                        <p class="text-sm text-gray-500 mb-1">Jami Loyihalar</p>
+                        <h3 class="text-3xl font-bold">14</h3>
+                    </div>
+                    <div class="surface p-5 rounded-xl shadow-sm border-l-4 border-l-green-500">
+                        <p class="text-sm text-gray-500 mb-1">Online</p>
+                        <h3 class="text-3xl font-bold text-green-500" id="online-count">--</h3>
+                    </div>
+                    <div class="surface p-5 rounded-xl shadow-sm">
+                        <p class="text-sm text-gray-500 mb-1">Server IP</p>
+                        <h3 class="text-lg font-mono font-semibold">95.217.191.63</h3>
+                    </div>
+                </div>
+
+                <div class="surface rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                        <h3 class="font-bold text-lg">Landing Sahifalar Statusi</h3>
+                        <button onclick="fetchData()" class="text-sm text-blue-500 hover:underline">Yangilash ↻</button>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-50 dark:bg-[#121416] text-gray-500 text-xs uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-6 py-4 font-semibold">Loyiha Nomi</th>
+                                    <th class="px-6 py-4 font-semibold">Port</th>
+                                    <th class="px-6 py-4 font-semibold">Holati</th>
+                                    <th class="px-6 py-4 font-semibold">Docker Info</th>
+                                </tr>
+                            </thead>
+                            <tbody id="container-list" class="divide-y divide-gray-100 dark:divide-gray-800">
+                                <tr><td colspan="4" class="p-10 text-center text-gray-400">Yuklanmoqda...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // DARK MODE FUNKSIYASI
+        function toggleTheme() {
+            const body = document.getElementById('app-body');
+            const icon = document.getElementById('theme-icon');
+            if (body.classList.contains('light')) {
+                body.classList.replace('light', 'dark');
+                icon.innerText = '☀️';
+            } else {
+                body.classList.replace('dark', 'light');
+                icon.innerText = '🌙';
+            }
+        }
+
+        // REAL MA'LUMOTLARNI OLISH
+        async function fetchData() {
+            try {
+                // data.json faylidan Docker statuslarini o'qiymiz
+                const response = await fetch('data.json');
+                const containers = await response.json();
+                
+                const list = document.getElementById('container-list');
+                const onlineDisplay = document.getElementById('online-count');
+                list.innerHTML = '';
+                
+                let onlineCount = 0;
+
+                containers.forEach(c => {
+                    const isUp = c.status.toLowerCase().includes('up');
+                    if(isUp) onlineCount++;
+
+                    list.innerHTML += `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-900/40 transition-colors">
+                            <td class="px-6 py-4 font-medium text-sm">${c.name.replace('euphoria-lands-', '')}</td>
+                            <td class="px-6 py-4 text-xs text-gray-400">Noma'lum</td>
+                            <td class="px-6 py-4">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold ${isUp ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}">
+                                    <span class="w-1.5 h-1.5 rounded-full ${isUp ? 'bg-green-500' : 'bg-red-500'}"></span>
+                                    ${isUp ? 'RUNNING' : 'STOPPED'}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-xs font-mono text-gray-500">${c.status}</td>
+                        </tr>
+                    `;
+                });
+
+                onlineDisplay.innerText = onlineCount;
+            } catch (error) {
+                console.error("Xatolik:", error);
+            }
+        }
+
+        // Har 10 soniyada avtomatik yangilash
+        setInterval(fetchData, 10000);
+        fetchData();
+    </script>
+</body>
+</html>
