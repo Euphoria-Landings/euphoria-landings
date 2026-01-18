@@ -1,96 +1,100 @@
 <!doctype html>
-<html lang="uz" class="dark">
+<html lang="uz">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Euphoria Elite Ops</title>
+    <title>Euphoria Elite Control • MUI Joy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background-color: #05070a;
-        color: #e2e8f0;
-      }
-      .glass {
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .status-glow-up {
-        box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
-      }
-      .status-glow-down {
-        box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        font-family: "Public Sans", sans-serif;
+        background-color: #020408; /* OLED Black */
+        color: #94a3b8;
+        margin: 0;
       }
 
-      /* Loading Bar Animatsiyasi */
-      @keyframes loadingBar {
+      /* MUI Joy Glass Effect */
+      .joy-card {
+        background: rgba(11, 13, 14, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+      }
+
+      /* Top Progress Bar (Neon) */
+      #sync-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #0b6bcb, #1f7a1f, #0b6bcb);
+        background-size: 200% 100%;
+        width: 0%;
+        opacity: 0;
+        z-index: 1000;
+        transition:
+          width 0.4s ease-in-out,
+          opacity 0.3s;
+      }
+      .syncing #sync-loader {
+        opacity: 1;
+        animation: progressMove 2s infinite linear;
+      }
+      @keyframes progressMove {
         0% {
           width: 0%;
-          opacity: 1;
-        }
-        50% {
-          width: 70%;
-          opacity: 1;
+          background-position: 100% 0;
         }
         100% {
           width: 100%;
-          opacity: 0;
+          background-position: -100% 0;
         }
       }
-      .loading-active #top-loader {
-        animation: loadingBar 1.5s ease-in-out forwards;
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #171a1c;
+        border-radius: 10px;
       }
     </style>
   </head>
-  <body class="overflow-x-hidden">
-    <div
-      id="loader-container"
-      class="fixed top-0 left-0 w-full h-[3px] z-[100]"
-    >
-      <div
-        id="top-loader"
-        class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 w-0 transition-all"
-      ></div>
-    </div>
+  <body>
+    <div id="sync-loader"></div>
 
     <div class="flex min-h-screen">
       <aside
-        class="w-72 glass hidden lg:flex flex-col p-8 sticky top-0 h-screen"
+        class="w-64 border-r border-white/5 bg-[#0B0D0E] hidden lg:flex flex-col p-6 sticky top-0 h-screen"
       >
-        <div class="flex items-center gap-3 mb-12">
+        <div class="flex items-center gap-3 mb-10">
           <div
-            class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20"
+            class="w-9 h-9 bg-[#0B6BCB] rounded-lg flex items-center justify-center text-white font-bold shadow-[0_0_15px_rgba(11,107,203,0.3)]"
           >
-            <span class="text-white font-bold text-xl">E</span>
+            E
           </div>
-          <div>
-            <h1
-              class="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
-            >
-              Euphoria Ops
-            </h1>
-            <p
-              class="text-[10px] text-indigo-400 font-bold uppercase tracking-[2px]"
-            >
-              Elite Control
-            </p>
-          </div>
+          <h1 class="text-white font-bold text-lg tracking-tight">
+            Euphoria <span class="text-[#0B6BCB]">Ops</span>
+          </h1>
         </div>
 
-        <nav class="space-y-4">
-          <p
-            class="text-[11px] text-gray-500 font-bold uppercase tracking-widest pl-2"
+        <nav class="space-y-1">
+          <div
+            class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 px-3"
           >
-            Menu
-          </p>
+            Asosiy
+          </div>
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 transition-all"
+            class="flex items-center gap-3 text-[#99C8FF] bg-[#0B2240] px-3 py-2 rounded-md font-medium border border-[#0B6BCB]/20"
           >
             <svg
               class="w-5 h-5"
@@ -103,16 +107,43 @@
                 stroke-linejoin="round"
                 stroke-width="2"
                 d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-              ></path>
+              />
             </svg>
-            <span class="font-semibold">Infratuzilma</span>
+            Dashboard
           </a>
-          <a
-            href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-white/5 transition-all group"
+        </nav>
+
+        <div class="mt-auto p-4 joy-card bg-white/[0.02]">
+          <p class="text-[10px] text-gray-500 mb-2 uppercase tracking-tighter">
+            Server Status
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-white font-medium">95.217.191.63</span>
+            <span
+              class="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"
+            ></span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="flex-1 p-8 lg:p-12 max-w-6xl mx-auto w-full">
+        <div
+          class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10"
+        >
+          <div>
+            <h2 class="text-3xl font-bold text-white tracking-tight">
+              Infratuzilma Monitoringi
+            </h2>
+            <p class="text-gray-500 text-sm mt-1">
+              Barcha landing sahifalar uchun markaziy boshqaruv
+            </p>
+          </div>
+          <button
+            onclick="fetchData()"
+            class="group flex items-center gap-2 px-5 py-2.5 bg-[#0B6BCB] hover:bg-[#185EA5] text-white rounded-lg transition-all font-semibold text-sm shadow-lg shadow-blue-900/20"
           >
             <svg
-              class="w-5 h-5 group-hover:text-white"
+              class="w-4 h-4 group-active:rotate-180 transition-transform"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -121,153 +152,88 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M5 12h14M5 12l4-4m-4 4l4 4"
-              ></path>
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+              />
             </svg>
-            <span class="group-hover:text-white">Loglar</span>
-          </a>
-        </nav>
-
-        <div class="mt-auto glass p-4 rounded-2xl">
-          <div class="flex items-center gap-3">
-            <div
-              class="w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400"
-            >
-              👨‍💻
-            </div>
-            <div>
-              <p class="text-xs font-bold">Admin</p>
-              <p class="text-[10px] text-green-500 uppercase">Super User</p>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <main class="flex-1 p-6 lg:p-12 overflow-y-auto">
-        <header
-          class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12"
-        >
-          <div>
-            <h2 class="text-3xl font-extrabold text-white tracking-tight">
-              Tizim Monitoringi
-            </h2>
-            <p class="text-gray-500 mt-1">
-              Docker infratuzilmangizning joriy holati
-            </p>
-          </div>
-          <div class="flex items-center gap-3">
-            <button
-              onclick="fetchData()"
-              class="group flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all shadow-lg shadow-indigo-600/20"
-            >
-              <svg
-                id="refresh-icon"
-                class="w-4 h-4 transition-transform group-hover:rotate-180"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                ></path>
-              </svg>
-              <span class="font-bold text-sm">Yangilash</span>
-            </button>
-          </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <div class="glass p-8 rounded-[2rem] relative overflow-hidden group">
-            <div
-              class="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform"
-            >
-              📦
-            </div>
-            <p
-              class="text-xs font-bold text-gray-500 uppercase tracking-widest"
-            >
-              Jami Loyihalar
-            </p>
-            <h3 class="text-4xl font-black mt-2 text-white">14</h3>
-          </div>
-          <div
-            class="glass p-8 rounded-[2rem] border-t-4 border-t-green-500/50"
-          >
-            <p
-              class="text-xs font-bold text-gray-500 uppercase tracking-widest text-green-500/80"
-            >
-              Online Servislar
-            </p>
-            <h3 class="text-4xl font-black mt-2 text-white" id="online-count">
-              --
-            </h3>
-          </div>
-          <div class="glass p-8 rounded-[2rem]">
-            <p
-              class="text-xs font-bold text-gray-500 uppercase tracking-widest text-blue-400"
-            >
-              Server Node
-            </p>
-            <h3 class="text-xl font-mono mt-4 text-white">95.217.191.63</h3>
-          </div>
+            Yangilash
+          </button>
         </div>
 
-        <div class="glass rounded-[2.5rem] overflow-hidden">
-          <div
-            class="p-8 border-b border-white/5 flex items-center justify-between"
-          >
-            <h3 class="text-xl font-bold">Landing Sahifalar</h3>
-            <span
-              class="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-              >Live Sync</span
-            >
-          </div>
-
-          <div class="overflow-x-auto text-sm">
-            <table class="w-full">
-              <thead
-                class="text-gray-500 uppercase text-[11px] font-bold tracking-widest"
-              >
-                <tr class="bg-white/[0.02]">
-                  <th class="px-8 py-5">Loyiha Nomi</th>
-                  <th class="px-8 py-5">Identifikator</th>
-                  <th class="px-8 py-5">Holati</th>
-                  <th class="px-8 py-5 text-right">Docker Info</th>
+        <div class="joy-card overflow-hidden shadow-2xl">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-white/5 bg-white/[0.01]">
+                  <th
+                    class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
+                  >
+                    Loyiha Nomi
+                  </th>
+                  <th
+                    class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
+                  >
+                    Port
+                  </th>
+                  <th
+                    class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
+                  >
+                    Holati
+                  </th>
+                  <th
+                    class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500 text-right"
+                  >
+                    Amal
+                  </th>
                 </tr>
               </thead>
-              <tbody id="container-list" class="divide-y divide-white/[0.05]">
-                <tr>
-                  <td
-                    colspan="4"
-                    class="p-20 text-center text-gray-500 font-medium"
-                  >
-                    Baza bilan aloqa o'rnatilmoqda...
-                  </td>
-                </tr>
-              </tbody>
+              <tbody
+                id="container-list"
+                class="divide-y divide-white/5"
+              ></tbody>
             </table>
           </div>
 
           <div
-            class="p-6 border-t border-white/5 flex items-center justify-between bg-white/[0.01]"
+            class="px-6 py-4 flex items-center justify-between bg-white/[0.01]"
           >
-            <p class="text-xs text-gray-500 font-medium">
-              Ko'rsatilmoqda <span class="text-white">1-14</span> / 14
+            <p class="text-xs text-gray-500 italic">
+              Ma'lumotlar har 10s da yangilanadi
             </p>
-            <div class="flex gap-2">
+            <div class="flex items-center gap-2">
               <button
-                class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold transition-all disabled:opacity-30"
-                disabled
+                class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 transition-all"
               >
-                Orqaga
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
               </button>
+              <span class="text-xs font-bold text-white px-2">1 / 1</span>
               <button
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 rounded-lg text-xs font-bold transition-all shadow-md shadow-indigo-600/10"
+                class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 transition-all"
               >
-                Keyingi
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -276,66 +242,74 @@
     </div>
 
     <script>
+      const SERVER_IP = "95.217.191.63";
+      const portMap = {
+        artrowell: 3001,
+        "cardio-balance": 3002,
+        dermozil: 3003,
+        diabetikforte: 3004,
+        diastop: 3005,
+        fatality: 3006,
+        "gemo-plus": 3007,
+        gipertofort: 3008,
+        "parazit-off": 3009,
+        slimfit: 3010,
+        sustaflex: 3011,
+        urion: 3012,
+        "uro-pro": 3013,
+        visucaps: 3014,
+        dashboard: 8080,
+      };
+
       async function fetchData() {
-        // Loading boshlanishi
-        document.body.classList.add("loading-active");
+        document.body.classList.add("syncing");
 
         try {
           const response = await fetch("data.json");
           const containers = await response.json();
-
           const list = document.getElementById("container-list");
-          const onlineDisplay = document.getElementById("online-count");
           list.innerHTML = "";
 
-          let onlineCount = 0;
-
           containers.forEach((c) => {
+            const cleanName = c.name
+              .replace("euphoria-lands-", "")
+              .replace("-1", "");
+            const port = portMap[cleanName] || "---";
             const isUp = c.status.toLowerCase().includes("up");
-            if (isUp) onlineCount++;
 
             list.innerHTML += `
-                        <tr class="group hover:bg-white/[0.03] transition-colors">
-                            <td class="px-8 py-6">
+                        <tr class="group hover:bg-white/[0.02] transition-colors">
+                            <td class="px-6 py-5">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-xs group-hover:scale-110 transition-transform">🌐</div>
-                                    <span class="font-bold text-gray-200">${c.name.replace("euphoria-lands-", "")}</span>
+                                    <div class="w-8 h-8 rounded bg-[#171A1C] flex items-center justify-center text-[10px]">📦</div>
+                                    <span class="text-white font-medium text-sm">${cleanName}</span>
                                 </div>
                             </td>
-                            <td class="px-8 py-6 text-xs text-gray-500 font-mono italic">
-                                ID-${Math.random().toString(36).substr(2, 5).toUpperCase()}
+                            <td class="px-6 py-5 font-mono text-[11px] text-gray-500">${port}</td>
+                            <td class="px-6 py-5">
+                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}">
+                                    <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-red-500"}"></span>
+                                    ${isUp ? "RUNNING" : "STOPPED"}
+                                </span>
                             </td>
-                            <td class="px-8 py-6">
-                                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20 status-glow-up" : "bg-red-500/10 text-red-400 border border-red-500/20 status-glow-down"}">
-                                    <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 animate-pulse" : "bg-red-500"}"></span>
-                                    ${isUp ? "ACTIVE" : "OFFLINE"}
-                                </div>
-                            </td>
-                            <td class="px-8 py-6 text-right">
-                                <span class="text-[11px] font-mono text-gray-500 bg-white/5 px-3 py-1 rounded-md border border-white/5">${c.status}</span>
+                            <td class="px-6 py-5 text-right">
+                                <a href="http://${SERVER_IP}:${port}" target="_blank" 
+                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold text-[#99C8FF] hover:bg-[#0B2240] border border-transparent hover:border-[#0B6BCB]/30 transition-all">
+                                    OCHISH <span>↗</span>
+                                </a>
                             </td>
                         </tr>
                     `;
           });
-
-          onlineDisplay.innerText = onlineCount;
         } catch (error) {
-          console.error("Xatolik:", error);
-          document.getElementById("container-list").innerHTML =
-            `<tr><td colspan="4" class="p-20 text-center text-red-400">Ma'lumotlarni yuklashda xatolik yuz berdi. data.json faylini tekshiring.</td></tr>`;
+          console.error("Fetch failed", error);
         } finally {
-          // Loading tugashi (biroz kechikish bilan vizual effekt uchun)
-          setTimeout(() => {
-            document.body.classList.remove("loading-active");
-            // Progress bar reset bo'lishi uchun kerak
-            const loader = document.getElementById("top-loader");
-            loader.style.width = "0%";
-          }, 1000);
+          // Progress bar effekti ko'rinishi uchun biroz ushlab turamiz
+          setTimeout(() => document.body.classList.remove("syncing"), 1500);
         }
       }
 
-      // Dastlabki yuklash
-      setInterval(fetchData, 30000); // Har 30 soniyada avtomat
+      setInterval(fetchData, 10000);
       fetchData();
     </script>
   </body>
