@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 # Umumiy sozlamalar andozasi
 x-deploy: &default-deploy
@@ -6,7 +6,7 @@ x-deploy: &default-deploy
   deploy:
     resources:
       limits:
-        cpus: '0.50'
+        cpus: "0.50"
         memory: 512M
 
 services:
@@ -79,3 +79,11 @@ services:
     build: ./visucaps-landing.uz
     ports: ["3014:80"]
     <<: *default-deploy
+
+dashboard:
+  image: nginx:alpine
+  ports: ["8080:80"] # Dashboard 8080 portda ochiladi
+  volumes:
+    - /home/deploy/euphoria-landings/index.html:/usr/share/nginx/html/index.html:ro
+    - /home/deploy/euphoria-landings/data.json:/usr/share/nginx/html/data.json:ro
+  restart: always
