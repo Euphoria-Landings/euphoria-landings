@@ -1,1 +1,1 @@
-# euphoria-landings
+# euphoria-landings-web
