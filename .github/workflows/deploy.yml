@@ -1,4 +1,4 @@
-name: Deploy Euphoria Landings (Optimized)
+name: Deploy Euphoria Landings
 
 on:
   push:
@@ -9,6 +9,7 @@ jobs:
     name: 🚀 Production Deploy
     runs-on: [self-hosted, Linux, X64]
     
+    # Bir vaqtda ikkita deploy bo'lib ketmasligi uchun
     concurrency:
       group: production
       cancel-in-progress: true
@@ -17,9 +18,13 @@ jobs:
       - name: 📥 Source kodni yuklash
         uses: actions/checkout@v4
 
-      - name: 🛠️ Deploy jarayoni
+      - name: 🛠️ Muhitni tayyorlash va Tozalash
         run: |
+          # Professional yo'l: loyihani /opt yoki /home ichida saqlash
           TARGET_DIR="/home/deploy/euphoria-landings"
+          
+          echo "🧹 Eski kesh va keraksiz elementlarni tozalash..."
+          docker image prune -f
           
           if [ -d "$TARGET_DIR" ]; then
             cd $TARGET_DIR
@@ -28,17 +33,37 @@ jobs:
             git clone ${{ github.server_url }}/${{ github.repository }}.git $TARGET_DIR
             cd $TARGET_DIR
           fi
+
+      - name: 🏗️ Ketma-ket Build va Deploy (Sequential)
+        run: |
+          cd /home/deploy/euphoria-landings
           
-          echo "🚀 Nginx Image'ni yangilash va konteynerlarni qayta yoqish..."
-          # Build shart emas, faqat pull va up
-          docker compose -p euphoria-lands pull
-          docker compose -p euphoria-lands up -d --remove-orphans
+          # Docker Compose faylidagi barcha servislarni ro'yxatga olish
+          SERVICES=$(docker compose config --services)
+          
+          echo "🚀 Loyihalarni bittalab ishga tushirish..."
+          for service in $SERVICES; do
+            echo "--------------------------------------------"
+            echo "📦 Building & Starting: $service"
+            
+            # --build: yangi o'zgarishni yig'adi
+            # -d: fonda ishga tushiradi
+            # --remove-orphans: keraksiz konteynerlarni o'chiradi
+            docker compose -p euphoria-lands up -d --build --remove-orphans $service
+            
+            echo "✅ $service muvaffaqiyatli ishga tushdi."
+            
+            # CPU dam olishi uchun kichik tanaffus
+            sleep 2
+          done
 
-      - name: 🧹 Serverni tozalash
+      - name: 🧹 Post-Deploy tozalash
+        if: always()
         run: |
-          echo "🗑️ Eski va foydalanilmayotgan Docker resurslarini tozalash..."
-          docker system prune -f
+          echo "🗑️ Foydalanilmayotgan danggler (osilib qolgan) imagelarni o'chirish..."
+          docker image prune -af
 
-      - name: ✅ Holatni tekshirish
+      - name: ✅ Salomatlikni tekshirish (Health Check)
         run: |
+          echo "📊 Ishlayotgan konteynerlar holati:"
           docker ps --filter "name=euphoria-lands" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"

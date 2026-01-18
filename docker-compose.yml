@@ -1,96 +1,81 @@
-version: "3.8"
+version: '3.8'
 
-# Umumiy sozlamalar (Template)
-x-landing-template: &landing-template
-  image: nginx:alpine
+# Umumiy sozlamalar andozasi
+x-deploy: &default-deploy
   restart: always
   deploy:
     resources:
       limits:
-        cpus: "0.50"
-        memory: 256M
+        cpus: '0.50'
+        memory: 512M
 
 services:
   artrowell:
-    <<: *landing-template
+    build: ./artrowell-landing.uz
     ports: ["3001:80"]
-    volumes:
-      - ./artrowell-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   cardio-balance:
-    <<: *landing-template
+    build: ./cardio-balance-landing.uz
     ports: ["3002:80"]
-    volumes:
-      - ./cardio-balance-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   dermozil:
-    <<: *landing-template
+    build: ./dermozil-landing.uz
     ports: ["3003:80"]
-    volumes:
-      - ./dermozil-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   diabetikforte:
-    <<: *landing-template
+    build: ./diabetikforte-landing.uz
     ports: ["3004:80"]
-    volumes:
-      - ./diabetikforte-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   diastop:
-    <<: *landing-template
+    build: ./diastop-landing.uz
     ports: ["3005:80"]
-    volumes:
-      - ./diastop-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   fatality:
-    <<: *landing-template
+    build: ./fatality-landing.uz
     ports: ["3006:80"]
-    volumes:
-      - ./fatality-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   gemo-plus:
-    <<: *landing-template
+    build: ./gemo-plus-landing.uz
     ports: ["3007:80"]
-    volumes:
-      - ./gemo-plus-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   gipertofort:
-    <<: *landing-template
+    build: ./gipertofort-landing.uz
     ports: ["3008:80"]
-    volumes:
-      - ./gipertofort-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   parazit-off:
-    <<: *landing-template
+    build: ./parazit-off-landing.uz
     ports: ["3009:80"]
-    volumes:
-      - ./parazit-off-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   slimfit:
-    <<: *landing-template
+    build: ./slimfit-landing.uz
     ports: ["3010:80"]
-    volumes:
-      - ./slimfit-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   sustaflex:
-    <<: *landing-template
+    build: ./sustaflex-landing.uz
     ports: ["3011:80"]
-    volumes:
-      - ./sustaflex-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   urion:
-    <<: *landing-template
+    build: ./urion-landing.uz
     ports: ["3012:80"]
-    volumes:
-      - ./urion-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   uro-pro:
-    <<: *landing-template
+    build: ./uro-pro-landing.uz
     ports: ["3013:80"]
-    volumes:
-      - ./uro-pro-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
 
   visucaps:
-    <<: *landing-template
+    build: ./visucaps-landing.uz
     ports: ["3014:80"]
-    volumes:
-      - ./visucaps-landing.uz:/usr/share/nginx/html:ro
+    <<: *default-deploy
