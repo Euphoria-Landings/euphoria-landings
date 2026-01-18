@@ -16,7 +16,7 @@ const Warning = () => {
           </p>
 
           <p className="text-white/40 font-black text-[7px] md:text-[9px] uppercase tracking-[1px] md:tracking-[2px] mt-1.5">
-            Iste'mol qilishdan avval mutaxassis bilan maslahatlashing
+            Qabul qilishdan avval shifokor bilan maslahatlashing
           </p>
         </div>
       </div>

@@ -12,7 +12,8 @@ const Warning = () => {
           {/* pointer-events-auto: yozuvning o'zi interaktiv bo'lishi mumkin */}
 
           <p className="text-red-600 font-[1000] text-[10px] md:text-[14px] tracking-[3px] md:tracking-[5px] uppercase italic leading-none">
-            BQM. DORI VOSITASI HISOBLANMAYDI.
+            BFQ. DORI VOSITASI HISOBLANMAYDI. <br />
+            <span className="text-[8px]">Qabul qilishdan avval shifokor bilan maslahatlashing</span>
           </p>
         </div>
       </div>

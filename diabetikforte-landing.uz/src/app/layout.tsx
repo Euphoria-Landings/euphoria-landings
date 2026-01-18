@@ -69,15 +69,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <main>{children}</main>
-
-        {/* GLOBAL DISCLAIMER */}
-        <div className="fixed bottom-0 left-0 w-full border-t border-red-100 py-3 bg-white/90 backdrop-blur-md z-[9999]">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-[#8B0000]/60 font-black text-[9px] md:text-[11px] tracking-[2px] uppercase">
-              BIOLOGIK FAOL QO'SHIMCHA. DORI VOSITASI HISOBLANMAYDI.
-            </p>
-          </div>
-        </div>
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ export default function Usage() {
   const usageInfo = [
     {
       icon: <Flame className="w-8 h-8 text-[#E91E63]" strokeWidth={2.5} />,
-      title: "KUNIGA 1-2 KAPSULA",
+      title: "KUNIGA 4ta KAPSULA",
       desc: "Ovqatlanishdan 30 daqiqa oldin yoki mashg'ulotdan avval ko'p miqdordagi suv bilan qabul qiling.",
     },
     {

@@ -125,15 +125,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <main>{children}</main>
-
-        {/* 5. GLOBAL BFQ DISCLAIMER (Fixed at bottom) */}
-        <div className="fixed bottom-0 left-0 w-full border-t border-red-600/10 py-3 bg-white/90 backdrop-blur-md z-[9999]">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-red-600 font-black text-[10px] md:text-xs tracking-[2px] uppercase italic">
-              BFQ. DORI VOSITASI HISOBLANMAYDI.
-            </p>
-          </div>
-        </div>
       </body>
     </html>
   );

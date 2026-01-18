@@ -41,7 +41,7 @@ export default function Intro() {
                 Bo‘g‘imlarning funksional holatini qo‘llab- quvvatlash va
                 yuklamalar paytida noqulaylik hissini kamaytirish uchun
                 vitamin-mineral kompleksli 
-                <span className="text-[#CC1D24]">biologik faol qo‘shimcha</span>.
+                <span className="text-[#CC1D24]"> biologik faol qo‘shimcha</span>.
               </p>
             </div>
 

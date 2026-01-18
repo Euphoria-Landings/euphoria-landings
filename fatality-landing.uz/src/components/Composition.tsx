@@ -10,7 +10,7 @@ export default function Composition() {
       "ISHTAHANI SAMARALI NAZORAT QILISH",
     ],
     components: [
-      "O'SIMLITABIIY O'SIMLIK EKSTRAKTLARI MAJMUASI",
+      "TABIIY O'SIMLIK EKSTRAKTLARI MAJMUASI",
       "moychechak ekstrakti",
       "mingbargI",
     ],

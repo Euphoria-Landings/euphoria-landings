@@ -80,7 +80,7 @@ export default function Composition() {
                   src="/image.png" // Bo'g'im anatomiyasi yoki ARTROWELL logotipi
                   alt="Joint Health Anatomy"
                   fill
-                  className="object-cover p-6 rounded-[50%] transition-transform duration-700 hover:scale-110"
+                  className="object-contain p-8 rounded-[50%] transition-transform duration-700 hover:scale-110 w-full"
                 />
               </div>
             </div>

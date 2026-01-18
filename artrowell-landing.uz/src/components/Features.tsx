@@ -39,7 +39,7 @@ export default function Features() {
               `}
             >
               {/* Brend belgisi: Artrowell suyak/bo'g'im stilistikasida */}
-              <div className="shrink-0 w-8 h-8 rounded-full bg-white border-2 border-[#CC1D24] shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+              <div className="shrink-0 w-10 h-8 rounded-full bg-white border-2 border-[#CC1D24] shadow-md flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 <svg 
                   viewBox="0 0 24 24" 
                   fill="none" 
@@ -58,7 +58,7 @@ export default function Features() {
 
               {/* Matn: Professional mikro-tipografiya */}
               <div className="relative">
-                <p className="text-[#1A1A1A] font-black text-[11px] md:text-[11.5px] leading-tight tracking-[1px] uppercase italic">
+                <p className="text-[#1A1A1A] font-bold text-[11px] md:text-[9px] leading-tight tracking-[1px] uppercase italic">
                   {item.text}
                 </p>
               </div>

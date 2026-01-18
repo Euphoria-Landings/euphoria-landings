@@ -9,11 +9,7 @@ export default function Composition() {
       "to‘r pardaning funksional holatini ta’minlaydi.",
       "ko‘zni oksidlovchi stressdan himoya qilishga yordam beradi.",
     ],
-    protection: [
-      "oddiy chernika",
-      "dorivor tirnoqgul",
-      "oddiy ayir",
-    ],
+    protection: ["oddiy chernika", "dorivor tirnoqgul", "oddiy ayir"],
   };
 
   const components = [
@@ -33,7 +29,11 @@ export default function Composition() {
             <span className="text-[#4B2C82]">CAPS</span> TARKIBI
           </h2>
           <p className="text-gray-400 font-bold mt-3 uppercase text-[8px] md:text-[9px] tracking-[4px]">
-            Tabiiy va xavfsiz komponentlar
+            Vizu Caps - bu yuqori ko‘rish yuklamalarida ko‘rish funksiyasini
+            qo‘llab-quvvatlash uchun mo‘ljallangan biologik faol qo‘shimchadir.
+            O‘simlik ekstraktlari va tabiiy antioksidantlar majmuasi ko‘zlar
+            uchun qulaylikni saqlashga va ko‘rish organlarining normal holatini
+            saqlashga yordam beradi.
           </p>
         </div>
 

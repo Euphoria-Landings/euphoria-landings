@@ -72,7 +72,7 @@ export default function Intro() {
               </div>
 
               {/* Mahsulot qutisi */}
-              <div className="absolute -bottom-8 -left-4 md:-left-12 z-20 w-[180px] md:w-[200px] drop-shadow-2xl">
+              <div className="absolute -bottom-8 -left-4 md:-left-12 z-20 w-[180px] md:w-[170px] drop-shadow-2xl">
                 <div className="relative aspect-[1/1.2] rounded-[24px]  overflow-hidden shadow-2xl  transition-transform duration-300 hover:-rotate-2">
                   <Image
                     src="/intro2.png"
@@ -89,7 +89,7 @@ export default function Intro() {
                   Kuniga
                 </span>
                 <span className="text-3xl md:text-5xl font-[1000] italic leading-none my-0.5 md:my-1">
-                  1
+                  4
                 </span>
                 <span className="text-[10px] md:text-[12px] font-black uppercase tracking-tighter">
                   MAHAL

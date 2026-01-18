@@ -20,7 +20,7 @@ export default function Usage() {
         </svg>
       ),
       title: "KUNIGA 2 MAHAL",
-      desc: "Ovqat paytida yoki ovqatdan keyin iste'mol qiling",
+      desc: "Ovqat paytida yoki ovqatdan keyin 2 ta kapsuladan",
     },
     {
       icon: (

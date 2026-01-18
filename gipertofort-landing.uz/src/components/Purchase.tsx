@@ -4,7 +4,7 @@ export default function Purchase() {
   const cards = [
     {
       title: "KOMPLEKS TA'SIR",
-      desc: "Do'lana va magniy kombinatsiyasi qon tomirlari tonusini yaxshilashga va arterial bosimni barqaror ushlashga yordam beradi.",
+      desc: "tomirlarning me’yoriy tonusini saqlashga yordam beradi. yurak-qon tomir tizimi faoliyatini qo‘llab-quvvatlaydi. hissiy muvozanatni saqlashga yordam beradi.",
       icon: (
         <svg
           viewBox="0 0 24 24"

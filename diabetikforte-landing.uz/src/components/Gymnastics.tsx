@@ -61,9 +61,9 @@ export default function Gymnastics() {
             >
               {/* Matnlar (Chap tomonda) - Ixchamroq */}
               <div className="absolute left-7 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
-                <h3 className="text-[#1A1A1A] text-xl md:text-2xl font-[1000] leading-[0.85] tracking-tighter uppercase">
+                <h3 className="text-[#7a1f1f] text-xl md:text-2xl font-[1000] leading-[0.85] tracking-tighter uppercase">
                   {card.title} <br />
-                  <span className="text-[10px] md:text-[11px] text-[#8B0000] font-black tracking-[2px] mt-1 block">
+                  <span className="text-[10px] md:text-[9px] text-[#8B0000] font-black tracking-[2px] mt-1 block">
                     {card.subtitle}
                   </span>
                 </h3>
@@ -71,7 +71,7 @@ export default function Gymnastics() {
 
               {/* Rasm qismi (O'ng tomonda) */}
               <div
-                className={`absolute right-0 top-0 w-[65%] h-full bg-gradient-to-l ${card.color} z-10`}
+                className={`absolute right-0 top-0 w-[50%] h-full bg-gradient-to-l ${card.color} z-10`}
               >
                 <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-700">
                   <Image

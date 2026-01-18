@@ -96,14 +96,7 @@ export default function RootLayout({
       >
         <main>{children}</main>
 
-        {/* GLOBAL DISCLAIMER (Yashil tonlarda) */}
-        <div className="fixed bottom-0 left-0 w-full border-t border-green-100 py-3 bg-white/90 backdrop-blur-md z-[9999]">
-          <div className="container mx-auto px-4 text-center">
-            <p className="text-green-800 font-bold text-[10px] md:text-xs tracking-[2px] uppercase">
-              BIOLOGIK FAOL QO'SHIMCHA. DORI VOSITASI HISOBLANMAYDI.
-            </p>
-          </div>
-        </div>
+     
       </body>
     </html>
   );

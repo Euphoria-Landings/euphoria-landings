@@ -3,13 +3,13 @@
 export default function Features() {
   const features = [
     {
-      text: "Ko'rish o'tkirligini 100% tabiiy tiklash",
+      text: "ko‘rishni qo‘llab-quvvatlash",
     },
     {
-      text: "Ko'z ichki bosimi va charchog'ini kamaytirish",
+      text: "tabiiy o‘simliklar jamlanmasi",
     },
     {
-      text: "To'r parda va gavhar himoyasini kuchaytirish",
+      text: "Tdori vositasi emas",
     },
   ];
 

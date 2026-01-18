@@ -74,7 +74,7 @@ export default function Purchase() {
               <div className="mb-8 transition-transform duration-700 group-hover:rotate-6 group-hover:scale-110">
                 {card.icon}
               </div>
-              <h3 className="text-[#1A1A1A] font-[1000] text-[12px] md:text-[13px] mb-4 tracking-[2px] uppercase italic leading-none">
+              <h3 className="text-[#1A1A1A] font-black text-[12px] md:text-[11px] mb-4 tracking-[2px] uppercase italic leading-none">
                 {card.title}
               </h3>
               <p className="text-gray-500 text-[11px] md:text-[12px] font-bold leading-relaxed uppercase tracking-tight opacity-80">

@@ -23,7 +23,7 @@ export default function Intro() {
                 <span className="text-2xl md:text-[38px] font-[1000] italic tracking-tighter text-[#1A1A1A] leading-none">
                   DIABETIK
                 </span>
-           
+
                 <span className="text-2xl md:text-[38px] font-[1000] italic tracking-tighter text-[#8B0000] leading-none">
                   FORTE
                 </span>
@@ -50,6 +50,9 @@ export default function Intro() {
                 . Gormonlarsiz va 100% xavfsiz tarkib.
               </p>
             </div>
+            <p className="text-[#8B0000] text-[13px] md:text-[11px] font-black uppercase tracking-[3px] mb-6">
+              Ariza qoldiring va 100% chegirmaga ega bo‘ling
+            </p>
 
             {/* TUGMALAR GURUHI - BIR XIL STILDA */}
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

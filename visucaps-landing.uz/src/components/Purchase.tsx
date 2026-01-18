@@ -3,8 +3,8 @@
 export default function Purchase() {
   const cards = [
     {
-      title: "KO'Z NURI TIKLANISHI",
-      desc: "Antotsianlar to'plami ko'z to'r pardasidagi hujayralar regeneratsiyasini tezlashtiradi va tiniqlikni tiklaydi.",
+      title: "ko‘z to‘qimalarida",
+      desc: "normal qon aylanishini ta’minlashga yordam beradi.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#4B2C82]">
           <path
@@ -25,8 +25,8 @@ export default function Purchase() {
       ),
     },
     {
-      title: "ICHKI BOSIM NAZORATI",
-      desc: "Bioaktiv minerallar ko'z ichki suyuqligi aylanishini yaxshilaydi va charchoq hamda bosimni bartaraf etadi.",
+      title: "yuklamalar paytida",
+      desc: "vizual moslashuvni qo‘llab-quvvatlaydi",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#4B2C82]">
           <path
@@ -39,8 +39,8 @@ export default function Purchase() {
       ),
     },
     {
-      title: "INTENSIV HIMOYA",
-      desc: "Lutein va zeaksantin filtri ko'zni raqamli ekranlar va quyosh nurlarining zararli nurlanishidan asraydi.",
+      title: "ko‘rish organlarining",
+      desc: "tabiiy himoya mexanizmlarini qo‘llab-quvvatlaydi",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6 text-[#4B2C82]">
           <path
@@ -58,6 +58,18 @@ export default function Purchase() {
   return (
     <section className="relative w-full py-8 bg-gray-50/40 overflow-hidden">
       <div className="max-w-[1100px] mx-auto px-4 relative z-10">
+        <div className="mb-8 space-y-2">
+          <h2 className="text-[22px] md:text-[32px] font-[1000] italic tracking-tighter leading-none uppercase flex flex-wrap items-center gap-x-2">
+            <span className="text-[#1A1A1A]">VISU</span>
+            <span className="text-[#4B2C82]">CAPS</span>
+            <span className="text-[#1A1A1A] not-italic font-black text-lg md:text-xl ml-1">
+              qanday ishlaydi
+            </span>
+          </h2>
+          <p className="text-gray-400 text-[8px] md:text-[9px] font-bold max-w-[400px] leading-tight uppercase tracking-[2px]">
+           Vizu Caps kompleks qo‘llab-quvvatlovchi ta’sir ko‘rsatadi:
+          </p>
+        </div>
         {/* AFZALLIKLAR KARTALARI - Ixchamroq */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
           {cards.map((card, idx) => (
@@ -86,7 +98,8 @@ export default function Purchase() {
           </h2>
           <div className="h-0.5 w-12 bg-[#4B2C82] rounded-full opacity-30" />
           <p className="text-gray-400 font-black tracking-[3px] uppercase text-[7px] md:text-[8px]">
-       Eng yaxshi samaraga sog‘lom turmush tarzi doirasida muntazam ravishda kurs qabul qilish orqali erishiladi.
+            Eng yaxshi samaraga sog‘lom turmush tarzi doirasida muntazam
+            ravishda kurs qabul qilish orqali erishiladi.
           </p>
         </div>
 

@@ -20,9 +20,15 @@ export const Hero = () => {
         />
       </div>
 
-      {/* 2. ASOSIY GRADIENTLI FON */}
-      <div className="absolute bottom-0 left-0 w-full h-[25%] md:h-[35%] bg-[#56A265] z-0" />
-      <div className="absolute bottom-[25%] md:bottom-[35%] left-0 w-full h-32 bg-gradient-to-t from-[#56A265] to-transparent z-0" />
+      {/* 2. ASOSIY GRADIENTLI FON (SIZ YUBORGAN LINEAR-GRADIENT) */}
+      <div 
+        className="absolute bottom-0 left-0 w-full h-[25%] md:h-[35%] z-0" 
+        style={{ background: "linear-gradient(90deg, #6DC368 0%, #ACFFA7 32.69%, #519349 100%)" }}
+      />
+      <div 
+        className="absolute bottom-[25%] md:bottom-[35%] left-0 w-full h-32 z-0" 
+        style={{ background: "linear-gradient(to top, #ACFFA7, transparent)" }}
+      />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:items-center">

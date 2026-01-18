@@ -40,7 +40,7 @@ export default function Intro() {
               <p className="text-[#333] text-[13px] md:text-[15px] leading-relaxed font-bold uppercase tracking-tight">
                 Uglevod almashinuvi va umumiy metabolik muvozanatni
                 qo‘llab-quvvatlash uchun vitamin-o‘simlik kompleksi bilan
-                biologik faol qo‘shimcha.
+               <span className="text-red-600"> biologik faol qo‘shimcha.</span>
               </p>
             </div>
 
@@ -79,7 +79,7 @@ export default function Intro() {
               </div>
 
               {/* Mahsulot qutisi (Siz yuborgan rasmdagi qadoq) */}
-              <div className="absolute -bottom-10 -left-6 md:-left-16 z-20 w-[190px] md:w-[300px] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
+              <div className="absolute -bottom-10 -left-6 md:-left-16 z-20 w-[190px] md:w-[200px] drop-shadow-[0_25px_25px_rgba(0,0,0,0.25)]">
                 <div className="relative aspect-[1/1.1] rounded-[32px] border-[8px] border-white overflow-hidden shadow-2xl bg-white transition-all duration-500 hover:rotate-2 hover:scale-105">
                   <Image
                     src="/intro2.png"
@@ -91,14 +91,14 @@ export default function Intro() {
               </div>
 
               {/* Badge (Dizayn: Qand miqdori uchun 100% tabiiy) */}
-              <div className="absolute -top-8 -right-4 md:-right-8 z-30 w-28 h-28 md:w-36 md:h-36 rounded-full bg-[#1A1A1A] border-[6px] border-[#CC1D24] shadow-2xl flex flex-col items-center justify-center text-white rotate-12">
-                <span className="text-[10px] md:text-[12px] font-black uppercase tracking-widest text-[#CC1D24]">
+              <div className="absolute -top-8 -right-4 md:-right-8 z-30 w-20 h-20 md:w-25 md:h-25 rounded-full bg-[#1A1A1A] border-[6px] border-[#CC1D24] shadow-2xl flex flex-col items-center justify-center text-white rotate-12">
+                <span className="text-[8px] md:text-[12px] font-black uppercase tracking-widest text-[#CC1D24]">
                   Tabiiy
                 </span>
-                <span className="text-3xl md:text-5xl font-[1000] italic leading-none my-1">
+                <span className="text-xl md:text-xl font-[1000] italic leading-none my-1">
                   100%
                 </span>
-                <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-tighter opacity-70">
+                <span className="text-[5px] md:text-[8px] font-bold uppercase tracking-tighter opacity-70">
                   Sertifikatlangan
                 </span>
               </div>

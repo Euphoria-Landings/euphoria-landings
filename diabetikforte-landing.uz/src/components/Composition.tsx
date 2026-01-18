@@ -4,21 +4,22 @@ import Image from "next/image";
 export default function Composition() {
   const mainFeatures = {
     benefits: [
-      "QONDAGI SHAKAR MIQDORINI NORMALLASHTIRISH",
-      "MODDA ALMASHINUVINI TABIIY TIKLASH",
-      "OSHXONOSTI BEZI FAOLIYATINI QO'LLAB-QUVVATLASH",
+      "uglevod almashinuvini normallashtirishga yordam beradi",
+      "qondagi qand miqdorini barqaror saqlashga yordam beradi",
+      "ishtahani pasaytiradi",
     ],
     components: [
-      "NATURAL O'SIMLIK EKSTRAKTLARI",
-      "MUHIM MIKRO VA MAKROELEMENTLAR",
-      "GORMORAL BALANSNI ME'YORDA SAQLASH",
+      "Topinambur",
+      " Katta qo‘tir ",
+      "Dorivor qoqio‘t",
+      "Oddiy chetan"
     ],
   };
 
   const formulaData = [
-    { name: "EKSTRAKTLAR", desc: "100% TABIIY" },
-    { name: "MINERALLAR", desc: "SINK, MAGNIY" },
-    { name: "VITAMINLAR", desc: "B, C, D3 GRUPPA" },
+    { name: "antioksidantlar", desc: "Qum o‘lmas o‘ti" },
+    { name: "Jigar faoliyatini", desc: "qo‘llab-quvvatlaydi" },
+    { name: "Metabolizmni", desc: "qo‘llab-quvvatlaydi" },
     { name: "XAVFSIZLIK", desc: "SERTIFIKATLANGAN" },
   ];
 
@@ -41,8 +42,12 @@ export default function Composition() {
           {/* 1-Karta: Asosiy Xususiyatlar */}
           <div className="w-full lg:w-[360px] bg-white rounded-[35px] p-8 md:p-9 shadow-2xl shadow-red-900/5 border border-red-50 relative z-10 transition-all duration-500 hover:-translate-y-2 group">
             <div className="mb-6">
-              <h3 className="text-[#8B0000] text-xl font-black uppercase italic">ASOSIY</h3>
-              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">TA'SIR DOIRASI</p>
+              <h3 className="text-[#8B0000] text-xl font-black uppercase italic">
+                ASOSIY
+              </h3>
+              <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">
+                xususiyatlari
+              </p>
               <div className="h-1 w-10 bg-[#1A1A1A] mt-2 rounded-full" />
             </div>
             <ul className="space-y-5">
@@ -51,7 +56,9 @@ export default function Composition() {
                   <div className="w-4 h-4 rounded-full bg-red-50 flex items-center justify-center shrink-0 mt-0.5 border border-red-100">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#8B0000] animate-pulse" />
                   </div>
-                  <p className="text-[#1A1A1A] text-[11px] md:text-[12px] font-black leading-snug uppercase italic">{item}</p>
+                  <p className="text-[#1A1A1A] text-[11px] md:text-[12px] font-black leading-snug uppercase italic">
+                    {item}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -61,7 +68,6 @@ export default function Composition() {
           <div className="flex flex-col items-center gap-8 z-20">
             {/* Ota-ona konteynerga aniq o'lcham berildi */}
             <div className="relative w-56 h-56 md:w-72 md:h-72">
-              
               {/* Orqa fondagi aylanuvchi nur */}
               <div className="absolute inset-0 bg-gradient-to-tr from-[#8B0000]/10 to-transparent rounded-full animate-spin-slow blur-xl" />
 
@@ -82,9 +88,16 @@ export default function Composition() {
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-2 gap-3 w-full max-w-[380px]">
               {formulaData.map((m, idx) => (
-                <div key={idx} className="bg-white p-4 rounded-[20px] border border-red-50 shadow-sm text-center">
-                  <h4 className="text-[#8B0000] font-black text-[9px] md:text-[10px] uppercase mb-1 tracking-wider">{m.name}</h4>
-                  <p className="text-[8px] md:text-[9px] text-[#1A1A1A] font-bold uppercase opacity-50">{m.desc}</p>
+                <div
+                  key={idx}
+                  className="bg-white p-4 rounded-[20px] border border-red-50 shadow-sm text-center"
+                >
+                  <h4 className="text-[#8B0000] font-black text-[9px] md:text-[10px] uppercase mb-1 tracking-wider">
+                    {m.name}
+                  </h4>
+                  <p className="text-[8px] md:text-[9px] text-[#1A1A1A] font-bold uppercase opacity-50">
+                    {m.desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -93,8 +106,12 @@ export default function Composition() {
           {/* 2-Karta: Tarkibiy Qismlar */}
           <div className="w-full lg:w-[360px] bg-[#1A1A1A] rounded-[35px] p-8 md:p-9 shadow-2xl shadow-red-900/20 relative z-10 transition-all duration-500 hover:-translate-y-2 group">
             <div className="mb-6">
-              <h3 className="text-[#8B0000] text-xl font-black uppercase italic">TARKIBI</h3>
-              <p className="text-[9px] text-white/40 font-bold uppercase tracking-widest mt-1">100% TABIIY VA XAVFSIZ</p>
+              <h3 className="text-[#8B0000] text-xl font-black uppercase italic">
+                TARKIBI
+              </h3>
+              <p className="text-[9px] text-white/40 font-bold uppercase tracking-widest mt-1">
+                100% TABIIY VA XAVFSIZ
+              </p>
               <div className="h-1 w-10 bg-[#8B0000] mt-2 rounded-full" />
             </div>
             <ul className="space-y-5">
@@ -103,7 +120,9 @@ export default function Composition() {
                   <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5 border border-white/5">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#8B0000]" />
                   </div>
-                  <p className="text-white text-[11px] md:text-[12px] font-black leading-snug uppercase italic">{item}</p>
+                  <p className="text-white text-[11px] md:text-[12px] font-black leading-snug uppercase italic">
+                    {item}
+                  </p>
                 </li>
               ))}
             </ul>

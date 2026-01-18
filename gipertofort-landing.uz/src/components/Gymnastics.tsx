@@ -60,7 +60,7 @@ export default function Gymnastics() {
 
               {/* Rasm qismi */}
               <div
-                className={`absolute right-0 top-0 w-[60%] h-full bg-gradient-to-l ${card.color} z-10`}
+                className={`absolute right-0 top-0 w-[100%] h-full bg-gradient-to-l ${card.color} z-10`}
               >
                 <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105">
                   <Image
