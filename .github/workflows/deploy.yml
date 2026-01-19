@@ -8,6 +8,8 @@ jobs:
   deploy:
     name: 🚀 Production Deploy
     runs-on: [self-hosted, Linux, X64]
+    
+    # Bir vaqtda ikkita deploy bo'lib ketmasligi uchun
     concurrency:
       group: production
       cancel-in-progress: true
@@ -16,53 +18,52 @@ jobs:
       - name: 📥 Source kodni yuklash
         uses: actions/checkout@v4
 
-      - name: 🛠️ Muhitni tayyorlash
+      - name: 🛠️ Muhitni tayyorlash va Tozalash
         run: |
+          # Professional yo'l: loyihani /opt yoki /home ichida saqlash
           TARGET_DIR="/home/deploy/euphoria-landings"
+          
+          echo "🧹 Eski kesh va keraksiz elementlarni tozalash..."
+          docker image prune -f
+          
           if [ -d "$TARGET_DIR" ]; then
             cd $TARGET_DIR
-            git fetch --all
-            git reset --hard origin/$(git branch --show-current)
+            git pull origin main
           else
             git clone ${{ github.server_url }}/${{ github.repository }}.git $TARGET_DIR
             cd $TARGET_DIR
           fi
 
-      - name: 🏗️ Brute-Force Deploy (Barcha portlarni ochish)
+      - name: 🏗️ Ketma-ket Build va Deploy (Sequential)
         run: |
           cd /home/deploy/euphoria-landings
-
-          # 1. Eng muhim qadam: Docker-dagi barcha konteynerlarni to'xtatib, tarmoqni bo'shatish
-          echo "🧨 Docker konteynerlarini majburiy to'xtatish..."
-          docker compose down --remove-orphans || true
-
-          # 2. Portlarni OS darajasida "qonatib" o'ldirish
-          echo "💀 Portlarni (3001-3015, 8080) majburiy bo'shatish..."
-          sudo fuser -k 3001/tcp 3002/tcp 3003/tcp 3004/tcp 3005/tcp 3006/tcp 3007/tcp 3008/tcp 3009/tcp 3010/tcp 3011/tcp 3012/tcp 3013/tcp 3014/tcp 3015/tcp 8080/tcp || true
-
-          # 3. Docker-ning o'lik tarmoqlarini tozalash
-          docker network prune -f || true
-
-          # 4. Endi bittadan build qilib, ishga tushirish
+          
+          # Docker Compose faylidagi barcha servislarni ro'yxatga olish
           SERVICES=$(docker compose config --services)
+          
+          echo "🚀 Loyihalarni bittalab ishga tushirish..."
           for service in $SERVICES; do
             echo "--------------------------------------------"
-            echo "📦 Deploying: $service"
+            echo "📦 Building & Starting: $service"
             
-            # Har bir servis oldidan yana bir bor portni tekshirish
-            sudo fuser -k 3001-3015/tcp 8080/tcp || true
+            # --build: yangi o'zgarishni yig'adi
+            # -d: fonda ishga tushiradi
+            # --remove-orphans: keraksiz konteynerlarni o'chiradi
+            docker compose -p euphoria-lands up -d --build --remove-orphans $service
             
-            docker compose up -d --build --force-recreate $service
+            echo "✅ $service muvaffaqiyatli ishga tushdi."
             
-            echo "✅ $service ishga tushdi."
-            sleep 2 # Kernel portni to'liq bog'lashi uchun vaqt
+            # CPU dam olishi uchun kichik tanaffus
+            sleep 2
           done
 
       - name: 🧹 Post-Deploy tozalash
         if: always()
         run: |
-          docker image prune -f
+          echo "🗑️ Foydalanilmayotgan danggler (osilib qolgan) imagelarni o'chirish..."
+          docker image prune -af
 
-      - name: ✅ Final Tekshiruv
+      - name: ✅ Salomatlikni tekshirish (Health Check)
         run: |
-          docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+          echo "📊 Ishlayotgan konteynerlar holati:"
+          docker ps --filter "name=euphoria-lands" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
