@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: 🚀 Production Deploy
     runs-on: [self-hosted, Linux, X64]
+
     concurrency:
       group: production
       cancel-in-progress: true
@@ -19,9 +20,9 @@ jobs:
       - name: 🛠️ Muhitni tayyorlash va Tozalash
         run: |
           TARGET_DIR="/home/deploy/euphoria-landings"
-          echo "🧹 Docker tizimini tozalash..."
+          echo "🧹 Docker tizimini dastlabki tozalash..."
           docker image prune -f
-          
+
           if [ -d "$TARGET_DIR" ]; then
             cd $TARGET_DIR
             git fetch --all
@@ -31,38 +32,51 @@ jobs:
             cd $TARGET_DIR
           fi
 
-      - name: 🏗️ Majburiy (Force) Port Tozalash va Deploy
+      - name: 🏗️ Majburiy (Force) Port Tozalash va Ketma-ket Deploy
         run: |
           cd /home/deploy/euphoria-landings
-          
-          # 1. Barcha ehtimoliy portlarni (3001-3015 va 8080) bittada tozalash
-          echo "🧨 Portlarni majburiy bo'shatish..."
+
+          # 1. Barcha portlarni birinchi marta ommaviy o'ldirish
+          echo "🧨 Barcha portlarni (3001-3015, 8080) tozalash..."
           sudo fuser -k 3001/tcp 3002/tcp 3003/tcp 3004/tcp 3005/tcp 3006/tcp 3007/tcp 3008/tcp 3009/tcp 3010/tcp 3011/tcp 3012/tcp 3013/tcp 3014/tcp 3015/tcp 8080/tcp || true
-          
+
           # 2. Docker Compose xizmatlarini olish
           SERVICES=$(docker compose config --services)
-          
+
           for service in $SERVICES; do
             echo "--------------------------------------------"
             echo "📦 Processing: $service"
             
-            # Har bir servis uchun konteynerni o'chirib, keyin yoqish (Port xatosi bermasligi uchun eng xavfsiz yo'l)
+            # 3. Har bir servis oldidan yana bir bor portni tekshirib o'ldirish (eng ishonchli usul)
+            # Bu yerda biz docker-compose portlarini dinamik aniqlaymiz yoki shunchaki fuser-ni qayta uramiz
+            sudo fuser -k 3001-3015/tcp 8080/tcp || true
+            
+            # 4. Konteynerni to'xtatish va butunlay o'chirish
             docker compose stop $service || true
             docker compose rm -f $service || true
             
-            # Build va Up
-            docker compose up -d --build --remove-orphans $service
+            # 5. OS xotirasidagi tarmoq ulanishlarini majburiy tozalash
+            docker network prune -f || true
             
-            echo "✅ $service qayta ishga tushdi."
-            sleep 1
+            # 6. Build va Up (--force-recreate bilan portni qayta bog'lashni majburlash)
+            docker compose up -d --build --force-recreate $service
+            
+            echo "✅ $service muvaffaqiyatli ishga tushdi."
+            
+            # Docker drayveri portni ro'yxatdan o'tkazishi uchun 2 soniya kutish
+            sleep 2
           done
 
       - name: 🧹 Post-Deploy tozalash
         if: always()
         run: |
+          echo "🗑️ Ortiqcha narsalarni tozalash..."
           docker image prune -af
 
-      - name: ✅ Salomatlikni tekshirish (Health Check)
+      - name: ✅ Final Tekshiruv (Health Check)
         run: |
-          echo "📊 Final Konteynerlar holati:"
+          echo "📊 Ishlayotgan konteynerlar ro'yxati:"
           docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+
+          echo "🌐 Nginx-ni qayta yuklash (har ehtimolga qarshi)..."
+          sudo systemctl reload nginx || true
