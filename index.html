@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Euphoria Elite Control • MUI Joy</title>
+    <title>Euphoria Elite Control • Monitoring</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap"
@@ -12,20 +12,16 @@
     <style>
       body {
         font-family: "Public Sans", sans-serif;
-        background-color: #020408; /* OLED Black */
+        background-color: #020408;
         color: #94a3b8;
         margin: 0;
       }
-
-      /* MUI Joy Glass Effect */
       .joy-card {
         background: rgba(11, 13, 14, 0.6);
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.05);
         border-radius: 16px;
       }
-
-      /* Top Progress Bar (Neon) */
       #sync-loader {
         position: fixed;
         top: 0;
@@ -54,13 +50,8 @@
           background-position: -100% 0;
         }
       }
-
-      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
         background: #171a1c;
@@ -85,7 +76,6 @@
             Euphoria <span class="text-[#0B6BCB]">Ops</span>
           </h1>
         </div>
-
         <nav class="space-y-1">
           <div
             class="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 px-3"
@@ -112,7 +102,6 @@
             Dashboard
           </a>
         </nav>
-
         <div class="mt-auto p-4 joy-card bg-white/[0.02]">
           <p class="text-[10px] text-gray-500 mb-2 uppercase tracking-tighter">
             Server Status
@@ -160,7 +149,7 @@
         </div>
 
         <div class="joy-card overflow-hidden shadow-2xl">
-          <div class="overflow-x-auto">
+          <div class="overflow-x-auto min-h-[500px]">
             <table class="w-full text-left border-collapse">
               <thead>
                 <tr class="border-b border-white/5 bg-white/[0.01]">
@@ -194,47 +183,55 @@
           </div>
 
           <div
-            class="px-6 py-4 flex items-center justify-between bg-white/[0.01]"
+            class="px-6 py-4 flex items-center justify-between bg-white/[0.01] border-t border-white/5"
           >
-            <p class="text-xs text-gray-500 italic">
-              Ma'lumotlar har 10s da yangilanadi
+            <p class="text-xs text-gray-500 italic" id="status-text">
+              Yuklanmoqda...
             </p>
-            <div class="flex items-center gap-2">
-              <button
-                class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 transition-all"
+            <div class="flex items-center gap-4">
+              <span class="text-[11px] text-gray-500" id="page-info"
+                >Sahifa 1 / 1</span
               >
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              <div class="flex items-center gap-2">
+                <button
+                  onclick="prevPage()"
+                  id="prevBtn"
+                  class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-              <span class="text-xs font-bold text-white px-2">1 / 1</span>
-              <button
-                class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 transition-all"
-              >
-                <svg
-                  class="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+                <button
+                  onclick="nextPage()"
+                  id="nextBtn"
+                  class="p-2 rounded-md border border-white/10 text-gray-500 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -243,6 +240,10 @@
 
     <script>
       const SERVER_IP = "95.217.191.63";
+      let allContainers = [];
+      let currentPage = 1;
+      const rowsPerPage = 7;
+
       const portMap = {
         artrowell: 3001,
         "cardio-balance": 3002,
@@ -258,54 +259,96 @@
         urion: 3012,
         "uro-pro": 3013,
         visucaps: 3014,
+        growx: 3015,
         dashboard: 8080,
       };
 
       async function fetchData() {
         document.body.classList.add("syncing");
-
         try {
           const response = await fetch("data.json");
-          const containers = await response.json();
-          const list = document.getElementById("container-list");
-          list.innerHTML = "";
-
-          containers.forEach((c) => {
-            const cleanName = c.name
-              .replace("euphoria-lands-", "")
-              .replace("-1", "");
-            const port = portMap[cleanName] || "---";
-            const isUp = c.status.toLowerCase().includes("up");
-
-            list.innerHTML += `
-                        <tr class="group hover:bg-white/[0.02] transition-colors">
-                            <td class="px-6 py-5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-8 h-8 rounded bg-[#171A1C] flex items-center justify-center text-[10px]">📦</div>
-                                    <span class="text-white font-medium text-sm">${cleanName}</span>
-                                </div>
-                            </td>
-                            <td class="px-6 py-5 font-mono text-[11px] text-gray-500">${port}</td>
-                            <td class="px-6 py-5">
-                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}">
-                                    <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-red-500"}"></span>
-                                    ${isUp ? "RUNNING" : "STOPPED"}
-                                </span>
-                            </td>
-                            <td class="px-6 py-5 text-right">
-                                <a href="http://${SERVER_IP}:${port}" target="_blank" 
-                                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold text-[#99C8FF] hover:bg-[#0B2240] border border-transparent hover:border-[#0B6BCB]/30 transition-all">
-                                    OCHISH <span>↗</span>
-                                </a>
-                            </td>
-                        </tr>
-                    `;
-          });
+          allContainers = await response.json();
+          renderTable();
+          document.getElementById("status-text").innerText =
+            `Jami: ${allContainers.length} ta konteyner`;
         } catch (error) {
           console.error("Fetch failed", error);
+          document.getElementById("status-text").innerText =
+            "Xatolik yuz berdi";
         } finally {
-          // Progress bar effekti ko'rinishi uchun biroz ushlab turamiz
-          setTimeout(() => document.body.classList.remove("syncing"), 1500);
+          setTimeout(() => document.body.classList.remove("syncing"), 1000);
+        }
+      }
+
+      function renderTable() {
+        const list = document.getElementById("container-list");
+        list.innerHTML = "";
+
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+        const paginatedItems = allContainers.slice(start, end);
+
+        paginatedItems.forEach((c) => {
+          const cleanName = c.name
+            .replace("euphoria-landings-", "")
+            .replace("euphoria-lands-", "")
+            .replace("-1", "");
+          const port = portMap[cleanName] || "---";
+          const isUp = c.status.toLowerCase().includes("up");
+
+          // Linkni Nginx orqali IP/port qilib to'g'rilaymiz
+          const link =
+            port === 8080
+              ? `http://${SERVER_IP}/`
+              : `http://${SERVER_IP}/${port}`;
+
+          list.innerHTML += `
+            <tr class="group hover:bg-white/[0.02] transition-colors">
+                <td class="px-6 py-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded bg-[#171A1C] flex items-center justify-center text-[10px]">📦</div>
+                        <span class="text-white font-medium text-sm capitalize">${cleanName}</span>
+                    </div>
+                </td>
+                <td class="px-6 py-5 font-mono text-[11px] text-gray-500">${port}</td>
+                <td class="px-6 py-5">
+                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}">
+                        <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-red-500"}"></span>
+                        ${isUp ? "RUNNING" : "STOPPED"}
+                    </span>
+                </td>
+                <td class="px-6 py-5 text-right">
+                    <a href="${link}" target="_blank" 
+                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold text-[#99C8FF] hover:bg-[#0B2240] border border-transparent hover:border-[#0B6BCB]/30 transition-all">
+                        OCHISH <span>↗</span>
+                    </a>
+                </td>
+            </tr>
+          `;
+        });
+
+        updatePaginationUI();
+      }
+
+      function updatePaginationUI() {
+        const totalPages = Math.ceil(allContainers.length / rowsPerPage);
+        document.getElementById("page-info").innerText =
+          `Sahifa ${currentPage} / ${totalPages || 1}`;
+        document.getElementById("prevBtn").disabled = currentPage === 1;
+        document.getElementById("nextBtn").disabled =
+          currentPage === totalPages || totalPages === 0;
+      }
+
+      function prevPage() {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      }
+      function nextPage() {
+        if (currentPage < Math.ceil(allContainers.length / rowsPerPage)) {
+          currentPage++;
+          renderTable();
         }
       }
 
