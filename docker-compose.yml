@@ -7,85 +7,101 @@ x-deploy: &default-deploy
         memory: 512M
 
 services:
+  # 1
   artrowell:
     build: ./artrowell-landing.uz
     ports: ["3001:80"]
     <<: *default-deploy
 
+  # 2
   cardio-balance:
     build: ./cardio-balance-landing.uz
     ports: ["3002:80"]
     <<: *default-deploy
 
+  # 3
   dermozil:
     build: ./dermozil-landing.uz
     ports: ["3003:80"]
     <<: *default-deploy
 
+  # 4
   diabetikforte:
     build: ./diabetikforte-landing.uz
     ports: ["3004:80"]
     <<: *default-deploy
 
+  # 5
   diastop:
     build: ./diastop-landing.uz
     ports: ["3005:80"]
     <<: *default-deploy
 
+  # 6
   fatality:
     build: ./fatality-landing.uz
     ports: ["3006:80"]
     <<: *default-deploy
 
+  # 7
   gemo-plus:
     build: ./gemo-plus-landing.uz
     ports: ["3007:80"]
     <<: *default-deploy
 
+  # 8
   gipertofort:
     build: ./gipertofort-landing.uz
     ports: ["3008:80"]
     <<: *default-deploy
 
+  # 9
   parazit-off:
     build: ./parazit-off-landing.uz
     ports: ["3009:80"]
     <<: *default-deploy
 
+  # 10
   slimfit:
     build: ./slimfit-landing.uz
     ports: ["3010:80"]
     <<: *default-deploy
 
+  # 11
   sustaflex:
     build: ./sustaflex-landing.uz
     ports: ["3011:80"]
     <<: *default-deploy
 
+  # 12
   urion:
     build: ./urion-landing.uz
     ports: ["3012:80"]
     <<: *default-deploy
 
+  # 13
   uro-pro:
     build: ./uro-pro-landing.uz
     ports: ["3013:80"]
     <<: *default-deploy
 
+  # 14
   visucaps:
     build: ./visucaps-landing.uz
     ports: ["3014:80"]
     <<: *default-deploy
 
+  # 15
   growx:
     build: ./growx-landing.uz
     ports: ["3015:80"]
     <<: *default-deploy
 
+  # MONITORING DASHBOARD
   dashboard:
     image: nginx:alpine
     ports: ["8080:80"]
     volumes:
       - /home/deploy/euphoria-landings/index.html:/usr/share/nginx/html/index.html:ro
       - /home/deploy/euphoria-landings/data.json:/usr/share/nginx/html/data.json:ro
-    restart: always
+    <<: *default-deploy
