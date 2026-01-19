@@ -12,81 +12,81 @@ x-deploy: &default-deploy
 services:
   artrowell:
     build: ./artrowell-landing.uz
-    ports: ["3001:80"]
+    ports: ["127.0.0.1:3001:80"]
     <<: *default-deploy
 
   cardio-balance:
     build: ./cardio-balance-landing.uz
-    ports: ["3002:80"]
+    ports: ["127.0.0.1:3002:80"]
     <<: *default-deploy
 
   dermozil:
     build: ./dermozil-landing.uz
-    ports: ["3003:80"]
+    ports: ["127.0.0.1:3003:80"]
     <<: *default-deploy
 
   diabetikforte:
     build: ./diabetikforte-landing.uz
-    ports: ["3004:80"]
+    ports: ["127.0.0.1:3004:80"]
     <<: *default-deploy
 
   diastop:
     build: ./diastop-landing.uz
-    ports: ["3005:80"]
+    ports: ["127.0.0.1:3005:80"]
     <<: *default-deploy
 
   fatality:
     build: ./fatality-landing.uz
-    ports: ["3006:80"]
+    ports: ["127.0.0.1:3006:80"]
     <<: *default-deploy
 
   gemo-plus:
     build: ./gemo-plus-landing.uz
-    ports: ["3007:80"]
+    ports: ["127.0.0.1:3007:80"]
     <<: *default-deploy
 
   gipertofort:
     build: ./gipertofort-landing.uz
-    ports: ["3008:80"]
+    ports: ["127.0.0.1:3008:80"]
     <<: *default-deploy
 
   parazit-off:
     build: ./parazit-off-landing.uz
-    ports: ["3009:80"]
+    ports: ["127.0.0.1:3009:80"]
     <<: *default-deploy
 
   slimfit:
     build: ./slimfit-landing.uz
-    ports: ["3010:80"]
+    ports: ["127.0.0.1:3010:80"]
     <<: *default-deploy
 
   sustaflex:
     build: ./sustaflex-landing.uz
-    ports: ["3011:80"]
+    ports: ["127.0.0.1:3011:80"]
     <<: *default-deploy
 
   urion:
     build: ./urion-landing.uz
-    ports: ["3012:80"]
+    ports: ["127.0.0.1:3012:80"]
     <<: *default-deploy
 
   uro-pro:
     build: ./uro-pro-landing.uz
-    ports: ["3013:80"]
-    <<: *default-deploy
-  growx:
-    build: ./growx-landing.uz
-    ports: ["127.0.0.1:3015:80"] # Xavfsizlik uchun localhostga bog'ladik
-    <<: *default-deploy
-  visucaps:
-    build: ./visucaps-landing.uz
-    ports: ["3014:80"]
+    ports: ["127.0.0.1:3013:80"]
     <<: *default-deploy
 
-  # DASHBOARD ENDI TO'G'RI SURILGAN (Services ichida)
+  visucaps:
+    build: ./visucaps-landing.uz
+    ports: ["127.0.0.1:3014:80"]
+    <<: *default-deploy
+
+  growx:
+    build: ./growx-landing.uz
+    ports: ["127.0.0.1:3015:80"]
+    <<: *default-deploy
+
   dashboard:
     image: nginx:alpine
-    container_name: euphoria-ops-dashboard
     ports:
       - "80:80"
     volumes:
