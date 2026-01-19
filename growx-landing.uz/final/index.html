@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-9797L85076");
+    </script>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          "gtm.start": new Date().getTime(),
+          event: "gtm.js",
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-MW9LBCZM");
+    </script>
+    <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-MW9LBCZM"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <meta name="viewport" content="width=devic~e-width, initial-scale=1.0" />
+    <meta name="description" content="Grow X" />
+    <link rel="icon" href="images/logo.svg" type="image/svg+xml" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+    ></script>
+    <!-- FancyBox CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
+    <!-- FancyBox JS -->
+    <title>Grow X</title>
+    <link rel="stylesheet" href="css/style-min.css" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+    ></script>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js",
+      );
+      fbq("init", "774057941909205");
+      fbq("track", "PageView");
+    </script>
+    <noscript
+      ><img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=774057941909205&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <script>
+      document.querySelectorAll(".primary__button").forEach((button) => {
+        button.addEventListener("click", function () {
+          gtag("event", "click_button", {
+            event_category: "Button",
+            event_label: "Order Button",
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="countdownTimer" class="countdown-timer">
+      <div class="timer-header">
+        <svg
+          class="timer-icon"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="12"
+            cy="12"
+            r="9"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path
+            d="M12 6v6l3.5 2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <div class="timer-label" id="timerLabel">Aksiya</div>
+      </div>
+      <div class="timer-display">
+        <span class="timer-number" id="minutes">05</span>
+        <span class="timer-colon" id="colon">:</span>
+        <span class="timer-number" id="seconds">00</span>
+      </div>
+      <div class="timer-message" id="timerMessage">
+        Arzon narxda sotib olishga ulguring!
+      </div>
+    </div>
+    <div id="modal" class="modal__overlay">
+      <div class="modal__content">
+        <button class="close__button">
+          <img src="./images/close.svg" alt="icon" />
+        </button>
+        <div class="form__block">
+          <h2 class="primary__title">Buyurtma berish</h2>
+          <form
+            method="POST"
+            class="subscribe__form"
+            action="javascript:void(0);"
+            name="contactform"
+            id="contactform"
+          >
+            <input name="name" type="text" placeholder="Ismingiz" />
+            <input
+              name="phone"
+              id="phone"
+              type="text"
+              placeholder="Telefon raqamingiz"
+            />
+            <button
+              id="submit-btn"
+              class="primary__button submit__button"
+              type="submit"
+            >
+              Yuborish
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <header class="bg-[#9a521d]">
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">logo</span>
+            <img class="h-8 w-auto" src="./images/logo.svg" alt="" />
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <!-- <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+                    id="menu-button">
+                    <span class="sr-only">Open main menu</span>
+                    <svg class="size-6" fill="none" viewBox="0 24 24" stroke-width="1.5" stroke="currentColor"
+                        aria-hidden="true" data-slot="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button> -->
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <div class="relative">
+            <a
+              href="#hero"
+              class="flex items-center gap-x-1 text-[18px] font-semibold text-white"
+              aria-expanded="false"
+            >
+              Asosiy
+            </a>
+          </div>
+          <a
+            href="https://arbitpro.com/"
+            class="text-[18px] font-semibold text-white"
+            >Biz haqimizda</a
+          >
+          <a href="#products" class="text-[18px] font-semibold text-white"
+            >Mahsulotlar</a
+          >
+          <a href="#reviews" class="text-[18px] font-semibold text-white"
+            >Sharhlar</a
+          >
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end"></div>
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="hidden" role="dialog" aria-modal="true" id="mobile-menu">
+        <div class="fixed inset-0 z-40 bg-black/50"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-50 w-full sm:max-w-sm bg-black px-6 py-6"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <img class="h-8 w-auto" src="./images/logo.svg" alt="" />
+            </a>
+            <button
+              id="close-menu"
+              type="button"
+              class="-m-2.5 rounded-md p-2.5 text-white"
+            >
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6">
+            <div class="flex flex-col space-y-2">
+              <a
+                href="#hero"
+                class="block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                >Asosiy</a
+              >
+              <a
+                href="https://arbitpro.com/"
+                class="block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                >Biz haqimizda</a
+              >
+              <a
+                href="#products"
+                class="block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                >Mahsulotlar</a
+              >
+              <a
+                href="#reviews"
+                class="block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                >Sharhlar</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section id="hero" class="hero">
+        <div class="container">
+          <div class="hero__block">
+            <div class="hero__content">
+              <h1 class="hero__title">
+                Soch, soqol o'sishini tezlashtirish va to'kilishini to'xtatish
+                uchun eng samarali vosita.
+              </h1>
+              <div>
+                <div class="hero__image__wrapper">
+                  <img src="./images/hero-image.jpg" alt="" />
+                </div>
+                <p class="hero__text">
+                  Sochlarni 3-6 oy ichida qayta tiklaydi Qalinroq sochlar uchun
+                  ildizlarni mustahkamlaydi Bosh terisining optimal salomatligi
+                  uchun uni oziqlantiradi Soch to'kilishining asosiy sababini
+                  bartaraf etadi
+                </p>
+              </div>
+              <div class="hero__btns">
+                <span class="hero__span"
+                  >Hoziroq qo'ng'iroq qilib, 50% chegirma bilan buyurtma
+                  bering</span
+                >
+                <button onClick="openModal()" class="hero__btn">
+                  Buyurtma berish
+                </button>
+              </div>
+            </div>
+            <div class="hero__image_box">
+              <img src="./images/heroImage.png" alt="" />
+              <a href="#whenHelp" class="hero__down_btn">
+                <img src="./images/arrow-down.svg" alt="icon" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hairCare">
+        <div class="container">
+          <div class="hairCare__content">
+            <h2 class="secondary__title hairCare__title">
+              Qalinroq va baquvvatroq sochlarga tez fursatda ega bo'ling
+            </h2>
+            <p class="hairCare__text">
+              1.Soch o'sishini tiklash uchun uyqudagi follikulalarni
+              faollashtiring. Soch to'kilishi ko'pincha follikulalar tinch
+              holatga o'tib, qalin va sog'lom tolalar ishlab chiqara olmay
+              qolganda boshlanadi. Grow x ning asosiy tarkibiy qismi hisoblangan
+              o'simlik ekstraktlari hujayra darajasida ta'sir ko'rsatib,
+              uyqudagi follikulalarni faollashtiradi, tabiiy o'sishni
+              rag'batlantiradi va sochlarning qalinligini tiklaydi.
+            </p>
+          </div>
+        </div>
+        <div class="hairCare__image__box">
+          <img src="./images/hairCareImage.jpg" alt="img" />
+        </div>
+      </section>
+      <section class="hairRescue">
+        <div class="container">
+          <div class="hairRescue__block">
+            <div class="hairRescue__content">
+              <h2 class="primary__title">
+                Soch to'kilishining asosiy sabablari bilan kurashing
+              </h2>
+              <p class="hairRescue__text">
+                Sog'lom bosh terisi sochlarning kuchli va uzoq muddat o'sishi
+                uchun zarur. Grow x tarkibida salitsil kislotasi va moychechak
+                ekstrakti mavjud bo'lib, ular birgalikda ta'sirlanishni
+                kamaytiradi, qon aylanishini yaxshilaydi va follikulalarni
+                to'sib qo'yishi mumkin bo'lgan iflosliklarni yo'qotadi.
+              </p>
+              <button onClick="openModal()" class="primary__button">
+                Buyurtma berish
+              </button>
+            </div>
+            <div class="hairRescue__image__box">
+              <img src="./images/hairRescueImage.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hairCare">
+        <div class="hairCare__image__box">
+          <img src="./images/hairCareImage2.png" alt="img" />
+        </div>
+        <div class="container">
+          <div class="hairCare__content">
+            <h2 class="secondary__title">
+              Qalinroq va baquvvatroq sochlarga tez fursatda ega bo'ling
+            </h2>
+            <p class="hairCare__text">
+              1.Soch o'sishini tiklash uchun uyqudagi follikulalarni
+              faollashtiring. Soch to'kilishi ko'pincha follikulalar tinch
+              holatga o'tib, qalin va sog'lom tolalar ishlab chiqara olmay
+              qolganda boshlanadi. Grow x ning asosiy tarkibiy qismi hisoblangan
+              o'simlik ekstraktlari hujayra darajasida ta'sir ko'rsatib,
+              uyqudagi follikulalarni faollashtiradi, tabiiy o'sishni
+              rag'batlantiradi va sochlarning qalinligini tiklaydi.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="hairRescue">
+        <div class="container">
+          <div class="hairRescue__block">
+            <div class="hairRescue__content">
+              <h2 class="primary__title">
+                Soch to'kilishining asosiy sabablari bilan kurashing
+              </h2>
+              <p class="hairRescue__text">
+                Sog'lom bosh terisi sochlarning kuchli va uzoq muddat o'sishi
+                uchun zarur. Grow x tarkibida salitsil kislotasi va moychechak
+                ekstrakti mavjud bo'lib, ular birgalikda ta'sirlanishni
+                kamaytiradi, qon aylanishini yaxshilaydi va follikulalarni
+                to'sib qo'yishi mumkin bo'lgan iflosliklarni yo'qotadi.
+              </p>
+              <button onClick="openModal()" class="primary__button">
+                Buyurtma berish
+              </button>
+            </div>
+            <div class="hairRescue__image__box">
+              <img src="./images/hairRescueImage2.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hairCareOffer">
+        <img
+          class="hairCareOffer__image"
+          src="./images/hairCareOfferImage.png"
+          alt="img"
+        />
+        <img
+          class="hairCareOffer__image"
+          src="./images/hairCareOfferImage2.png"
+          alt=""
+        />
+        <img
+          class="hairCareOffer__image"
+          src="./images/hairCareOfferImage.png"
+          alt=""
+        />
+        <img
+          class="hairCareOffer__image"
+          src="./images/hairCareOfferImage2.png"
+          alt="img"
+        />
+        <div class="container">
+          <div class="hairCareOffer__content">
+            <span class="hairCareOffer__span">
+              Hoziroq qo'ng'iroq qilib,<br />
+              50% chegirma bilan buyurtma bering
+            </span>
+            <button onClick="openModal()" class="hairCareOffer__btn">
+              Buyurtma berish
+            </button>
+          </div>
+        </div>
+      </section>
+      <section id="products" class="products">
+        <div class="container">
+          <h2 class="primary__title">Bizning maxsulotimiz tarkibi</h2>
+          <p class="products__text">
+            Gormonal nojo'ya ta'sirlar yo'q va tabiiy ingredientlar
+          </p>
+          <ul class="products__list">
+            <li class="products__item">
+              <div class="products__image__box">
+                <img src="./images/product1.png" alt="img" />
+              </div>
+              <h3 class="products__title">Qichitqi o't ekstrakt</h3>
+              <p class="products__item__text">
+                Sochlarni mustahkamlash va kallikka qarshi kurashish uchun
+                tabiiy vosita. U bosh terisini vitaminlar va mikroelementlar
+                bilan to'yintiradi, qon aylanishini yaxshilaydi, soch
+                to'kilishini kamaytiradi va yangi sochlarning o'sishini
+                rag'batlantiradi. Qichitqi o't yallig'lanishga qarshi va
+                mustahkamlovchi xususiyatlarga ega bo'lib, sochlarni qalin,
+                mustahkam va sog'lom qiladi.
+              </p>
+            </li>
+            <li class="products__item">
+              <div class="products__image__box">
+                <img src="./images/product2.png" alt="img" />
+              </div>
+              <h3 class="products__title">Moychechak ekstrakt</h3>
+              <p class="products__item__text">
+                Sochlarni mustahkamlaydi, ularga mayinlik va tabiiy jilo beradi.
+                U bosh terisini tinchlantiradi, ta'sirlanish va qichishishni
+                bartaraf etadi, qazg'oqning oldini oladi. Yorqinlashtiruvchi
+                ta'siri tufayli moychechak och rangli sochlarni yanada yorqinroq
+                qiladi, to'q rangli sochlarga esa iliq tus beradi. Muntazam
+                qo'llash sochlarni kuchli, silliq va parvarishlangan qiladi
+              </p>
+            </li>
+            <li class="products__item">
+              <div class="products__image__box">
+                <img src="./images/product3.png" alt="img" />
+              </div>
+              <h3 class="products__title">Tirnoqgul ekstrakt</h3>
+              <p class="products__item__text">
+                Sochlarni mustahkamlaydi, o'sishini tezlashtiradi va sinishining
+                oldini oladi. U antiseptik va tinchlantiruvchi xususiyatlari
+                tufayli qazg'oq va bosh terisining ortiqcha yog'lanishiga qarshi
+                samarali kurashadi. Qon aylanishini yaxshilaydi, soch
+                follikulalarini oziqlantiradi va sochlarga tabiiy yaltiroqlik va
+                elastiklik beradi. Barcha turdagi sochlar, ayniqsa, zaiflashgan
+                va shikastlangan sochlar uchun mos keladi.
+              </p>
+            </li>
+
+            <li class="products__item">
+              <div class="products__image__box">
+                <img src="./images/product4.png" alt="img" />
+              </div>
+              <h3 class="products__title">Tirnoqgul ekstrakti</h3>
+              <p class="products__item__text">
+                Sochlarni mustahkamlaydi, o'sishini tezlashtiradi va sinishining
+                oldini oladi. U antiseptik va tinchlantiruvchi xususiyatlari
+                tufayli qazg'oq va bosh terisining ortiqcha yog'lanishiga qarshi
+                samarali kurashadi. Qon aylanishini yaxshilaydi, soch
+                follikulalarini oziqlantiradi va sochlarga tabiiy yaltiroqlik va
+                elastiklik beradi. Barcha turdagi sochlar, ayniqsa, zaiflashgan
+                va shikastlangan sochlar uchun mos keladi.
+              </p>
+            </li>
+
+            <li class="products__item">
+              <div class="products__image__box">
+                <img src="./images/product5.png" alt="img" />
+              </div>
+              <h3 class="products__title">Minoksidil moddasi</h3>
+              <p class="products__item__text">
+                Minoksidil soch o'sishini rag'batlantiruvchi klinik jihatdan
+                isbotlangan vositadir. U bosh terisidagi qon aylanishini
+                yaxshilaydi, "uyqudagi" follikulalarni faollashtiradi va
+                sochlarning faol o'sish davrini uzaytiradi. Muntazam ravishda
+                qo'llash soch to'kilishini kamaytiradi, sochlarni qalinroq va
+                baquvvatroq qilishga yordam beradi.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section id="whenHelp" class="whenHelp">
+        <div class="whenHelp__block">
+          <div class="whenHelp__image__box">
+            <img src="./images/hairCareOfferImage.png" alt="" />
+            <img src="./images/hairCareOfferImage2.png" alt="" />
+          </div>
+          <div class="whenHelp__card">
+            <span class="card__span"
+              ><img src="./images/commas.svg" alt="commas"
+            /></span>
+            <h2 class="secondary__title">
+              QANDAY HOLATLARDA GROW X va grovit YORDAM BERADI?
+            </h2>
+            <ul class="card__list">
+              <li class="card__list__item">
+                Erkaklar va ayollarda soch to'kilishida
+              </li>
+              <li class="card__list__item">Androgen va o'choqli allopetsiya</li>
+              <li class="card__list__item">Mo'rt va oqargan sochlar</li>
+              <li class="card__list__item">Qalin soqol va sochning yo'qligi</li>
+            </ul>
+            <div class="card__bottom">
+              <p class="card__bottom__text">
+                Hamda sovg'a sifatida beriladigan Grovit krem- balzami sochlarni
+                chuqur oziqlantiradi va mustahkamlaydi. Yumshoqlik va tabiiy
+                porlashini taqdim etadi. Shu bilan birga qurishdan, sinishdan
+                himoya qiladi.
+              </p>
+              <div class="card__bottom__image__box">
+                <img src="./images/whenHelpCardImg.png" alt="img" />
+              </div>
+            </div>
+            <span class="card__span2"
+              ><img src="./images/commas2.svg" alt="commas"
+            /></span>
+          </div>
+        </div>
+        <button onClick="openModal()" class="primary__button whenHelp__button">
+          Buyurtma berish
+        </button>
+      </section>
+      <section class="productDifference">
+        <div class="container">
+          <h2 class="primary__title">
+            bizning maxsulotimiz boshqalardan <br />
+            nimasi bilan farq qiladi?
+          </h2>
+          <div class="productDifference__block">
+            <div class="productDifference__image__box">
+              <img src="./images/productDifferenceImg1.png" alt="" />
+              <img src="./images/productDifferenceImg2.png" alt="" />
+              <img src="./images/productDifferenceImg3.png" alt="" />
+            </div>
+            <div class="productDifference__content">
+              <div class="content__difference">
+                <div class="content__difference__colum">
+                  <span class="content__difference__span">Grow x</span>
+                  <ul class="content__difference__colum__list">
+                    <li>Gormonal nojo'ya ta'sirlar yo'q</li>
+                    <li>Tabiiy ingredientlar</li>
+                    <li>2-6 oydan keyin ko'rinadigan o'sish</li>
+                    <li>Tuksizlanish fazasi</li>
+                    <li>Kunlik bir martalik mahalliy foydalanish</li>
+                    <li>Bosh terisiga ehtiyotkorlik bilan ta'sir qiladi</li>
+                  </ul>
+                </div>
+                <div class="content__difference__colum">
+                  <span class="content__difference__span">Boshqalar</span>
+                  <ul class="content__difference__colum__list">
+                    <li>Ehtimoliy turli xil nojo'ya ta'sirlar</li>
+                    <li>Sintetik ingrediyentlar</li>
+                    <li>4-8 oydan keyingi natijalar</li>
+                    <li>Qayta soch to'kilishi xavfi</li>
+                    <li>Kuniga ikki marta surtish kerak</li>
+                    <li>Bosh terisining potensial ta'sirlanishi</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="content__sertificate">
+                <div class="content__sertificate__box">
+                  <h3 class="content__sertificate__title">Sertifikatlar</h3>
+                  <p class="content__sertificate__text">
+                    Bizning har bir maxsulotlarimiz sertifikatlangan va original
+                    maxsulot
+                  </p>
+                </div>
+                <div class="content__sertificate__images">
+                  <a data-fancybox="gallery" href="./images/sertificate1.jpg">
+                    <img src="./images/sertificate1.jpg" alt="Certificate 1" />
+                  </a>
+                  <a data-fancybox="gallery" href="./images/sertificate2.jpg">
+                    <img src="./images/sertificate2.jpg" alt="Certificate 2" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="productDifference__video">
+          <video class="rounded-[18px]" width="100%" loop controls>
+            <source src="./images/video.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+      <section id="reviews" class="reviews">
+        <div class="container">
+          <h2 class="primary__title reviews__title">
+            GROW X SAMARADORLIGIGA <br />
+            10 000 KISHI ISHONCH HOSIL QILDI
+          </h2>
+          <ul class="reviews__list">
+            <li class="reviews__item">
+              <span class="reviews__span">Abbos Karimov, 30 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img src="./images/person.svg" alt="" />
+                  </div>
+                  <div class="audio-player">
+                    <audio class="audio" src="./audio/audio1.ogg"></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+            <li class="reviews__item">
+              <span class="reviews__span">Javlonbek Yo'ldoshov, 29 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img src="./images/person2.svg" alt="" />
+                  </div>
+                  <div class="audio-player">
+                    <audio class="audio" src="./audio/audio2.ogg"></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+            <li class="reviews__item">
+              <span class="reviews__span">Dilnoza Tursunova, 25 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img src="./images/person3.svg" alt="" />
+                  </div>
+                  <div class="audio-player">
+                    <audio
+                      class="audio"
+                      src="./audio/audio_2025-04-18_12-59-22.ogg"
+                    ></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+            <li class="reviews__item">
+              <span class="reviews__span">Asilbek Bekmurodov, 28 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img
+                      src="https://sessionize.com/image/c315-400o400o2-spjM5A6VVfVNnQsuwvX3DY.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="audio-player">
+                    <audio class="audio" src="./audio/audio4.ogg"></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+            <li class="reviews__item">
+              <span class="reviews__span">Azizbek Mirzayev, 36 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img src="./images/person4.svg" alt="" />
+                  </div>
+                  <div class="audio-player">
+                    <audio class="audio" src="./audio/audio3.ogg"></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+            <li class="reviews__item">
+              <span class="reviews__span">Temur Murodov, 30 yosh </span>
+              <div class="reviews__item__box">
+                <div class="reviews__item__header">
+                  <div class="reviews__item__image">
+                    <img
+                      src="https://sessionize.com/image/cef7-400o400o2-KBZUydbjfkfGACQmjbHEvX.jpeg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="audio-player">
+                    <audio class="audio" src="./audio/audio5.ogg"></audio>
+                    <button class="play-pause play"></button>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                    </div>
+                    <span class="current-time" style="display: none">0:00</span>
+                    <span class="duration">0:00</span>
+                  </div>
+                </div>
+                <!-- <p class="reviews__item__text">Yoshligimda sochlarim juda qalin edi, ammo yillar o'tishi
+                                bilan to'kilishni boshladi. Do'stim Grow X ni tavsiya qilgach,
+                                2 oydan so'ng natijasini ko'rdim. Sochlarim qalinlashib,
+                                sog'lomlashdi. Endi o'zimga bo'lgan ishonchim ortdi.</p> -->
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="orders">
+        <div class="container">
+          <ul class="orders__list">
+            <li class="orders__item">
+              <div class="orders__item__img__box">
+                <img src="./images/phone.svg" alt="" />
+              </div>
+              <p class="orders__item__text">Saytimizda buyurtma bering</p>
+            </li>
+            <li class="orders__item">
+              <div class="orders__item__img__box">
+                <img src="./images/operator.svg" alt="" />
+              </div>
+              <p class="orders__item__text">
+                Siz bilan operatorlarimiz bog'lanishadi
+              </p>
+            </li>
+            <li class="orders__item">
+              <div class="orders__item__img__box">
+                <img src="./images/delivery.svg" alt="" />
+              </div>
+              <p class="orders__item__text">
+                Buyurtmangiz logistikamiz orqali jo'natiladi
+              </p>
+            </li>
+            <li class="orders__item">
+              <div class="orders__item__img__box">
+                <img src="./images/courier.svg" alt="" />
+              </div>
+              <p class="orders__item__text">
+                Buyurtmangiz xonadoningizgacha yetkazib beramiz
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section class="subscribe">
+        <div class="container">
+          <img
+            class="subscribe__image"
+            src="./images/hairCareOfferImage.png"
+            alt=""
+          />
+          <img
+            class="subscribe__image"
+            src="./images/hairCareOfferImage2.png"
+            alt=""
+          />
+          <img
+            class="subscribe__image"
+            src="./images/whenHelpCardImg.png"
+            alt=""
+          />
+          <div class="form__block">
+            <h2 style="z-index: 2; position: relative" class="primary__title">
+              Buyurtma berish
+            </h2>
+
+            <p class="discount__text">50% chegirma</p>
+
+            <form
+              method="POST"
+              class="subscribe__form"
+              action="javascript:void(0);"
+              name="contactform"
+              id="contactform"
+            >
+              <input
+                class="opacity-[0.4]"
+                name="name"
+                type="text"
+                placeholder="Ismingiz"
+              />
+              <input
+                class="opacity-[0.4]"
+                name="phone"
+                id="phone"
+                type="text"
+                placeholder="Telefon raqamingiz"
+              />
+              <button
+                id="submit-btn2"
+                class="primary__button submit__button"
+                type="submit"
+              >
+                Yuborish
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="relative w-full py-6 bg-[#1a0e07]">
+      <div class="w-full px-8 mx-auto max-w-7xl">
+        <div
+          class="grid justify-between items-center grid-cols-1 gap-4 md:grid-cols-2"
+        >
+          <a href="#" class="mb-2 text-xl font-semibold text-white">
+            <img src="./images/logo.svg" alt="" />
+          </a>
+        </div>
+        <div
+          class="flex flex-col items-end justify-center w-full py-4 mt-6 border-t border-slate-200 md:flex-row md:justify-between"
+        >
+          <p class="block mb-4 text-sm text-center text-white md:mb-0 mxAuto">
+            © 2025 Grow X. All rights reserved
+          </p>
+          <div class="flex gap-4 text-white sm:justify-center mxAuto">
+            <!-- <a href="https://www.instagram.com/grow_x_uz?igsh=NDRnZjBreXpndWVt&utm_source=qr"
+                        class="block transition-opacity text-inherit hover:opacity-80">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </a> -->
+            <a
+              href="https://www.instagram.com/grow_x_uz?igsh=NDRnZjBreXpndWVt&utm_source=qr"
+              class="block transition-opacity text-inherit hover:opacity-80"
+            >
+              <svg
+                class="w-8 h-8"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </a>
+            <!-- <a href="https://www.instagram.com/grow_x_uz?igsh=NDRnZjBreXpndWVt&utm_source=qr"
+                        class="block transition-opacity text-inherit hover:opacity-80">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                            </path>
+                        </svg>
+                    </a> -->
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script defer src="js/script.js"></script>
+  <script defer src="js/audio.js"></script>
+  <script defer src="js/gsap.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/req.js"></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"
+  ></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      Fancybox.bind("[data-fancybox]", {
+        Thumbs: {
+          autoStart: true,
+        },
+        Toolbar: {
+          display: {
+            left: ["infobar"],
+            middle: [],
+            right: ["zoom", "slideshow", "thumbs", "close"],
+          },
+        },
+        loop: true,
+      });
+    });
+  </script>
+</html>

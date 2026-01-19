@@ -74,7 +74,10 @@ services:
     build: ./uro-pro-landing.uz
     ports: ["3013:80"]
     <<: *default-deploy
-
+  growx:
+    build: ./growx-landing.uz
+    ports: ["127.0.0.1:3015:80"] # Xavfsizlik uchun localhostga bog'ladik
+    <<: *default-deploy
   visucaps:
     build: ./visucaps-landing.uz
     ports: ["3014:80"]

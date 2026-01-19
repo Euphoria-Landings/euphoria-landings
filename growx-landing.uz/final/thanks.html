@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Meta Pixel Code -->
+<script>
+	!function (f, b, e, v, n, t, s) {
+		if (f.fbq) return; n = f.fbq = function () {
+			n.callMethod ?
+			n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+		};
+		if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+		n.queue = []; t = b.createElement(e); t.async = !0;
+		t.src = v; s = b.getElementsByTagName(e)[0];
+		s.parentNode.insertBefore(t, s)
+	}(window, document, 'script',
+		'https://connect.facebook.net/en_US/fbevents.js');
+	fbq('init', '774057941909205');
+	fbq('track', 'Lead');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=774057941909205&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Thank You Page</title>
+	<style>
+		body {
+			background: black;
+			color: white;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+			font-family: Arial, sans-serif;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.container {
+			max-width: 400px;
+			text-align: center;
+			position: relative;
+			z-index: 10;
+			padding: 20px;
+		}
+
+		.back-btn {
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			background: none;
+			border: none;
+			color: white;
+			font-size: 24px;
+			cursor: pointer;
+			padding: 8px;
+			border-radius: 50%;
+			transition: background 0.3s;
+		}
+
+		.back-btn:hover {
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.icon {
+			font-size: 80px;
+			color: #FFB703;
+			margin-bottom: 20px;
+		}
+
+		h1 {
+			font-size: 32px;
+			margin-bottom: 16px;
+		}
+
+		p {
+			font-size: 16px;
+			opacity: 0.9;
+			margin-bottom: 24px;
+		}
+
+		.bid-info {
+			background: rgba(0, 0, 0, 0.3);
+			border: 1px solid rgba(255, 183, 3, 0.3);
+			border-radius: 8px;
+			padding: 20px;
+			margin-bottom: 24px;
+		}
+
+		.bid-info div {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 12px;
+			font-size: 14px;
+		}
+
+		.bid-info .label {
+			opacity: 0.8;
+		}
+
+		.bid-info .value {
+			font-weight: 500;
+		}
+
+		.bid-info .status {
+			color: #FFB703;
+		}
+
+		.buttons {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		button {
+			padding: 12px 24px;
+			border-radius: 8px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: background 0.3s;
+			width: 100%;
+			border: none;
+		}
+
+		.home-btn {
+			background: #FFB703;
+			color: black;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+
+		.home-btn:hover {
+			background: rgba(255, 183, 3, 0.9);
+		}
+
+		.bids-btn {
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			background: none;
+			color: white;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+
+		.bids-btn:hover {
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.bg-blur {
+			position: absolute;
+			top: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 300px;
+			height: 300px;
+			background: rgba(255, 183, 3, 0.2);
+			border-radius: 50%;
+			filter: blur(100px);
+			opacity: 0.3;
+			pointer-events: none;
+		}
+
+		.confetti {
+			position: absolute;
+			top: -10px;
+			animation: confetti-fall linear forwards;
+			pointer-events: none;
+		}
+
+		@keyframes confetti-fall {
+			0% {
+				transform: translateY(0) rotate(0deg);
+				opacity: 1;
+			}
+
+			100% {
+				transform: translateY(100vh) rotate(720deg);
+				opacity: 0;
+			}
+		}
+
+		@media (min-width: 640px) {
+			.container {
+				max-width: 500px;
+			}
+
+			.icon {
+				font-size: 100px;
+			}
+
+			h1 {
+				font-size: 40px;
+			}
+
+			p {
+				font-size: 18px;
+			}
+
+			.buttons {
+				flex-direction: row;
+				justify-content: center;
+			}
+
+			button {
+				width: auto;
+			}
+		}
+	</style>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'G-9797L85076');
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="icon">&#10003;</div>
+		<h1>Arizangiz uchun rahmat!</h1>
+		<p>Arizangizni oldik va tez orada siz bilan aloqa chiqamiz</p>
+		<div class="buttons">
+			<button class="home-btn" onclick="window.location.href='/'">
+				<span style="font-size: 20px;">&#8592;</span> Asosiy sahifa
+			</button>
+		</div>
+	</div>
+	<div class="bg-blur"></div>
+	<script>
+		// Set current date
+		document.getElementById('current-date').textContent = new Date().toLocaleDateString();
+
+		// Confetti effect
+		function createConfetti() {
+			for (let i = 0; i < 50; i++) {
+				const confetti = document.createElement('div');
+				confetti.className = 'confetti';
+				confetti.style.left = `${Math.random() * 100}%`;
+				confetti.style.width = `${Math.random() * 10 + 5}px`;
+				confetti.style.height = `${Math.random() * 10 + 5}px`;
+				confetti.style.background = i % 3 === 0 ? '#FFB703' : i % 3 === 1 ? '#ffffff' : '#FFB703';
+				confetti.style.borderRadius = i % 2 === 0 ? '50%' : '0';
+				confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+				confetti.style.animationDelay = `${Math.random() * 2}s`;
+				document.body.appendChild(confetti);
+				// Clean up after animation
+				setTimeout(() => confetti.remove(), 5000);
+			}
+		}
+
+		// Trigger confetti on page load and stop after 3 seconds
+		window.onload = () => {
+			createConfetti();
+			setTimeout(() => { }, 3000); // Placeholder for stopping confetti (handled by cleanup)
+		};
+	</script>
+</body>
+
+</html>
