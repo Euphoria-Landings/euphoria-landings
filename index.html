@@ -274,9 +274,9 @@
         } catch (error) {
           console.error("Fetch failed", error);
           document.getElementById("status-text").innerText =
-            "Xatolik yuz berdi";
+            "Ma'lumotlarni yuklashda xatolik";
         } finally {
-          setTimeout(() => document.body.classList.remove("syncing"), 1000);
+          setTimeout(() => document.body.classList.remove("syncing"), 800);
         }
       }
 
@@ -293,14 +293,12 @@
             .replace("euphoria-landings-", "")
             .replace("euphoria-lands-", "")
             .replace("-1", "");
+
           const port = portMap[cleanName] || "---";
           const isUp = c.status.toLowerCase().includes("up");
 
-          // Linkni Nginx orqali IP/port qilib to'g'rilaymiz
-          const link =
-            port === 8080
-              ? `http://${SERVER_IP}/`
-              : `http://${SERVER_IP}/${port}`;
+          // IDEAL LINK: Har doim IP:PORT formatida ochiladi
+          const link = `http://${SERVER_IP}:${port}/`;
 
           list.innerHTML += `
             <tr class="group hover:bg-white/[0.02] transition-colors">
