@@ -6,7 +6,7 @@ export default function Composition() {
     benefits: [
       "uglevod almashinuvini normallashtirishga yordam beradi",
       "qondagi qand miqdorini barqaror saqlashga yordam beradi",
-      "ishtahani pasaytiradi",
+      "ishtahani boshqarishga yordam beradi",
     ],
     components: [
       "Topinambur",

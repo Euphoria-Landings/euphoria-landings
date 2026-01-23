@@ -18,7 +18,7 @@ export default function Purchase() {
     },
     {
       title: "ENERGIYA VA TONUS",
-      desc: "Ozish jarayonida charchoqni yo'qotadi. Tanadagi yog'larni foydali energiyaga aylantirib, kun boyi tetiklik beradi.",
+      desc: "Ozish jarayonida charchoqni kamaytirishga ko‘maklashadi. Tanadagi yog'larni foydali energiyaga aylantirib, kun boyi tetiklik beradi.",
       icon: (
         <svg
           viewBox="0 0 24 24"

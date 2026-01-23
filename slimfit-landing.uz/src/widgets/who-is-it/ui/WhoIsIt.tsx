@@ -96,8 +96,8 @@ export const WhoIsIt = () => {
             whileInView={{ opacity: 1 }}
             className="text-[22px] md:text-[34px] font-black text-slate-900 text-center uppercase tracking-tight"
           >
-            Arizangizni qoldiring va{" "}
-            <span className="text-green-600">100% chegirma</span> oling!
+                       Buyurtma berish uchun ariza qoldiring!
+
           </motion.h3>
 
           <motion.button
@@ -130,7 +130,6 @@ export const WhoIsIt = () => {
         </div>
       </div>
 
-      
       <OrderModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* FON BEZAGI */}

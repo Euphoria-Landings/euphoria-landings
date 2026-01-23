@@ -23,7 +23,7 @@ export default function Purchase() {
     },
     {
       title: "YUQORI SO'RILISH",
-      desc: "Bioaktiv formula tufayli komponentlar organizmga tez kirib boradi va qon aylanishini darhol yaxshilaydi.",
+      desc: "Bioaktiv formula tufayli komponentlar organizmga tez kirib boradi va qon aylanishini  yaxshilaydi.",
       icon: (
         <svg
           viewBox="0 0 24 24"

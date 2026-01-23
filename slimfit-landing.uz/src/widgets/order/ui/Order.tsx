@@ -7,7 +7,7 @@ export const Order = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <section className="py-20 bg-white border-t border-slate-100" id="order">
+    <section className="py-26 bg-white border-t border-slate-100" id="order">
       <div className="container mx-auto px-4 flex flex-col items-center text-center">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -15,7 +15,7 @@ export const Order = () => {
           viewport={{ once: true }}
           className="text-black font-[1000] text-lg md:text-2xl mb-8 uppercase tracking-tight"
         >
-          Arizangizni qoldiring va 100% chegirma oling!
+          Buyurtma berish uchun ariza qoldiring!
         </motion.p>
 
         <motion.button

@@ -5,7 +5,7 @@ import { Activity } from "lucide-react";
 export default function Composition() {
   const mainFeatures = {
     benefits: [
-      "YOG'LARNI TABIIY ERITISH VA QOMATNI TIKLASH",
+      "yog‘larni eritishda ko‘maklashadi va qomatni tiklashda kompleks yordam",
       "METABOLIZMNI 2 BARAVAR TEZLASHTIRISH",
       "ISHTAHANI SAMARALI NAZORAT QILISH",
     ],

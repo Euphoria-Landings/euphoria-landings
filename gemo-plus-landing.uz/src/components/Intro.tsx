@@ -31,16 +31,15 @@ export default function Intro() {
               </h1>
               <div className="mt-6 space-y-3">
                 <h2 className="text-[25px] md:text-[30px] font-[900] leading-[1] text-[#1A1A1A] tracking-tight">
-                 gemorroyga qarshi tabiiy vosita
+                  gemorroyga qarshi tabiiy vosita
                 </h2>
               </div>
             </div>
 
             <div className="flex items-start gap-4 max-w-[480px] mb-10 border-l-4 border-[#C5A358] pl-6 py-2">
               <p className="text-slate-600 text-[15px] md:text-[17px] leading-relaxed font-medium">
-                100% tabiiy efir moylari — organizmni parazitlardan tozalashda
-                yuqori samaradorlik va xavfsiz yondashuv. Artemisia (shuvoq)
-                kuchi bilan sog'ligingizni tiklang.
+                Organizmni parazitlardan tozalashda tabiiy va xavfsiz yondashuv.
+                Artemisia (shuvoq) kuchi bilan sog'ligingizni tiklang.
               </p>
             </div>
 

@@ -21,12 +21,15 @@ export const Hero = () => {
       </div>
 
       {/* 2. ASOSIY GRADIENTLI FON (SIZ YUBORGAN LINEAR-GRADIENT) */}
-      <div 
-        className="absolute bottom-0 left-0 w-full h-[25%] md:h-[35%] z-0" 
-        style={{ background: "linear-gradient(90deg, #6DC368 0%, #ACFFA7 32.69%, #519349 100%)" }}
+      <div
+        className="absolute bottom-0 left-0 w-full h-[25%] md:h-[35%] z-0"
+        style={{
+          background:
+            "linear-gradient(90deg, #6DC368 0%, #ACFFA7 32.69%, #519349 100%)",
+        }}
       />
-      <div 
-        className="absolute bottom-[25%] md:bottom-[35%] left-0 w-full h-32 z-0" 
+      <div
+        className="absolute bottom-[25%] md:bottom-[35%] left-0 w-full h-32 z-0"
         style={{ background: "linear-gradient(to top, #ACFFA7, transparent)" }}
       />
 
@@ -34,17 +37,13 @@ export const Hero = () => {
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 lg:items-center">
           {/* MATNLI QISM */}
           <div className="pb-16 lg:pb-0 lg:py-40 relative z-20">
-            <motion.h1
-              className="text-[32px] md:text-6xl lg:text-[68px] font-black text-slate-900 leading-[1.05] mb-4 text-center lg:text-left lg:max-w-[120%]"
-            >
+            <motion.h1 className="text-[32px] md:text-6xl lg:text-[68px] font-black text-slate-900 leading-[1.05] mb-4 text-center lg:text-left lg:max-w-[120%]">
               Slimfit — vazn nazoratini <br className="hidden lg:block" />{" "}
               oqilona yondashuvi
             </motion.h1>
 
-            <motion.p
-              className="text-base md:text-xl text-slate-800 font-medium mb-8 text-center lg:text-left"
-            >
-              Arizangizni qoldiring va 100% chegirma oling!
+            <motion.p className="text-base md:text-xl text-slate-800 font-medium mb-8 text-center lg:text-left">
+              Buyurtma berish uchun ariza qoldiring!
             </motion.p>
 
             {/* TUGMA QISMI */}
@@ -104,9 +103,7 @@ export const Hero = () => {
 
           {/* RASMLI QISM */}
           <div className="relative h-[450px] md:h-[650px] lg:h-[850px] flex items-end justify-center pt-24 lg:pt-0 z-10">
-            <motion.div
-              className="relative w-full h-full"
-            >
+            <motion.div className="relative w-full h-full">
               <Image
                 src="/girls.png"
                 alt="Slimfit result girl"

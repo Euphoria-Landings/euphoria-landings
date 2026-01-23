@@ -30,12 +30,9 @@ export default function Intro() {
 
             <div className="flex items-start gap-2 max-w-[380px] mb-10 border-l-2 border-red-600 pl-4">
               <p className="text-[#1A1A1A] text-[14px] md:text-[16px] leading-relaxed font-medium">
-                Bo'g'imlarni tiklash va og'riqni unutish uchun mo'ljallangan
-                <span className="text-red-600 font-bold">
-                  {" "}
-                  innovatsion formula
-                </span>
-                . Sog'lom kelajak o'z qo'lingizda!
+                Bo‘g‘imlarni qo‘llab-quvvatlashga yordam beruvchi
+                <span className="text-red-600 font-bold"> formula</span>.
+                Sog'lom kelajak o'z qo'lingizda!
               </p>
             </div>
 

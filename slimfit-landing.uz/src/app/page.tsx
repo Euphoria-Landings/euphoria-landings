@@ -14,7 +14,6 @@ const page = () => {
       <Hero />
       <StickyFooter />
       <WhoIsIt />
-      <Results />
       <Features />
       <Ingredients />
       <Faq />

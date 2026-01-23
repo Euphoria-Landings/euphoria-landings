@@ -10,7 +10,7 @@ export default function Composition() {
       "erkak jinsiy maylini saqlab qolishga yordam beradi",
     ],
     energy: [
-      "Tabiiy gormonal muvozanatni tiklaydi",
+      "Tabiiy gormonal muvozanatni tiklashda qatnashadi",
       "qulaylik va ishonchni saqlashga yordam beradi",
       "kurs amaliyoti uchun mos",
     ],

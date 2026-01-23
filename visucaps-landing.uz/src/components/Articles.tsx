@@ -10,7 +10,7 @@ export default function Articles() {
     {
       title: " ko'z himoyasi",
       description:
-        "Raqamli ekranlarning ko'k nuridan himoyalanish va to'r parda salomatligini saqlash usullari.",
+        "Ko'zning tabiiy quvvatini oshirishda ko'maklashadi",
       imgSrc: "/luten.png",
       category: "HIMOYA",
     },

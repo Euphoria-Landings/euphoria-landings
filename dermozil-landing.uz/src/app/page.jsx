@@ -16,7 +16,7 @@ const Page = () => {
       <Brings />
       <Effect />
       <Best />
-      <Swiper />
+      {/* <Swiper /> */}
       <Faq />
     </div>
   );
