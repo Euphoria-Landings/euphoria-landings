@@ -156,12 +156,12 @@
                   <th
                     class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
                   >
-                    Loyiha Nomi
+                    Loyixa Nomi
                   </th>
                   <th
                     class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
                   >
-                    Port
+                    Domen / Manzil
                   </th>
                   <th
                     class="px-6 py-4 text-[11px] font-bold uppercase tracking-widest text-gray-500"
@@ -242,25 +242,25 @@
       const SERVER_IP = "95.217.191.63";
       let allContainers = [];
       let currentPage = 1;
-      const rowsPerPage = 7;
+      const rowsPerPage = 10;
 
-      const portMap = {
-        artrowell: 3001,
-        "cardio-balance": 3002,
-        dermozil: 3003,
-        diabetikforte: 3004,
-        diastop: 3005,
-        fatality: 3006,
-        "gemo-plus": 3007,
-        gipertofort: 3008,
-        "parazit-off": 3009,
-        slimfit: 3010,
-        sustaflex: 3011,
-        urion: 3012,
-        "uro-pro": 3013,
-        visucaps: 3014,
-        growx: 3015,
-        dashboard: 8080,
+      const domainMap = {
+        artrowell: "artrowell.uz",
+        "cardio-balance": "cardio-balance.uz",
+        dermozil: "dermozil.uz",
+        diabetikforte: "diabetic-forte.uz",
+        diastop: "diastop.uz",
+        fatality: "fatality.uz",
+        "gemo-plus": "gemo-plus.uz",
+        gipertofort: "giperto-fort.uz",
+        "parazit-off": "parazit-off.uz",
+        slimfit: "slimfit.uz",
+        sustaflex: "sustaflex.uz",
+        urion: "urion.uz",
+        "uro-pro": "uropro.uz",
+        visucaps: "visu-caps.uz",
+        growx: "growx.uz",
+        dashboard: "95.217.191.63:8080",
       };
 
       async function fetchData() {
@@ -270,11 +270,10 @@
           allContainers = await response.json();
           renderTable();
           document.getElementById("status-text").innerText =
-            `Jami: ${allContainers.length} ta konteyner`;
+            `Jami: ${allContainers.length} ta loyiha faol`;
         } catch (error) {
-          console.error("Fetch failed", error);
           document.getElementById("status-text").innerText =
-            "Ma'lumotlarni yuklashda xatolik";
+            "Xatolik: data.json yuklanmadi";
         } finally {
           setTimeout(() => document.body.classList.remove("syncing"), 800);
         }
@@ -283,7 +282,6 @@
       function renderTable() {
         const list = document.getElementById("container-list");
         list.innerHTML = "";
-
         const start = (currentPage - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         const paginatedItems = allContainers.slice(start, end);
@@ -293,38 +291,31 @@
             .replace("euphoria-landings-", "")
             .replace("euphoria-lands-", "")
             .replace("-1", "");
-
-          const port = portMap[cleanName] || "---";
+          const domain = domainMap[cleanName] || cleanName;
           const isUp = c.status.toLowerCase().includes("up");
-
-          // IDEAL LINK: Har doim IP:PORT formatida ochiladi
-          const link = `http://${SERVER_IP}:${port}/`;
+          const isDomain = domain.includes(".uz");
+          const link = isDomain ? `https://${domain}/` : `http://${domain}/`;
 
           list.innerHTML += `
             <tr class="group hover:bg-white/[0.02] transition-colors">
                 <td class="px-6 py-5">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded bg-[#171A1C] flex items-center justify-center text-[10px]">📦</div>
-                        <span class="text-white font-medium text-sm capitalize">${cleanName}</span>
+                        <div class="w-8 h-8 rounded bg-[#171A1C] flex items-center justify-center text-[10px] shadow-inner">${isDomain ? "🌐" : "⚙️"}</div>
+                        <span class="text-white font-medium text-sm capitalize">${cleanName.replace(/-/g, " ")}</span>
                     </div>
                 </td>
-                <td class="px-6 py-5 font-mono text-[11px] text-gray-500">${port}</td>
+                <td class="px-6 py-5 font-mono text-[11px] ${isDomain ? "text-[#99C8FF]" : "text-gray-500"}">${domain}</td>
                 <td class="px-6 py-5">
-                    <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}">
-                        <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 shadow-[0_0_5px_#22c55e]" : "bg-red-500"}"></span>
-                        ${isUp ? "RUNNING" : "STOPPED"}
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[10px] font-bold ${isUp ? "bg-green-500/10 text-green-400 border border-green-500/20" : "bg-red-500/10 text-red-400 border border-red-500/20"}">
+                        <span class="w-1.5 h-1.5 rounded-full ${isUp ? "bg-green-500 shadow-[0_0_8px_#22c55e]" : "bg-red-500"}"></span>
+                        ${isUp ? "ONLINE" : "OFFLINE"}
                     </span>
                 </td>
                 <td class="px-6 py-5 text-right">
-                    <a href="${link}" target="_blank" 
-                       class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-[11px] font-bold text-[#99C8FF] hover:bg-[#0B2240] border border-transparent hover:border-[#0B6BCB]/30 transition-all">
-                        OCHISH <span>↗</span>
-                    </a>
+                    <a href="${link}" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 rounded text-[11px] font-bold text-white bg-[#0B6BCB] hover:bg-[#185EA5] shadow-lg shadow-blue-900/20 transition-all active:scale-95">SAYTNI OCHISH <span>↗</span></a>
                 </td>
-            </tr>
-          `;
+            </tr>`;
         });
-
         updatePaginationUI();
       }
 
@@ -350,7 +341,7 @@
         }
       }
 
-      setInterval(fetchData, 10000);
+      setInterval(fetchData, 15000);
       fetchData();
     </script>
   </body>
