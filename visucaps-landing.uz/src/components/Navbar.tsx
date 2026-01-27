@@ -43,9 +43,9 @@ export default function Navbar() {
             {/* 1. LOGO: VISU (Qora) + CAPS (Binafsha) */}
             <Link href="/" className="shrink-0 relative z-[130] group">
               <span className="text-xl md:text-2xl font-[1000] italic tracking-tighter uppercase inline-block">
-                <span className="text-[#1A1A1A]">VISU</span>
+                <span className="text-[#1A1A1A]">VIZU</span>
                 <span className="text-[#4B2C82] inline-flex items-center">
-                  C
+                  K
                   <span className="relative inline-block text-[#4B2C82]">
                     A{/* A harfi ustida diagonal chiziq */}
                   </span>

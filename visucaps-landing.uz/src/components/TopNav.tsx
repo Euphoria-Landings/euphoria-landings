@@ -8,7 +8,7 @@ export default function TopNav() {
 
   return (
     <>
-      {/* Top bar: VisuCaps binafsha va to'q qora kombinatsiyasi */}
+      {/* Top bar: ViZuCaKs binafsha va to'q qora kombinatsiyasi */}
       <div className="w-full bg-[#0F0F0F] h-[40px] flex items-center relative z-[70] border-b border-white/5">
         <div className="max-w-[1100px] w-full mx-auto px-4 flex justify-between items-center">
           {/* CHAP TOMON: Aksiya holati */}
@@ -59,12 +59,12 @@ export default function TopNav() {
           </div>
         </div>
 
-        {/* MARQUEE: VISUCAPS ANIMATSIYASI */}
+        {/* MARQUEE: VIZUCAKS ANIMATSIYASI */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.02] overflow-hidden whitespace-nowrap flex items-center select-none">
           <p className="text-white text-[18px] font-black italic tracking-widest uppercase animate-marquee">
-            VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS
-            VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS VISUCAPS
-            VISUCAPS VISUCAPS
+            VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS
+            VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS VIZUCAKS
+            VIZUCAKS VIZUCAKS
           </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function Features() {
       text: "tabiiy o‘simliklar jamlanmasi",
     },
     {
-      text: "Tdori vositasi emas",
+      text: "dori vositasi emas",
     },
   ];
 

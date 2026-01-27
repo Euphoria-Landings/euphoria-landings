@@ -60,8 +60,8 @@ export default function Purchase() {
       <div className="max-w-[1100px] mx-auto px-4 relative z-10">
         <div className="mb-8 space-y-2">
           <h2 className="text-[22px] md:text-[32px] font-[1000] italic tracking-tighter leading-none uppercase flex flex-wrap items-center gap-x-2">
-            <span className="text-[#1A1A1A]">VISU</span>
-            <span className="text-[#4B2C82]">CAPS</span>
+            <span className="text-[#1A1A1A]">VIZU</span>
+            <span className="text-[#4B2C82]">KAPS</span>
             <span className="text-[#1A1A1A] not-italic font-black text-lg md:text-xl ml-1">
               qanday ishlaydi
             </span>
@@ -93,7 +93,7 @@ export default function Purchase() {
         {/* LOGO QISMI - VISUCAPS Clean Standarti */}
         <div className="flex flex-col items-center text-center space-y-2">
           <h2 className="text-[32px] md:text-[48px] font-[1000] italic tracking-tighter leading-none uppercase">
-            <span className="text-[#1A1A1A]">VISU</span>
+            <span className="text-[#1A1A1A]">VIZU</span>
             <span className="text-[#4B2C82]">CAPS</span>
           </h2>
           <div className="h-0.5 w-12 bg-[#4B2C82] rounded-full opacity-30" />

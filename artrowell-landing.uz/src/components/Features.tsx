@@ -6,7 +6,7 @@ export default function Features() {
       text: "bo‘g‘imlarni qo‘llab-quvvatlash",
     },
     {
-      text: "Tbo‘g‘imlardagi noqulaylikning kamayishi",
+      text: "Bo‘g‘imlardagi noqulaylikning kamayishi",
     },
     {
       text: "100% tabiiy va xavfsiz tarkib",

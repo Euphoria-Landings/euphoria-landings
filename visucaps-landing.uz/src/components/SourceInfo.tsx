@@ -21,8 +21,8 @@ export default function SourceInfo() {
           {/* BREND VA TUGMALAR - VISUCAPS Clean Style */}
           <div className="flex flex-col items-center md:items-start gap-4">
             <h2 className="text-[28px] md:text-[34px] font-[1000] italic tracking-tighter leading-none uppercase">
-              <span className="text-[#1A1A1A]">VISU</span>
-              <span className="text-[#4B2C82]">CAPS</span>
+              <span className="text-[#1A1A1A]">VIZU</span>
+              <span className="text-[#4B2C82]">KAPS</span>
             </h2>
 
             <div className="flex flex-wrap justify-center md:justify-start gap-2.5">

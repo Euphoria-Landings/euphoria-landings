@@ -19,7 +19,7 @@ export default function Purchase() {
     },
     {
       title: "CHIDAMLILIK VA ENERGIYA",
-      desc: "Ishdagi va shaxsiy hayotdagi faollikni oshiradi, jismoniy charchoqni kamaytirib, organizmni tonusda saqlaydi.",
+      desc: "Ishdagi va shaxsiy hayotdagi faollikni oshiradi, jismoniy charchoqni kamaytirib, organizmni tonusda saqlashga yordam beradi.",
       icon: (
         <svg
           viewBox="0 0 24 24"

@@ -18,8 +18,8 @@ export default function Intro() {
             <div className="mb-5">
               {/* Logo - Ixchamroq */}
               <h1 className="text-[40px] md:text-[60px] font-[1000] italic leading-none tracking-[ -0.05em] uppercase">
-                <span className="text-[#1A1A1A]">VISU</span>
-                <span className="text-[#4B2C82]">CAPS</span>
+                <span className="text-[#1A1A1A]">VIZU</span>
+                <span className="text-[#4B2C82]">KAPS</span>
               </h1>
 
               <div className="mt-5 space-y-1">

@@ -60,7 +60,7 @@ export default function Purchase() {
     },
     {
       title: "TABIIY FORMULA",
-      desc: "Xaftaga to'qimasining tabiiy komponentlarini o'z ichiga oladi.Magniy D vitamini metabolizmini boshqarish orqali kalsiy almashinuviga yordam berad",
+      desc: "Xaftaga to'qimasining tabiiy komponentlarini o'z ichiga oladi. Magniy D vitamini metabolizmini boshqarish orqali kalsiy almashinuviga yordam beradi.",
       icon: (
         <svg
           viewBox="0 0 24 24"

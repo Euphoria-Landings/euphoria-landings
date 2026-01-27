@@ -10,7 +10,7 @@ export default function Gymnastics() {
       color: "from-purple-50 to-purple-100",
     },
     {
-      title: "FOCyorqin yorug‘lik",
+      title: "yorqin yorug‘lik",
       subtitle: "yoki quruq havoda ishlaydiganlar",
       imgSrc: "/focus.png",
       color: "from-gray-50 to-gray-100",
@@ -29,14 +29,14 @@ export default function Gymnastics() {
         {/* SARLAVHA - VISUCAPS Ixcham Style */}
         <div className="mb-8 space-y-2">
           <h2 className="text-[22px] md:text-[32px] font-[1000] italic tracking-tighter leading-none uppercase flex flex-wrap items-center gap-x-2">
-            <span className="text-[#1A1A1A]">VISU</span>
-            <span className="text-[#4B2C82]">CAPS</span>
+            <span className="text-[#1A1A1A]">VIZU</span>
+            <span className="text-[#4B2C82]">KAPS</span>
             <span className="text-[#1A1A1A] not-italic font-black text-lg md:text-xl ml-1">
               kimlar uchun mos keladi
             </span>
           </h2>
           <p className="text-gray-400 text-[8px] md:text-[9px] font-bold max-w-[400px] leading-tight uppercase tracking-[2px]">
-            Vizu Caps kattalarga tavsiya etilishi mumkin, ular:
+            Vizu Kaps kattalarga tavsiya etilishi mumkin, ular:
           </p>
         </div>
 

@@ -25,11 +25,11 @@ export default function Composition() {
         {/* Sarlavha - Ixcham VisuCaps Style */}
         <div className="text-center mb-12">
           <h2 className="text-[#1A1A1A] text-xl md:text-3xl font-[1000] italic leading-none uppercase tracking-tighter">
-            <span className="text-[#1A1A1A]">VISU</span>
-            <span className="text-[#4B2C82]">CAPS</span> TARKIBI
+            <span className="text-[#1A1A1A]">VIZU</span>
+            <span className="text-[#4B2C82]">KAPS</span> TARKIBI
           </h2>
           <p className="text-gray-400 font-bold mt-3 uppercase text-[8px] md:text-[9px] tracking-[4px]">
-            Vizu Caps - bu yuqori ko‘rish yuklamalarida ko‘rish funksiyasini
+            Vizu Kaps - bu yuqori ko‘rish yuklamalarida ko‘rish funksiyasini
             qo‘llab-quvvatlash uchun mo‘ljallangan biologik faol qo‘shimchadir.
             O‘simlik ekstraktlari va tabiiy antioksidantlar majmuasi ko‘zlar
             uchun qulaylikni saqlashga va ko‘rish organlarining normal holatini

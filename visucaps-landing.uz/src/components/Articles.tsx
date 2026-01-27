@@ -15,9 +15,9 @@ export default function Articles() {
       category: "HIMOYA",
     },
     {
-      title: "Tungi ko'rishni yaxshilash",
+      title: "Tungi ko'rish",
       description:
-        "Gidratatsiya va to'g'ri vitaminlar majmuasi orqali qorong'uda ko'rish o'tkirligini tiklash.",
+        "Gidratatsiya va to'g'ri vitaminlar majmuasi orqali qorong'uda ko'rish o'tkirligiga yordam beradi",
       imgSrc: "/tun.png",
       category: "TIKLASH",
     },
@@ -39,8 +39,8 @@ export default function Articles() {
         {/* SARLAVHA - VISUCAPS Ixcham Style */}
         <div className="mb-8 text-center md:text-left">
           <h2 className="text-[24px] md:text-[36px] font-[1000] italic mb-2 tracking-tighter leading-none uppercase flex flex-wrap items-center justify-center md:justify-start gap-x-2">
-            <span className="text-[#1A1A1A]">VISU</span>
-            <span className="text-[#4B2C82]">CAPS</span>
+            <span className="text-[#1A1A1A]">VIZU</span>
+            <span className="text-[#4B2C82]">KAPS</span>
             <span className="text-[#1A1A1A] not-italic text-lg md:text-xl font-[900] ml-1">
               MUTAXASSISLAR TAVSIYALARI
             </span>
@@ -48,7 +48,7 @@ export default function Articles() {
           <div className="flex items-center gap-2 justify-center md:justify-start opacity-70">
             <div className="h-[1.5px] w-6 bg-[#4B2C82]" />
             <p className="text-[#4B2C82] text-[8px] font-black uppercase tracking-[3px]">
-              Tiniqlik garovi
+              Tiniqlikka yordam
             </p>
           </div>
         </div>

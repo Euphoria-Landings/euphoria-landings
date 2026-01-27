@@ -8,14 +8,10 @@ export default function MainFooter() {
           {/* 1. BRENDING - VISUCAPS Minimalist */}
           <div className="flex flex-col items-center md:items-start gap-3">
             <h2 className="text-[28px] md:text-[36px] font-[1000] italic tracking-tighter leading-none uppercase">
-              <span className="text-white">VISU</span>
-              <span className="text-[#4B2C82]">CAPS</span>
+              <span className="text-white">VIZU</span>
+              <span className="text-[#4B2C82]">KAPS</span>
             </h2>
-            <div className="text-center md:text-left">
-              <span className="block text-[7px] md:text-[8px] font-[1000] tracking-[3px] text-[#4B2C82] uppercase italic opacity-90">
-                Tiniq ko'rish texnologiyasi
-              </span>
-            </div>
+            <div className="text-center md:text-left"></div>
           </div>
 
           {/* 2. ALOQA - Ixcham va Zamonaviy */}
@@ -61,14 +57,14 @@ export default function MainFooter() {
 
         {/* ENG PASTKI QISM: COPYRIGHT & TAGS */}
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-5 text-[7px] uppercase tracking-[2.5px] text-white/10 font-black">
-          <p>© 2026 VISUCAPS GLOBAL. BARCHA HUQUQLAR HIMOYaLANGAN.</p>
+          <p>© 2026 VIZUKAPS GLOBAL. BARCHA HUQUQLAR HIMOYALANGAN.</p>
 
           <div className="flex gap-2">
             <span className="px-3 py-1 border border-white/5 rounded-md bg-white/[0.01]">
               GMP
             </span>
             <span className="px-3 py-1 border border-white/5 rounded-md bg-white/[0.01]">
-              BQM
+              BFQ
             </span>
             <span className="px-3 py-1 border border-[#4B2C82]/20 text-[#4B2C82]/40 rounded-md bg-purple-500/[0.01]">
               100% NATURAL

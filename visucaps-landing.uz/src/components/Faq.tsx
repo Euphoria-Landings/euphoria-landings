@@ -4,14 +4,14 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 
 const faqData = [
   {
-    question: "Visu Caps ko‘rish qobiliyatini yaxshilaydimi?",
+    question: "Vizu Kaps ko‘rish qobiliyatini yaxshilaydimi?",
     answer:
-      "Visu Caps ko‘rish organlarining normal funksional holatini saqlashga yordam beradi. Shuni yodda tutingki, u dori vositasi emas, balki tabiiy o'simlik kompleksi qo'shilgan biologik faol qo'shimchadir.",
+      "Vizu Kaps ko‘rish organlarining normal funksional holatini saqlashga yordam beradi. Shuni yodda tutingki, u dori vositasi emas, balki tabiiy o'simlik kompleksi qo'shilgan biologik faol qo'shimchadir.",
   },
   {
     question: "Profilaktik qabul uchun yaroqlimi?",
     answer:
-      "Ha, Visu Caps aynan ko'rish qobiliyatini qo'llab-quvvatlovchi va ko'z charchog'ini oldini oluvchi profilaktik qabul uchun mo'ljallangan.",
+      "Ha, Vizu Kaps aynan ko'rish qobiliyatini qo'llab-quvvatlovchi va ko'z charchog'ini oldini oluvchi profilaktik qabul uchun mo'ljallangan.",
   },
   {
     question: "Doimiy qabul qilish mumkinmi?",
