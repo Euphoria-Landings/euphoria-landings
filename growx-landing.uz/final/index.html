@@ -57,6 +57,43 @@
     <!-- FancyBox JS -->
     <title>Grow X</title>
     <link rel="stylesheet" href="css/style-min.css" />
+
+    <style>
+      /* Notice elementi uchun uslublar */
+      #api-status-notice {
+        position: fixed;
+        top: 20px; /* Ekranning tepasidan chiqadi */
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px); /* Dastlab ko'rinmaydi */
+        min-width: 320px;
+        padding: 16px 24px;
+        border-radius: 12px;
+        background: #1a1a1a;
+        color: white;
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border-bottom: 4px solid transparent;
+      }
+
+      /* Notice ko'ringanda */
+      #api-status-notice.show {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* Xatolik turi */
+      #api-status-notice.error {
+        border-color: #ff4b4b;
+      }
+
+      /* Muvaffaqiyatli turi */
+      #api-status-notice.success {
+        border-color: #00c853;
+      }
+    </style>
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"

@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./orderform.scss";
 import Confetti from "../confetti/Confetti";
-import { Snackbar } from "../ui/Snackbar";
 
 const UserIcon = () => (
   <svg
@@ -34,6 +33,87 @@ const PhoneIcon = () => (
     />
   </svg>
 );
+
+// Snackbar komponenti - inline stillar bilan
+const Snackbar = ({ isVisible, message, onClose }) => {
+  const snackbarContainerStyle = {
+    position: "fixed",
+    top: "20px",
+    right: "20px",
+    zIndex: 9999,
+    pointerEvents: isVisible ? "auto" : "none",
+  };
+
+  const snackbarStyle = {
+    backgroundColor: "#10b981",
+    color: "#ffffff",
+    padding: "16px 24px",
+    borderRadius: "12px",
+    boxShadow: "0 10px 40px rgba(16, 185, 129, 0.3)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    minWidth: "320px",
+    maxWidth: "450px",
+    fontSize: "15px",
+    fontWeight: "500",
+    lineHeight: "1.5",
+  };
+
+  const closeButtonStyle = {
+    background: "transparent",
+    border: "none",
+    color: "#ffffff",
+    fontSize: "24px",
+    cursor: "pointer",
+    marginLeft: "16px",
+    padding: "0",
+    width: "28px",
+    height: "28px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "4px",
+    transition: "background-color 0.2s ease",
+  };
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const closeButtonHoverStyle = {
+    ...closeButtonStyle,
+    backgroundColor: isHovered ? "rgba(255, 255, 255, 0.2)" : "transparent",
+  };
+
+  return (
+    <div style={snackbarContainerStyle}>
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            style={snackbarStyle}
+            initial={{ opacity: 0, y: -50, x: 50 }}
+            animate={{ opacity: 1, y: 0, x: 0 }}
+            exit={{ opacity: 0, y: -50, x: 50 }}
+            transition={{
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1],
+            }}
+          >
+            <span style={{ flex: 1 }}>{message}</span>
+            <button
+              style={closeButtonHoverStyle}
+              onClick={onClose}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              aria-label="Close notification"
+            >
+              ×
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 const OrderForm = ({ onCloseModal }) => {
   const [name, setName] = useState("");
@@ -106,7 +186,7 @@ const OrderForm = ({ onCloseModal }) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       if (response.ok) {

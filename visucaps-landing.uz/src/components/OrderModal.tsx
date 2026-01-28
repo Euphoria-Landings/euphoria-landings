@@ -147,7 +147,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
               {/* Logo Section */}
               <div className="text-center mb-8">
                 <h2 className="text-[28px] md:text-[32px] font-[1000] italic tracking-tighter text-[#1A1A1A] uppercase">
-                  VISU<span className="text-[#4B2C82]">CAPS</span>
+                  VIZU<span className="text-[#4B2C82]">KAPS</span>
                 </h2>
                 <p className="text-gray-400 text-[8px] font-black uppercase tracking-[2px] mt-2 opacity-60">
                   Buyurtmani rasmiylashtirish

@@ -1,6 +1,17 @@
-const TELEGRAM_BOT_TOKEN = "7619799420:AAFpPcxuR36JOhOq7kbDF67x8kgd42Fyxyk";
-const TELEGRAM_CHAT_ID = "-1002656673085";
-const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+const NEXT_PUBLIC_API_URL = "https://artrowell.uz/api";
+
+// Bildirishnoma yaratish (UI uchun)
+const noticeEl = document.createElement("div");
+noticeEl.id = "api-status-notice";
+document.body.appendChild(noticeEl);
+
+function showNotice(msg, type = "error") {
+  noticeEl.textContent = msg;
+  noticeEl.className = `show ${type}`;
+  setTimeout(() => {
+    noticeEl.classList.remove("show");
+  }, 4000);
+}
 
 const forms = document.querySelectorAll(".subscribe__form");
 let isSubmitting = false;
@@ -17,115 +28,89 @@ forms.forEach((form, index) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (isSubmitting) {
-      console.log("Повторная отправка предотвращена");
+    if (isSubmitting) return;
+
+    const nameInput = form.querySelector("[name=name]");
+    const phoneInput = form.querySelector("[name=phone]");
+
+    if (!nameInput || !phoneInput) return;
+
+    if (nameInput.value.trim().length < 2) {
+      showNotice("Ism kamida 2 ta harfdan iborat bo'lishi kerak!");
       return;
     }
+
+    const digitsOnly = phoneInput.value.replace(/\D/g, "");
+    if (digitsOnly.length !== 12) {
+      showNotice("Telefon raqamingizni to'liq kiriting!");
+      return;
+    }
+
     isSubmitting = true;
-    console.log(
-      `handleSubmit вызван для формы ${index}:`,
-      new Date().toISOString()
-    );
-
-    const modal = document.getElementById("modal");
-    if (submitBtn) submitBtn.disabled = true;
-    if (submitBtn2) submitBtn2.disabled = true;
-    if (modal && modal.style.display === "flex") {
-      modal.style.display = "none";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Yuborilmoqda...";
     }
 
-    const name = form.querySelector("[name=name]");
-    const phone = form.querySelector("[name=phone]");
+    const payload = {
+      full_name: nameInput.value.trim(),
+      phone_number: `+${digitsOnly}`,
+      product_name: "GrowX",
+    };
 
-    if (!name || !phone) {
-      console.error("name or phone not found");
-      isSubmitting = false;
-      if (submitBtn) submitBtn.disabled = false;
-      if (submitBtn2) submitBtn2.disabled = false;
-      return;
-    }
-
-    if (name.value.trim().length < 2) {
-      alert("Ism eng kamida 2 ta belgidan iborat bo'lishi kerak");
-      isSubmitting = false;
-      if (submitBtn) submitBtn.disabled = false;
-      if (submitBtn2) submitBtn2.disabled = false;
-      return;
-    }
-
-    const phoneDigits = phone.value.replace(/\D/g, "");
-    if (!phoneDigits.startsWith("998") || phoneDigits.length !== 12) {
-      alert("Telefon raqamingizni to'g'ri kirittingiz");
-      isSubmitting = false;
-      if (submitBtn) submitBtn.disabled = false;
-      if (submitBtn2) submitBtn2.disabled = false;
-      return;
-    }
-
-    const messageText = `
-Yangi ro'yxatdan o'tish so'rovi:
-Ism: ${name.value.trim()}
-Telefon: ${phone.value.trim()}
-    `;
     try {
-      const response = await fetch(TELEGRAM_API_URL, {
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/leads/`, {
         method: "POST",
-        headers: {
-          accept: "*/*",
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: messageText,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP ошибка! Статус: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      if (result.ok) {
-        name.value = "";
-        phone.value = "+998";
-        window.location.href = "/thanks.html";
+      if (response.ok) {
+        showNotice("Muvaffaqiyatli qabul qilindi!", "success");
+        nameInput.value = "";
+        phoneInput.value = "+998";
+        setTimeout(() => {
+          window.location.href = "/thanks.html";
+        }, 1500);
+      } else if (response.status === 429) {
+        // 429 Error - Spamga qarshi bildirishnoma
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else {
-        alert("Jo'natilishda xatolik yuz berdi");
+        throw new Error();
       }
     } catch (err) {
-      console.error("Ошибка при отправке:", err);
-      alert("Jo'natilishda xatolik yuz berdi");
+      showNotice("Xatolik! Server bilan bog'lanib bo'lmadi.");
     } finally {
       isSubmitting = false;
-      if (submitBtn) submitBtn.disabled = false;
-      if (submitBtn2) submitBtn2.disabled = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "TASDIQLASH";
+      }
     }
   }
 
-  // Удаляем старые обработчики, если они есть
-  form.removeEventListener("submit", handleSubmit);
   form.addEventListener("submit", handleSubmit);
 });
 
+// Telefon formatlash funksiyasi (o'zgarmadi)
 function validatePhoneInput(e) {
   let phoneInput = e.target;
-  let value = phoneInput.value;
+  let value = phoneInput.value.replace(/[^\d]/g, "");
+  if (!value.startsWith("998")) value = "998" + value;
+  if (value.length > 12) value = value.slice(0, 12);
 
-  value = value.replace(/[^\d+]/g, "");
-  if (!value.startsWith("+")) value = "+998";
-  value = value.replace(/\+(?=.*\+)/g, "");
-
-  let digitsOnly = value.replace(/\D/g, "");
-  if (digitsOnly.length > 12) digitsOnly = digitsOnly.slice(0, 12);
-
-  let formatted = `+998`;
-  digitsOnly = digitsOnly.slice(3);
-
-  if (digitsOnly.length > 0) formatted += ` ${digitsOnly.slice(0, 2)}`;
-  if (digitsOnly.length > 2) formatted += ` ${digitsOnly.slice(2, 5)}`;
-  if (digitsOnly.length > 5) formatted += ` ${digitsOnly.slice(5, 7)}`;
-  if (digitsOnly.length > 7) formatted += ` ${digitsOnly.slice(7)}`;
-
+  let formatted = "+998";
+  if (value.length > 3) {
+    let part1 = value.slice(3, 5);
+    let part2 = value.slice(5, 8);
+    let part3 = value.slice(8, 10);
+    let part4 = value.slice(10, 12);
+    if (part1) formatted += ` (${part1})`;
+    if (part2) formatted += ` ${part2}`;
+    if (part3) formatted += ` ${part3}`;
+    if (part4) formatted += ` ${part4}`;
+  }
   phoneInput.value = formatted;
 }
