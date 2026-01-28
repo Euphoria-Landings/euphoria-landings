@@ -10,7 +10,7 @@ const Warning = () => {
           {/* pointer-events-auto: Matnni tanlash yoki bosish imkonini beradi */}
 
           <p className="text-[#E31E24] font-[1000] text-[10px] md:text-[15px] tracking-[2px] md:tracking-[5px] uppercase italic leading-none">
-            BQM. DORI VOSITASI HISOBLANMAYDI.
+            BFQ. DORI VOSITASI HISOBLANMAYDI.
           </p>
 
           <p className="text-white/40 font-bold text-[7px] md:text-[9px] uppercase tracking-[1px] md:tracking-[2px] mt-1.5 max-w-[800px] mx-auto leading-tight">
