@@ -12,6 +12,18 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
@@ -35,13 +47,13 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     }
   }, [isOpen]);
 
-  // Ism kiritish: Faqat harflar (Lotin va Kirill)
+  // Ism kiritish: Faqat harflar (Lotin va Kirill) va bo'sh joy
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Faqat harflar va space qoladi, qolgan hamma narsa (raqam, belgi) o'chiriladi
     const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
     setFormData({ ...formData, name: value });
   };
 
-  // Telefon kiritish: Faqat raqamlar paneli ochiladi
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
     if (!value.startsWith("998")) value = "998" + value.slice(0, 9);
@@ -57,7 +69,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     setFormData({ ...formData, phone: formatted });
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digitsOnly = formData.phone.replace(/\D/g, "");
 
@@ -79,21 +91,23 @@ const handleSubmit = async (e: React.FormEvent) => {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Device-ID": getDeviceId(), // --- HEADER QO'SHILDI ---
+          },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
-      // --- STATUS KODLARINI TEKSHIRISH ---
       if (response.ok) {
         setStatus("success");
         setTimeout(() => onClose(), 3500);
       } else if (response.status === 429) {
-        // Agar bir soat ichida qayta yuborilgan bo'lsa
         setStatus("idle");
-        showNotice("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else {
-        // Boshqa server xatoliklari uchun
         throw new Error();
       }
     } catch (error) {
@@ -101,6 +115,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       showNotice("Xatolik! Server bilan bog'lanib bo'lmadi.");
     }
   };
+
   if (!isOpen) return null;
 
   return (
@@ -112,7 +127,6 @@ const handleSubmit = async (e: React.FormEvent) => {
       />
 
       <div className="relative w-full max-w-[450px] bg-white rounded-[32px] shadow-2xl overflow-hidden">
-        {/* Static Progress (Faqat to'lganda qizil bo'ladi) */}
         <div
           className={`h-1 w-full transition-colors ${
             formData.name.length > 2 && formData.phone.length > 18
@@ -162,17 +176,15 @@ const handleSubmit = async (e: React.FormEvent) => {
                 <input
                   required
                   type="text"
-                  inputMode="text"
                   placeholder="Ismingiz"
                   className="w-full px-6 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-[#CC1D24] transition-all outline-none font-bold text-[#1A1A1A]"
                   value={formData.name}
-                  onChange={handleNameChange}
+                  onChange={handleNameChange} // --- FAQAT HARFLAR FILTRI ---
                 />
 
                 <input
                   required
                   type="tel"
-                  inputMode="tel"
                   placeholder="+998 (__) ___ __ __"
                   className="w-full px-6 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-[#CC1D24] transition-all outline-none font-bold text-[#1A1A1A]"
                   value={formData.phone}

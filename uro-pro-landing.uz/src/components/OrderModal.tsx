@@ -13,6 +13,17 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   // Modal ochilganda holatni tozalash
   useEffect(() => {
     if (isOpen) {
@@ -27,7 +38,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
   // Ism kiritishda faqat harflarni qabul qilish
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, "");
+    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
     setFormData({ ...formData, name: value });
   };
 
@@ -62,13 +73,16 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Device-ID": getDeviceId(), // --- HEADER QO'SHILDI ---
+          },
           body: JSON.stringify({
             full_name: formData.name,
             phone_number: `+${digitsOnly}`,
             product_name: "UroPro",
           }),
-        }
+        },
       );
 
       if (response.ok) {
@@ -76,18 +90,19 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         setTimeout(() => onClose(), 3000);
       } else if (response.status === 429) {
         setStatus("idle");
-        setSnackbar({ 
-          isVisible: true, 
-          message: "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring." 
+        setSnackbar({
+          isVisible: true,
+          message:
+            "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
         });
       } else {
         throw new Error();
       }
     } catch (error) {
       setStatus("idle");
-      setSnackbar({ 
-        isVisible: true, 
-        message: "Xatolik yuz berdi! Server bilan bog'lanib bo'lmadi." 
+      setSnackbar({
+        isVisible: true,
+        message: "Xatolik yuz berdi! Server bilan bog'lanib bo'lmadi.",
       });
     }
   };
@@ -126,7 +141,14 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
             {status === "success" ? (
               <div className="py-10 text-center animate-in fade-in zoom-in duration-300">
                 <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 shadow-lg">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                  <svg
+                    width="40"
+                    height="40"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  >
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 </div>
@@ -150,11 +172,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div
-                    className={`relative bg-slate-50 border-2 rounded-2xl transition-all duration-300 ${
-                      activeField === "name"
-                        ? "border-[#E31E24] bg-white shadow-sm"
-                        : "border-transparent"
-                    }`}
+                    className={`relative bg-slate-50 border-2 rounded-2xl transition-all duration-300 ${activeField === "name" ? "border-[#E31E24] bg-white shadow-sm" : "border-transparent"}`}
                   >
                     <input
                       required
@@ -162,42 +180,41 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                       placeholder="Ismingiz"
                       onFocus={() => setActiveField("name")}
                       onBlur={() => setActiveField(null)}
-                      className="w-full pl-6 pr-6 py-4 bg-transparent outline-none font-bold text-[#1A2B3C] placeholder:text-slate-300"
+                      className="w-full pl-6 pr-6 py-4 bg-transparent outline-none font-bold text-[#1A2B3C]"
                       value={formData.name}
                       onChange={handleNameChange}
                     />
                   </div>
 
                   <div
-                    className={`relative bg-slate-50 border-2 rounded-2xl transition-all duration-300 ${
-                      activeField === "phone"
-                        ? "border-[#E31E24] bg-white shadow-sm"
-                        : "border-transparent"
-                    }`}
+                    className={`relative bg-slate-50 border-2 rounded-2xl transition-all duration-300 ${activeField === "phone" ? "border-[#E31E24] bg-white shadow-sm" : "border-transparent"}`}
                   >
                     <input
                       required
-                      type="text"
+                      type="tel"
+                      inputMode="numeric"
                       placeholder="+998 (__) ___ __ __"
                       onFocus={() => setActiveField("phone")}
                       onBlur={() => setActiveField(null)}
-                      className="w-full pl-6 pr-6 py-4 bg-transparent outline-none font-bold text-[#1A2B3C] placeholder:text-slate-300"
+                      className="w-full pl-6 pr-6 py-4 bg-transparent outline-none font-bold text-[#1A2B3C]"
                       value={formData.phone}
                       onChange={handlePhoneChange}
                     />
                   </div>
 
                   <button
-                    disabled={status === "loading" || formData.name.length < 2 || formData.phone.length < 19}
-                    className="w-full py-5 bg-[#E31E24] text-white rounded-2xl font-[1000] uppercase tracking-[2px] text-xs shadow-xl shadow-red-600/20 hover:bg-[#1A2B3C] active:scale-[0.98] disabled:bg-slate-100 disabled:text-slate-300 disabled:shadow-none transition-all duration-300"
+                    disabled={
+                      status === "loading" ||
+                      formData.name.length < 2 ||
+                      formData.phone.length < 19
+                    }
+                    className="w-full py-5 bg-[#E31E24] text-white rounded-2xl font-[1000] uppercase tracking-[2px] text-xs shadow-xl shadow-red-600/20 hover:bg-[#1A2B3C] active:scale-[0.98] disabled:bg-slate-100 disabled:text-slate-300 transition-all duration-300"
                   >
-                    {status === "loading" ? "Yuborilmoqda..." : "Buyurtmani tasdiqlash"}
+                    {status === "loading"
+                      ? "Yuborilmoqda..."
+                      : "Buyurtmani tasdiqlash"}
                   </button>
                 </form>
-
-                <p className="text-center text-[8px] text-slate-400 mt-6 leading-relaxed uppercase font-bold tracking-tighter">
-                  Ma'lumotlaringiz maxfiyligi kafolatlanadi
-                </p>
               </div>
             )}
           </div>
@@ -206,7 +223,14 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
             onClick={onClose}
             className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-400 hover:bg-[#E31E24] hover:text-white transition-all duration-300"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+            >
               <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           </button>

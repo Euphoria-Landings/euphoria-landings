@@ -12,6 +12,18 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI (TO'LIQ HOLATDA) ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -59,7 +71,11 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // --- UNIQUE HEADER QO'SHILDI ---
+            "X-Device-ID": getDeviceId(),
+          },
           body: JSON.stringify({
             full_name: formData.name,
             phone_number: `+${digitsOnly}`,

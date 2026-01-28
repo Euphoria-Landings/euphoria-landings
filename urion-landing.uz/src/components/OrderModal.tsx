@@ -16,6 +16,17 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/leads/`;
 
   const progress =
@@ -33,9 +44,9 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     }
   }, [isOpen]);
 
-  // Ism kiritish: Faqat harflar
+  // Ism kiritish: Faqat harflar va bo'sh joy
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, "");
+    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
     setFormData({ ...formData, name: value });
   };
 
@@ -69,7 +80,11 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // --- UNIQUE DEVICE ID YUBORISH ---
+          "X-Device-ID": getDeviceId(),
+        },
         body: JSON.stringify({
           full_name: formData.name,
           phone_number: `+${cleanPhone}`,
@@ -114,7 +129,6 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       <div className="absolute inset-0" onClick={onClose} />
 
       <div className="relative w-full max-w-[480px] bg-white rounded-[45px] shadow-[0_30px_100px_rgba(0,0,0,0.5)] overflow-hidden">
-        {/* Progress Bar */}
         <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100">
           <div
             className={`h-full transition-all duration-300 ${
@@ -126,7 +140,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
         <div className="p-8 md:p-12">
           {status === "success" ? (
-            <div className="py-12 text-center animate-in fade-in zoom-in duration-500">
+            <div className="py-12 text-center">
               <div className="w-24 h-24 bg-green-500 rounded-[30px] flex items-center justify-center text-white shadow-2xl mx-auto mb-8 rotate-[10deg]">
                 <Check size={48} strokeWidth={4} />
               </div>
@@ -140,7 +154,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
           ) : (
             <div>
               <div className="text-center mb-10">
-                <div className="flex items-center justify-center text-4xl md:text-5xl font-[1000] italic tracking-tighter">
+                <div className="flex items-center justify-center text-4xl md:text-5xl font-[1000] italic tracking-tighter uppercase">
                   <span className="text-[#1A2B3C]">URI</span>
                   <Mars
                     strokeWidth={3}
@@ -156,11 +170,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                     Ismingiz:
                   </label>
                   <div
-                    className={`relative flex items-center bg-slate-50 border-2 rounded-[22px] transition-all ${
-                      activeField === "name"
-                        ? "border-[#4FC3F7] bg-white"
-                        : "border-slate-100"
-                    }`}
+                    className={`relative flex items-center bg-slate-50 border-2 rounded-[22px] transition-all ${activeField === "name" ? "border-[#4FC3F7] bg-white" : "border-slate-100"}`}
                   >
                     <span className="pl-6 text-slate-300">
                       <User size={20} strokeWidth={2.5} />
@@ -168,7 +178,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                     <input
                       required
                       type="text"
-                      placeholder="Azizbek"
+                      placeholder="Ismingizni kiriting"
                       onFocus={() => setActiveField("name")}
                       onBlur={() => setActiveField(null)}
                       className="w-full px-4 py-5 bg-transparent outline-none font-bold text-[#1A2B3C] text-sm"
@@ -183,11 +193,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                     Telefon raqam:
                   </label>
                   <div
-                    className={`relative flex items-center bg-slate-50 border-2 rounded-[22px] transition-all ${
-                      activeField === "phone"
-                        ? "border-[#4FC3F7] bg-white"
-                        : "border-slate-100"
-                    }`}
+                    className={`relative flex items-center bg-slate-50 border-2 rounded-[22px] transition-all ${activeField === "phone" ? "border-[#4FC3F7] bg-white" : "border-slate-100"}`}
                   >
                     <span className="pl-6 text-slate-300">
                       <Phone size={20} strokeWidth={2.5} />
@@ -217,8 +223,8 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                   {status === "loading"
                     ? "YUBORILMOQDA..."
                     : status === "error"
-                    ? "XATOLIK!"
-                    : "TASDIQLASH"}
+                      ? "XATOLIK!"
+                      : "TASDIQLASH"}
                 </button>
               </form>
             </div>

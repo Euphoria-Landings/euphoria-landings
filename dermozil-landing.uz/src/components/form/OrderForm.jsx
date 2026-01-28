@@ -34,16 +34,16 @@ const PhoneIcon = () => (
   </svg>
 );
 
-// Snackbar komponenti - type bo'yicha rang o'zgaradi
+// Snackbar komponenti
 const Snackbar = ({ isVisible, message, onClose, type = "success" }) => {
   const getBackgroundColor = () => {
     switch (type) {
       case "success":
-        return "#10b981"; // Yashil
+        return "#10b981";
       case "error":
-        return "#ef4444"; // Qizil
+        return "#ef4444";
       case "warning":
-        return "#f59e0b"; // Sariq
+        return "#f59e0b";
       default:
         return "#10b981";
     }
@@ -98,11 +98,6 @@ const Snackbar = ({ isVisible, message, onClose, type = "success" }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
-  const closeButtonHoverStyle = {
-    ...closeButtonStyle,
-    backgroundColor: isHovered ? "rgba(255, 255, 255, 0.2)" : "transparent",
-  };
-
   return (
     <div style={snackbarContainerStyle}>
       <AnimatePresence>
@@ -112,18 +107,19 @@ const Snackbar = ({ isVisible, message, onClose, type = "success" }) => {
             initial={{ opacity: 0, y: -50, x: 50 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, y: -50, x: 50 }}
-            transition={{
-              duration: 0.4,
-              ease: [0.4, 0, 0.2, 1],
-            }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             <span style={{ flex: 1 }}>{message}</span>
             <button
-              style={closeButtonHoverStyle}
+              style={{
+                ...closeButtonStyle,
+                backgroundColor: isHovered
+                  ? "rgba(255, 255, 255, 0.2)"
+                  : "transparent",
+              }}
               onClick={onClose}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              aria-label="Close notification"
             >
               ×
             </button>
@@ -140,7 +136,17 @@ const OrderForm = ({ onCloseModal }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Snackbar holati - type qo'shildi
+  // --- QURILMA IDsini OLISH YOKI YARATISH LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const [snackbar, setSnackbar] = useState({
     isVisible: false,
     message: "",
@@ -164,13 +170,11 @@ const OrderForm = ({ onCloseModal }) => {
     if (!value) return "";
     const cleaned = value.replace(/\D/g, "");
     let formatted = "+998";
-
     if (cleaned.length < 4) return formatted;
     formatted += " " + cleaned.substring(3, 5);
     if (cleaned.length >= 6) formatted += " " + cleaned.substring(5, 8);
     if (cleaned.length >= 9) formatted += " " + cleaned.substring(8, 10);
     if (cleaned.length >= 11) formatted += " " + cleaned.substring(10, 12);
-
     return formatted;
   };
 
@@ -207,12 +211,15 @@ const OrderForm = ({ onCloseModal }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // --- HEADER QO'SHILDI ---
+            "X-Device-ID": getDeviceId(),
+          },
           body: JSON.stringify(payload),
         },
       );
 
-      // 429 - Too Many Requests
       if (response.status === 429) {
         showNotice(
           "Juda ko'p so'rov yuborildi. Iltimos, 1 soatdan keyin urinib ko'ring.",
@@ -223,7 +230,6 @@ const OrderForm = ({ onCloseModal }) => {
       }
 
       if (response.ok || response.status === 201) {
-        // MUVAFFAQIYATLI HOLAT
         setIsSuccess(true);
         showNotice(
           "Muvaffaqiyatli! Operatorimiz tez orada bog'lanadi.",
@@ -231,23 +237,18 @@ const OrderForm = ({ onCloseModal }) => {
         );
         setName("");
         setPhone("");
-
-        // 3.5 sekunddan keyin modalni yopish
         setTimeout(() => {
           setIsSuccess(false);
-          if (onCloseModal) {
-            onCloseModal();
-          }
+          if (onCloseModal) onCloseModal();
         }, 3500);
       } else {
-        // Boshqa xatolar
         const errorData = await response.json().catch(() => ({}));
-        const errorMessage =
-          errorData.message || "Xatolik! Ma'lumot yuborishda muammo bo'ldi.";
-        showNotice(errorMessage, "error");
+        showNotice(
+          errorData.message || "Xatolik! Ma'lumot yuborishda muammo bo'ldi.",
+          "error",
+        );
       }
     } catch (error) {
-      console.error("Submit error:", error);
       showNotice("Server bilan aloqa uzildi. Internetni tekshiring.", "error");
     } finally {
       setIsLoading(false);
@@ -256,7 +257,6 @@ const OrderForm = ({ onCloseModal }) => {
 
   return (
     <>
-      {/* Snackbar - type parametri bilan */}
       <Snackbar
         isVisible={snackbar.isVisible}
         message={snackbar.message}

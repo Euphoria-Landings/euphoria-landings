@@ -13,6 +13,18 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- QURILMA IDsini OLISH YOKI YARATISH ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
@@ -71,10 +83,14 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // --- X-DEVICE-ID HEADER QO'SHILDI ---
+            "X-Device-ID": getDeviceId(),
+          },
           body: JSON.stringify({
             full_name: formData.name,
-            phone_number: `+${digitsOnly}`, // Backendga "+" bilan yuborish
+            phone_number: `+${digitsOnly}`,
             product_name: "Cardio Balance",
           }),
         },
@@ -85,13 +101,11 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         setStatus("success");
         setTimeout(() => onClose(), 4000);
       } else if (response.status === 429) {
-        // --- LIMIT LOGIKASI (Too Many Requests) ---
         setStatus("idle");
         showNotice(
           "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
         );
       } else {
-        // 400 yoki boshqa server xatolari
         throw new Error();
       }
     } catch (error) {

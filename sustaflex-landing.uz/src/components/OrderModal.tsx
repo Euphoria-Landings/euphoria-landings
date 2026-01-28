@@ -13,6 +13,17 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
@@ -40,6 +51,12 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     }
   }, [isOpen]);
 
+  // Ism kiritish: Faqat harflar filtri
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
+    setFormData({ ...formData, name: value });
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
     if (!value.startsWith("998")) value = "998" + value;
@@ -55,7 +72,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     setFormData({ ...formData, phone: formatted });
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digitsOnly = formData.phone.replace(/\D/g, "");
 
@@ -77,21 +94,23 @@ const handleSubmit = async (e: React.FormEvent) => {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Device-ID": getDeviceId(), // --- HEADER QO'SHILDI ---
+          },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
-      // --- STATUS KODLARINI TEKSHIRISH ---
       if (response.ok) {
         setStatus("success");
         setTimeout(() => onClose(), 4000);
       } else if (response.status === 429) {
-        // Limit xatosi (Too Many Requests)
         setStatus("idle");
-        showNotice("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else {
-        // 400 yoki boshqa server xatolari
         throw new Error();
       }
     } catch (error) {
@@ -111,11 +130,9 @@ const handleSubmit = async (e: React.FormEvent) => {
       />
 
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-[#1A1A1A]/80 backdrop-blur-xl">
-        {/* Overlay click to close */}
         <div className="absolute inset-0" onClick={onClose} />
 
         <div className="relative w-full max-w-[500px] bg-white rounded-[50px] shadow-[0_50px_100px_rgba(0,0,0,0.4)] overflow-hidden">
-          {/* Progress Bar */}
           <div className="absolute top-0 left-0 w-full h-2 bg-gray-100">
             <div
               className="h-full bg-red-600 transition-all duration-300"
@@ -138,7 +155,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                     <path d="M20 6L9 17l-5-5" />
                   </svg>
                 </div>
-                <h3 className="text-3xl font-black text-[#1A1A1A] mb-4">
+                <h3 className="text-3xl font-black text-[#1A1A1A] mb-4 uppercase">
                   Qabul qilindi!
                 </h3>
                 <p className="text-gray-500 font-bold max-w-[250px] mx-auto leading-relaxed">
@@ -160,14 +177,9 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name Input */}
                   <div className="relative">
                     <div
-                      className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${
-                        activeField === "name"
-                          ? "border-red-600"
-                          : "border-[#F3F4F6]"
-                      }`}
+                      className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${activeField === "name" ? "border-red-600" : "border-[#F3F4F6]"}`}
                     >
                       <span className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300">
                         <svg
@@ -190,21 +202,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                         onBlur={() => setActiveField(null)}
                         className="w-full pl-16 pr-6 py-5 bg-transparent outline-none font-bold text-[#1A1A1A] placeholder:text-gray-300"
                         value={formData.name}
-                        onChange={(e) =>
-                          setFormData({ ...formData, name: e.target.value })
-                        }
+                        onChange={handleNameChange}
                       />
                     </div>
                   </div>
 
-                  {/* Phone Input - Keyboard optimized */}
                   <div className="relative">
                     <div
-                      className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${
-                        activeField === "phone"
-                          ? "border-red-600"
-                          : "border-[#F3F4F6]"
-                      }`}
+                      className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${activeField === "phone" ? "border-red-600" : "border-[#F3F4F6]"}`}
                     >
                       <span className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300">
                         <svg
@@ -225,14 +230,13 @@ const handleSubmit = async (e: React.FormEvent) => {
                         placeholder="+998 (__) ___ __ __"
                         onFocus={() => setActiveField("phone")}
                         onBlur={() => setActiveField(null)}
-                        className="w-full pl-16 pr-6 py-5 bg-transparent outline-none font-bold text-[#1A1A1A] placeholder:text-gray-300"
+                        className="w-full pl-16 pr-6 py-5 bg-transparent outline-none font-bold text-[#1A1A1A]"
                         value={formData.phone}
                         onChange={handlePhoneChange}
                       />
                     </div>
                   </div>
 
-                  {/* Submit Button */}
                   <button
                     disabled={status === "loading" || progress < 100}
                     className="relative w-full py-6 bg-red-600 rounded-3xl text-white font-black uppercase tracking-[3px] text-xs shadow-2xl shadow-red-500/40 disabled:bg-gray-200 transition-all active:scale-[0.98]"
@@ -243,7 +247,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </button>
                 </form>
 
-                <p className="text-center text-[9px] text-gray-400 mt-8 leading-relaxed px-4">
+                <p className="text-center text-[9px] text-gray-400 mt-8 leading-relaxed px-4 uppercase font-bold tracking-tighter">
                   Tugmani bosish orqali siz shaxsiy ma'lumotlarni qayta
                   ishlashga rozilik bildirasiz
                 </p>
@@ -251,7 +255,6 @@ const handleSubmit = async (e: React.FormEvent) => {
             )}
           </div>
 
-          {/* Close Button */}
           <button
             onClick={onClose}
             className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-600 transition-all"

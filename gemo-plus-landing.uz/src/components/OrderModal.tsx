@@ -13,6 +13,18 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI (TO'LIQ INTEGRATSIYA) ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
@@ -55,7 +67,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     setFormData({ ...formData, phone: formatted });
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digitsOnly = formData.phone.replace(/\D/g, "");
 
@@ -77,21 +89,24 @@ const handleSubmit = async (e: React.FormEvent) => {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // --- HEADER QO'SHILDI ---
+            "X-Device-ID": getDeviceId(),
+          },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
-      // --- STATUS KODLARINI TEKSHIRISH ---
       if (response.ok) {
         setStatus("success");
         setTimeout(() => onClose(), 4000);
       } else if (response.status === 429) {
-        // --- 429 LIMIT LOGIKASI ---
         setStatus("idle");
-        showNotice("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else {
-        // Boshqa server xatoliklari (400, 500 va h.k.)
         throw new Error();
       }
     } catch (error) {
@@ -99,6 +114,7 @@ const handleSubmit = async (e: React.FormEvent) => {
       showNotice("Xatolik yuz berdi! Server bilan bog'lanib bo'lmadi.");
     }
   };
+
   if (!isOpen) return null;
 
   return (
@@ -113,7 +129,6 @@ const handleSubmit = async (e: React.FormEvent) => {
         <div className="absolute inset-0" onClick={onClose} />
 
         <div className="relative w-full max-w-[500px] bg-white rounded-[50px] shadow-[0_50px_100px_rgba(0,0,0,0.4)] overflow-hidden">
-          {/* Progress Bar (Tilla rangda) */}
           <div className="absolute top-0 left-0 w-full h-2 bg-gray-100">
             <div
               className="h-full bg-[#C5A358] transition-all duration-300"
@@ -158,7 +173,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Ism kiritish */}
                   <div className="relative">
                     <div
                       className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${
@@ -195,7 +209,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </div>
                   </div>
 
-                  {/* Telefon raqami */}
                   <div className="relative">
                     <div
                       className={`bg-gray-50 border-2 rounded-3xl overflow-hidden transition-all duration-200 ${
@@ -230,7 +243,6 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </div>
                   </div>
 
-                  {/* Buyurtma berish tugmasi */}
                   <button
                     disabled={status === "loading" || progress < 100}
                     className="relative w-full py-6 bg-[#1A1A1A] rounded-3xl text-white font-black uppercase tracking-[3px] text-xs shadow-2xl shadow-gray-900/40 disabled:bg-gray-200 transition-all active:scale-[0.98] border-b-4 border-[#C5A358]/50"
@@ -249,7 +261,6 @@ const handleSubmit = async (e: React.FormEvent) => {
             )}
           </div>
 
-          {/* Yopish tugmasi */}
           <button
             onClick={onClose}
             className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-50 text-gray-400 hover:bg-[#C5A358]/10 hover:text-[#C5A358] transition-all"

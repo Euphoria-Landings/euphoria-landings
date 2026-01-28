@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Leaf, User, Phone, X, Check } from "lucide-react";
+import { User, Phone, X, Check } from "lucide-react";
 import { Snackbar } from "./ui/Snackbar";
 
 interface OrderModalProps {
@@ -15,9 +15,22 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   >("idle");
   const [activeField, setActiveField] = useState<"name" | "phone" | null>(null);
 
-  // Snackbar va xabarlarni boshqarish
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("Server bilan bog'lanishda xatolik!");
+  const [errorMessage, setErrorMessage] = useState(
+    "Server bilan bog'lanishda xatolik!",
+  );
+
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
 
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/leads/`;
 
@@ -35,6 +48,12 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       document.body.style.overflow = "auto";
     }
   }, [isOpen]);
+
+  // Ism kiritish: Faqat harflar (Lotin va Kirill)
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s]/g, "");
+    setFormData({ ...formData, name: value });
+  };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.replace(/\D/g, "");
@@ -61,10 +80,14 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // --- HEADER INTEGRATSIYASI ---
+          "X-Device-ID": getDeviceId(),
+        },
         body: JSON.stringify({
           full_name: formData.name,
-          phone_number: `+${cleanPhone}`, // Backend uchun plyus bilan
+          phone_number: `+${cleanPhone}`,
           product_name: "ParazitOFF",
         }),
       });
@@ -73,9 +96,10 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         setStatus("success");
         setTimeout(() => onClose(), 4000);
       } else if (response.status === 429) {
-        // --- 429 TOO MANY REQUESTS ---
         setStatus("error");
-        setErrorMessage("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        setErrorMessage(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
         setShowError(true);
         setTimeout(() => {
           setStatus("idle");
@@ -99,7 +123,6 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-[#002D25]/90 backdrop-blur-md">
-      {/* Snackbar endi dinamik errorMessage'ni ko'rsatadi */}
       <Snackbar
         isVisible={showError}
         message={errorMessage}
@@ -163,9 +186,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                       onBlur={() => setActiveField(null)}
                       className="w-full px-4 py-5 bg-transparent outline-none font-bold text-[#004D40] text-sm"
                       value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
+                      onChange={handleNameChange}
                     />
                   </div>
                 </div>
@@ -209,8 +230,8 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                   {status === "loading"
                     ? "YUBORILMOQDA..."
                     : status === "error"
-                    ? "XATOLIK!"
-                    : "BUYURTMA BERISH"}
+                      ? "XATOLIK!"
+                      : "BUYURTMA BERISH"}
                 </button>
               </form>
             </div>

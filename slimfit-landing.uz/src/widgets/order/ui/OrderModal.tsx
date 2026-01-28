@@ -18,11 +18,21 @@ export const OrderModal = ({
   // Snackbar holati
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- DEVICE ID LOGIKASI ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
 
-  // 4 sekunddan keyin avtomatik yopish
   useEffect(() => {
     if (snackbar.isVisible) {
       const timer = setTimeout(() => {
@@ -32,8 +42,9 @@ export const OrderModal = ({
     }
   }, [snackbar.isVisible]);
 
+  // Ism filtri: Faqat harflar va birinchi harfni avtomatik katta qilish
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
     const formattedName = value.charAt(0).toUpperCase() + value.slice(1);
     setFormData({ ...formData, name: formattedName });
   };
@@ -78,7 +89,10 @@ export const OrderModal = ({
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Device-ID": getDeviceId(), // --- HEADER INTEGRATSIYASI ---
+          },
           body: JSON.stringify(payload),
         },
       );
@@ -86,7 +100,6 @@ export const OrderModal = ({
       if (response.ok) {
         setStep(2);
       } else if (response.status === 429) {
-        // --- 429 TOO MANY REQUESTS LOGIKASI ---
         showNotice(
           "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
         );
@@ -144,7 +157,7 @@ export const OrderModal = ({
                         required
                         className="w-full p-5 mt-1 bg-slate-50 border-2 border-transparent focus:border-yellow-400 rounded-3xl outline-none font-bold text-black transition-all"
                         value={formData.name}
-                        onChange={handleNameChange}
+                        onChange={handleNameChange} // --- FAQAT HARFLAR VA FORMATLASH ---
                         placeholder="Masalan: Ali"
                       />
                     </div>

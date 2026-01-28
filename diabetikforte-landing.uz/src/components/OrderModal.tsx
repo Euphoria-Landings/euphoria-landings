@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Activity, User, Phone, X, Check } from "lucide-react";
-import { Snackbar } from "./ui/Snackbar"; // Snackbar import qilindi
+import { Snackbar } from "./ui/Snackbar";
 
 interface OrderModalProps {
   isOpen: boolean;
@@ -20,6 +20,18 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [errorMessage, setErrorMessage] = useState(
     "Server bilan bog'lanishda xatolik!",
   );
+
+  // --- DEVICE ID LOGIKASI (HECH QANDAY O'ZGARISHLARSIZ) ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return "";
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
 
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/leads/`;
 
@@ -63,10 +75,14 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     try {
       const response = await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // --- UNIQUE DEVICE ID YUBORISH ---
+          "X-Device-ID": getDeviceId(),
+        },
         body: JSON.stringify({
           full_name: formData.name,
-          phone_number: `+${cleanPhone}`, // Plyus belgisi qo'shildi
+          phone_number: `+${cleanPhone}`,
           product_name: "diabetik_forte_web",
         }),
       });
@@ -75,7 +91,6 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         setStatus("success");
         setTimeout(() => onClose(), 4000);
       } else if (response.status === 429) {
-        // --- 429 LIMIT HANDLING ---
         setStatus("error");
         setErrorMessage(
           "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",

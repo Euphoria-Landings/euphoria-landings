@@ -1,19 +1,28 @@
 const NEXT_PUBLIC_API_URL = "https://artrowell.uz/api";
 
+// --- DEVICE ID FUNKSIYASI ---
+function getDeviceId() {
+  let deviceId = localStorage.getItem("device_id");
+  if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem("device_id", deviceId);
+  }
+  return deviceId;
+}
+
 // 1. Bildirishnoma (Notice) elementi yaratish
 const noticeEl = document.createElement("div");
 noticeEl.id = "api-status-notice";
 
-// Snackbar uchun universal stillar
 Object.assign(noticeEl.style, {
   position: "fixed",
-  left: "50%", // Telefonda markazlash uchun
-  transform: "translateX(-50%) translateY(-20px)", // Markazda va biroz tepada
+  left: "50%",
+  transform: "translateX(-50%) translateY(-20px)",
   top: "20px",
   padding: "14px 24px",
   borderRadius: "12px",
   color: "#ffffff",
-  zIndex: "1000000", // Eng ustki qatlam
+  zIndex: "1000000",
   display: "none",
   fontWeight: "600",
   fontSize: "15px",
@@ -21,13 +30,12 @@ Object.assign(noticeEl.style, {
   boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
   opacity: "0",
   textAlign: "center",
-  width: "90%", // Telefonda ekran chetiga yopishib qolmasligi uchun
-  maxWidth: "400px", // Kompyuterda haddan tashqari kengayib ketmasligi uchun
+  width: "90%",
+  maxWidth: "400px",
   transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-  pointerEvents: "none", // Xabar ustiga bosilganda ostidagi elementlarga xalaqit bermaslik uchun
+  pointerEvents: "none",
 });
 
-// Kompyuterlar uchun stilni biroz o'zgartiramiz (ekran keng bo'lsa o'ng tomonga olamiz)
 function applyResponsiveStyles() {
   if (window.innerWidth > 768) {
     noticeEl.style.left = "auto";
@@ -42,19 +50,15 @@ function applyResponsiveStyles() {
   }
 }
 
-// Sahifa yuklanganda va o'lcham o'zgarganda tekshirish
 window.addEventListener("resize", applyResponsiveStyles);
 applyResponsiveStyles();
-
 document.body.appendChild(noticeEl);
 
-// Bildirishnoma ko'rsatish funksiyasi
 function showNotice(msg, type = "error") {
   noticeEl.textContent = msg;
   noticeEl.style.display = "block";
   noticeEl.style.backgroundColor = type === "success" ? "#10B981" : "#EF4444";
 
-  // Animatsiyani ishga tushirish
   setTimeout(() => {
     noticeEl.style.opacity = "1";
     if (window.innerWidth > 768) {
@@ -64,7 +68,6 @@ function showNotice(msg, type = "error") {
     }
   }, 10);
 
-  // 4 sekunddan keyin yashirish
   setTimeout(() => {
     noticeEl.style.opacity = "0";
     if (window.innerWidth > 768) {
@@ -78,7 +81,7 @@ function showNotice(msg, type = "error") {
   }, 4000);
 }
 
-// 2. Telefon formatlash funksiyasi
+// 2. Formatlash funksiyalari
 function formatPhoneInput(e) {
   let phoneInput = e.target;
   let value = phoneInput.value.replace(/[^\d]/g, "");
@@ -97,6 +100,12 @@ function formatPhoneInput(e) {
     if (part4) formatted += ` ${part4}`;
   }
   phoneInput.value = formatted;
+}
+
+// --- ISM UCHUN FAQAT HARFLAR FILTRI ---
+function formatNameInput(e) {
+  // Faqat lotin, kirill harflari va bo'sh joy qoldiriladi
+  e.target.value = e.target.value.replace(/[^a-zA-Zа-яА-ЯёЁсС\s]/g, "");
 }
 
 // 3. Modalni boshqarish
@@ -131,6 +140,7 @@ let isSubmitting = false;
 forms.forEach((form) => {
   const phoneInput =
     form.querySelector("#phone") || form.querySelector("[name=phone]");
+  const nameInput = form.querySelector("[name=name]");
   const submitBtn = form.querySelector(".submit__button");
 
   if (phoneInput) {
@@ -144,11 +154,15 @@ forms.forEach((form) => {
     });
   }
 
+  // Ism filtrini qo'shish
+  if (nameInput) {
+    nameInput.addEventListener("input", formatNameInput);
+  }
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
     if (isSubmitting) return;
 
-    const nameInput = form.querySelector("[name=name]");
     const phoneField = form.querySelector("[name=phone]");
     const digitsOnly = phoneField ? phoneField.value.replace(/\D/g, "") : "";
 
@@ -157,7 +171,7 @@ forms.forEach((form) => {
       return;
     }
     if (nameInput.value.trim().length < 2) {
-      showNotice("Ismingizni kiriting!");
+      showNotice("Ismingizni to'g'ri kiriting!");
       return;
     }
     if (digitsOnly.length !== 12) {
@@ -177,6 +191,8 @@ forms.forEach((form) => {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          // --- UNIQUE DEVICE ID YUBORISH ---
+          "X-Device-ID": getDeviceId(),
         },
         body: JSON.stringify({
           full_name: nameInput.value.trim(),
@@ -186,9 +202,14 @@ forms.forEach((form) => {
       });
 
       if (response.status === 429) {
-        showNotice("Juda ko'p urinish! Birozdan keyin urinib ko'ring.");
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else if (response.ok || response.status === 201) {
-        showNotice("Muvaffaqiyatli yuborildi! Tez orada bog'lanamiz ", "success");
+        showNotice(
+          "Muvaffaqiyatli yuborildi! Tez orada bog'lanamiz ",
+          "success",
+        );
         form.reset();
         phoneField.value = "+998";
         setTimeout(() => {
@@ -196,7 +217,10 @@ forms.forEach((form) => {
         }, 2000);
       } else {
         const errorData = await response.json().catch(() => ({}));
-        showNotice(errorData.message || "Xatolik yuz berdi. birozdan so'ng qaytadan urinib ko'ring .");
+        showNotice(
+          errorData.message ||
+            "Xatolik yuz berdi. Birozdan so'ng qaytadan urinib ko'ring.",
+        );
       }
     } catch (err) {
       showNotice("Internet aloqasini tekshiring.");
