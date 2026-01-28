@@ -12,6 +12,19 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
 
+  // --- QURILMA IDsini OLISH YOKI YARATISH ---
+  const getDeviceId = () => {
+    if (typeof window === "undefined") return ""; // Server-side rendering uchun himoya
+
+    let deviceId = localStorage.getItem("device_id");
+    if (!deviceId) {
+      // Yangi UUID yaratish
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("device_id", deviceId);
+    }
+    return deviceId;
+  };
+
   const showNotice = (msg: string) => {
     setSnackbar({ isVisible: true, message: msg });
   };
@@ -79,9 +92,13 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            // --- X-DEVICE-ID HEADER QO'SHILDI ---
+            "X-Device-ID": getDeviceId(),
+          },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       // --- STATUS KODLARINI TEKSHIRISH ---
@@ -92,7 +109,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
         // --- 429 LIMIT LOGIKASI ---
         setStatus("idle");
         showNotice(
-          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring."
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
         );
       } else {
         // Boshqa server xatoliklari (400, 500 va h.k.)
