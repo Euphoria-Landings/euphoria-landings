@@ -34,8 +34,21 @@ const PhoneIcon = () => (
   </svg>
 );
 
-// Snackbar komponenti - inline stillar bilan
-const Snackbar = ({ isVisible, message, onClose }) => {
+// Snackbar komponenti - type bo'yicha rang o'zgaradi
+const Snackbar = ({ isVisible, message, onClose, type = "success" }) => {
+  const getBackgroundColor = () => {
+    switch (type) {
+      case "success":
+        return "#10b981"; // Yashil
+      case "error":
+        return "#ef4444"; // Qizil
+      case "warning":
+        return "#f59e0b"; // Sariq
+      default:
+        return "#10b981";
+    }
+  };
+
   const snackbarContainerStyle = {
     position: "fixed",
     top: "20px",
@@ -45,11 +58,17 @@ const Snackbar = ({ isVisible, message, onClose }) => {
   };
 
   const snackbarStyle = {
-    backgroundColor: "#10b981",
+    backgroundColor: getBackgroundColor(),
     color: "#ffffff",
     padding: "16px 24px",
     borderRadius: "12px",
-    boxShadow: "0 10px 40px rgba(16, 185, 129, 0.3)",
+    boxShadow: `0 10px 40px ${
+      type === "error"
+        ? "rgba(239, 68, 68, 0.3)"
+        : type === "warning"
+          ? "rgba(245, 158, 11, 0.3)"
+          : "rgba(16, 185, 129, 0.3)"
+    }`,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -121,11 +140,15 @@ const OrderForm = ({ onCloseModal }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Snackbar holati
-  const [snackbar, setSnackbar] = useState({ isVisible: false, message: "" });
+  // Snackbar holati - type qo'shildi
+  const [snackbar, setSnackbar] = useState({
+    isVisible: false,
+    message: "",
+    type: "success",
+  });
 
-  const showNotice = (msg) => {
-    setSnackbar({ isVisible: true, message: msg });
+  const showNotice = (msg, type = "success") => {
+    setSnackbar({ isVisible: true, message: msg, type });
   };
 
   useEffect(() => {
@@ -162,19 +185,19 @@ const OrderForm = ({ onCloseModal }) => {
     const digitsOnly = phone.replace(/\D/g, "");
 
     if (!name.trim()) {
-      showNotice("Iltimos, ismingizni kiriting.");
+      showNotice("Iltimos, ismingizni kiriting.", "warning");
       return;
     }
 
     if (digitsOnly.length !== 12) {
-      showNotice("Telefon raqamini to'liq kiriting.");
+      showNotice("Telefon raqamini to'liq kiriting.", "warning");
       return;
     }
 
     setIsLoading(true);
 
     const payload = {
-      full_name: name,
+      full_name: name.trim(),
       phone_number: `+${digitsOnly}`,
       product_name: "Dermozil",
     };
@@ -189,25 +212,43 @@ const OrderForm = ({ onCloseModal }) => {
         },
       );
 
-      if (response.ok) {
-        // MUVAFFARIYATLI HOLAT
+      // 429 - Too Many Requests
+      if (response.status === 429) {
+        showNotice(
+          "Juda ko'p so'rov yuborildi. Iltimos, 1 soatdan keyin urinib ko'ring.",
+          "error",
+        );
+        setIsLoading(false);
+        return;
+      }
+
+      if (response.ok || response.status === 201) {
+        // MUVAFFAQIYATLI HOLAT
         setIsSuccess(true);
-        showNotice("Muvaffaqiyatli! Operatorimiz tez orada bog'lanadi.");
+        showNotice(
+          "Muvaffaqiyatli! Operatorimiz tez orada bog'lanadi.",
+          "success",
+        );
         setName("");
         setPhone("");
 
-        // 3 sekunddan keyin modalni yopish
+        // 3.5 sekunddan keyin modalni yopish
         setTimeout(() => {
           setIsSuccess(false);
           if (onCloseModal) {
-            onCloseModal(); // Bu funksiya modalni yopadi
+            onCloseModal();
           }
         }, 3500);
       } else {
-        showNotice("Xatolik! Ma'lumot yuborishda muammo bo'ldi.");
+        // Boshqa xatolar
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage =
+          errorData.message || "Xatolik! Ma'lumot yuborishda muammo bo'ldi.";
+        showNotice(errorMessage, "error");
       }
     } catch (error) {
-      showNotice("Server bilan aloqa uzildi. Internetni tekshiring.");
+      console.error("Submit error:", error);
+      showNotice("Server bilan aloqa uzildi. Internetni tekshiring.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -215,10 +256,11 @@ const OrderForm = ({ onCloseModal }) => {
 
   return (
     <>
-      {/* Snackbar har doim eng tepada ko'rinishi uchun */}
+      {/* Snackbar - type parametri bilan */}
       <Snackbar
         isVisible={snackbar.isVisible}
         message={snackbar.message}
+        type={snackbar.type}
         onClose={() => setSnackbar((prev) => ({ ...prev, isVisible: false }))}
       />
 
