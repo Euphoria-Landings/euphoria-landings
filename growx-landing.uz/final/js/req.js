@@ -1,116 +1,175 @@
 const NEXT_PUBLIC_API_URL = "https://artrowell.uz/api";
 
-// Bildirishnoma elementi yaratish
+// 1. Bildirishnoma (Notice) elementi yaratish
 const noticeEl = document.createElement("div");
 noticeEl.id = "api-status-notice";
+
+// Snackbar uchun universal stillar
+Object.assign(noticeEl.style, {
+  position: "fixed",
+  left: "50%", // Telefonda markazlash uchun
+  transform: "translateX(-50%) translateY(-20px)", // Markazda va biroz tepada
+  top: "20px",
+  padding: "14px 24px",
+  borderRadius: "12px",
+  color: "#ffffff",
+  zIndex: "1000000", // Eng ustki qatlam
+  display: "none",
+  fontWeight: "600",
+  fontSize: "15px",
+  fontFamily: "sans-serif",
+  boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+  opacity: "0",
+  textAlign: "center",
+  width: "90%", // Telefonda ekran chetiga yopishib qolmasligi uchun
+  maxWidth: "400px", // Kompyuterda haddan tashqari kengayib ketmasligi uchun
+  transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  pointerEvents: "none", // Xabar ustiga bosilganda ostidagi elementlarga xalaqit bermaslik uchun
+});
+
+// Kompyuterlar uchun stilni biroz o'zgartiramiz (ekran keng bo'lsa o'ng tomonga olamiz)
+function applyResponsiveStyles() {
+  if (window.innerWidth > 768) {
+    noticeEl.style.left = "auto";
+    noticeEl.style.right = "20px";
+    noticeEl.style.transform = "translateY(-20px)";
+    noticeEl.style.width = "auto";
+  } else {
+    noticeEl.style.left = "50%";
+    noticeEl.style.right = "auto";
+    noticeEl.style.transform = "translateX(-50%) translateY(-20px)";
+    noticeEl.style.width = "90%";
+  }
+}
+
+// Sahifa yuklanganda va o'lcham o'zgarganda tekshirish
+window.addEventListener("resize", applyResponsiveStyles);
+applyResponsiveStyles();
+
 document.body.appendChild(noticeEl);
 
 // Bildirishnoma ko'rsatish funksiyasi
 function showNotice(msg, type = "error") {
   noticeEl.textContent = msg;
-  noticeEl.className = `show ${type}`;
+  noticeEl.style.display = "block";
+  noticeEl.style.backgroundColor = type === "success" ? "#10B981" : "#EF4444";
+
+  // Animatsiyani ishga tushirish
+  setTimeout(() => {
+    noticeEl.style.opacity = "1";
+    if (window.innerWidth > 768) {
+      noticeEl.style.transform = "translateY(0)";
+    } else {
+      noticeEl.style.transform = "translateX(-50%) translateY(0)";
+    }
+  }, 10);
 
   // 4 sekunddan keyin yashirish
   setTimeout(() => {
-    noticeEl.classList.remove("show");
+    noticeEl.style.opacity = "0";
+    if (window.innerWidth > 768) {
+      noticeEl.style.transform = "translateY(-20px)";
+    } else {
+      noticeEl.style.transform = "translateX(-50%) translateY(-20px)";
+    }
+    setTimeout(() => {
+      noticeEl.style.display = "none";
+    }, 400);
   }, 4000);
 }
 
-// Telefon formatlash funksiyasi
+// 2. Telefon formatlash funksiyasi
 function formatPhoneInput(e) {
   let phoneInput = e.target;
   let value = phoneInput.value.replace(/[^\d]/g, "");
+  if (!value.startsWith("998")) value = "998" + value;
+  if (value.length > 12) value = value.slice(0, 12);
 
-  // 998 bilan boshlanishini ta'minlash
-  if (!value.startsWith("998")) {
-    value = "998" + value;
-  }
-
-  // Maksimal 12 ta raqam (998 + 9 ta raqam)
-  if (value.length > 12) {
-    value = value.slice(0, 12);
-  }
-
-  // Formatlash: +998 (XX) XXX XX XX
   let formatted = "+998";
   if (value.length > 3) {
-    let part1 = value.slice(3, 5);
-    let part2 = value.slice(5, 8);
-    let part3 = value.slice(8, 10);
-    let part4 = value.slice(10, 12);
-
+    let part1 = value.slice(3, 5),
+      part2 = value.slice(5, 8),
+      part3 = value.slice(8, 10),
+      part4 = value.slice(10, 12);
     if (part1) formatted += ` (${part1})`;
     if (part2) formatted += ` ${part2}`;
     if (part3) formatted += ` ${part3}`;
     if (part4) formatted += ` ${part4}`;
   }
-
   phoneInput.value = formatted;
 }
 
-// Barcha formalarni topish
+// 3. Modalni boshqarish
+const modal = document.getElementById("modal");
+function openModal() {
+  if (modal) modal.style.display = "flex";
+}
+
+document.querySelectorAll(".open-modal-btn").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal();
+  });
+});
+
+const closeButton = document.querySelector(".close__button");
+if (closeButton)
+  closeButton.addEventListener("click", () => {
+    if (modal) modal.style.display = "none";
+  });
+
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.style.display = "none";
+  });
+}
+
+// 4. Formani yuborish
 const forms = document.querySelectorAll(".subscribe__form");
 let isSubmitting = false;
 
-// Har bir forma uchun
 forms.forEach((form) => {
-  const phoneInput = form.querySelector("#phone");
+  const phoneInput =
+    form.querySelector("#phone") || form.querySelector("[name=phone]");
   const submitBtn = form.querySelector(".submit__button");
 
-  // Telefon inputga boshlang'ich qiymat berish
   if (phoneInput) {
     phoneInput.value = "+998";
     phoneInput.addEventListener("input", formatPhoneInput);
-
-    // Focus bo'lganda kursorni oxiriga o'tkazish
     phoneInput.addEventListener("focus", function () {
-      setTimeout(() => {
-        this.setSelectionRange(this.value.length, this.value.length);
-      }, 0);
+      setTimeout(
+        () => this.setSelectionRange(this.value.length, this.value.length),
+        0,
+      );
     });
   }
 
-  // Forma yuborilganda
-  async function handleSubmit(e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
-
-    // Agar allaqachon yuborilayotgan bo'lsa, to'xtatish
     if (isSubmitting) return;
 
     const nameInput = form.querySelector("[name=name]");
-    const phoneInput = form.querySelector("[name=phone]");
+    const phoneField = form.querySelector("[name=phone]");
+    const digitsOnly = phoneField ? phoneField.value.replace(/\D/g, "") : "";
 
-    if (!nameInput || !phoneInput) {
-      showNotice("Forma ma'lumotlari topilmadi!");
+    if (!nameInput || !phoneField) {
+      showNotice("Ma'lumotlar to'liq emas!");
       return;
     }
-
-    // Ismni tekshirish
     if (nameInput.value.trim().length < 2) {
-      showNotice("Ism kamida 2 ta harfdan iborat bo'lishi kerak!", "error");
+      showNotice("Ismingizni kiriting!");
       return;
     }
-
-    // Telefon raqamini tekshirish
-    const digitsOnly = phoneInput.value.replace(/\D/g, "");
     if (digitsOnly.length !== 12) {
-      showNotice("Telefon raqamingizni to'liq kiriting!", "error");
+      showNotice("Telefon raqamni to'liq kiriting!");
       return;
     }
 
-    // Yuborish jarayonini boshlash
     isSubmitting = true;
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.innerText = "Yuborilmoqda...";
     }
-
-    // API ga yuborish uchun ma'lumot
-    const payload = {
-      full_name: nameInput.value.trim(),
-      phone_number: `+${digitsOnly}`,
-      product_name: "GrowX",
-    };
 
     try {
       const response = await fetch(`${NEXT_PUBLIC_API_URL}/leads/`, {
@@ -119,83 +178,34 @@ forms.forEach((form) => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          full_name: nameInput.value.trim(),
+          phone_number: `+${digitsOnly}`,
+          product_name: "GrowX",
+        }),
       });
 
-      // 429 - Juda ko'p so'rov
       if (response.status === 429) {
-        showNotice(
-          "Juda ko'p so'rov yuborildi. Iltimos, 1 soatdan keyin urinib ko'ring.",
-          "error",
-        );
-        return;
-      }
-
-      // Muvaffaqiyatli
-      if (response.ok || response.status === 201) {
-        showNotice("Muvaffaqiyatli qabul qilindi!", "success");
-
-        // Formani tozalash
-        nameInput.value = "";
-        phoneInput.value = "+998";
-
-        // 1.5 sekunddan keyin thanks.html sahifasiga o'tish
+        showNotice("Juda ko'p urinish! Birozdan keyin urinib ko'ring.");
+      } else if (response.ok || response.status === 201) {
+        showNotice("Muvaffaqiyatli yuborildi! Tez orada bog'lanamiz ", "success");
+        form.reset();
+        phoneField.value = "+998";
         setTimeout(() => {
-          window.location.href = "/thanks.html";
-        }, 1500);
+          if (modal) modal.style.display = "none";
+        }, 2000);
       } else {
-        // Boshqa xatolar
         const errorData = await response.json().catch(() => ({}));
-        const errorMessage =
-          errorData.message ||
-          "Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.";
-        showNotice(errorMessage, "error");
+        showNotice(errorData.message || "Xatolik yuz berdi. birozdan so'ng qaytadan urinib ko'ring .");
       }
     } catch (err) {
-      console.error("Submit error:", err);
-      showNotice(
-        "Server bilan bog'lanib bo'lmadi. Internetni tekshiring.",
-        "error",
-      );
+      showNotice("Internet aloqasini tekshiring.");
     } finally {
-      // Yuborish jarayonini tugatish
       isSubmitting = false;
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.innerText = "Yuborish";
       }
     }
-  }
-
-  // Forma submit eventini bog'lash
-  form.addEventListener("submit", handleSubmit);
+  });
 });
-
-// Modal oynasi uchun (agar kerak bo'lsa)
-function openModal() {
-  const modal = document.getElementById("modal");
-  if (modal) {
-    modal.style.display = "flex";
-  }
-}
-
-// Modal yopish
-const closeButton = document.querySelector(".close__button");
-if (closeButton) {
-  closeButton.addEventListener("click", function () {
-    const modal = document.getElementById("modal");
-    if (modal) {
-      modal.style.display = "none";
-    }
-  });
-}
-
-// Modal overlay bosilganda yopish
-const modalOverlay = document.getElementById("modal");
-if (modalOverlay) {
-  modalOverlay.addEventListener("click", function (e) {
-    if (e.target === modalOverlay) {
-      modalOverlay.style.display = "none";
-    }
-  });
-}
