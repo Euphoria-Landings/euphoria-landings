@@ -65,7 +65,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
             phone_number: `+${digitsOnly}`,
             product_name: "Diastop",
           }),
-        }
+        },
       );
 
       if (response.ok) {

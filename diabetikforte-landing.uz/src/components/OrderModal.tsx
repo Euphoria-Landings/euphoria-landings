@@ -17,7 +17,9 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
   // Xatolik xabarlari uchun holat
   const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("Server bilan bog'lanishda xatolik!");
+  const [errorMessage, setErrorMessage] = useState(
+    "Server bilan bog'lanishda xatolik!",
+  );
 
   const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/leads/`;
 
@@ -55,7 +57,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     e.preventDefault();
     setStatus("loading");
     setShowError(false);
-    
+
     const cleanPhone = formData.phone.replace(/\D/g, "");
 
     try {
@@ -75,7 +77,9 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       } else if (response.status === 429) {
         // --- 429 LIMIT HANDLING ---
         setStatus("error");
-        setErrorMessage("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        setErrorMessage(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
         setShowError(true);
         setTimeout(() => {
           setStatus("idle");
@@ -212,8 +216,8 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
                   {status === "loading"
                     ? "YUBORILMOQDA..."
                     : status === "error"
-                    ? "XATOLIK!"
-                    : "BUYURTMA BERISH"}
+                      ? "XATOLIK!"
+                      : "BUYURTMA BERISH"}
                 </button>
               </form>
             </div>

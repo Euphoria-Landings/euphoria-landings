@@ -55,7 +55,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
     setFormData({ ...formData, phone: formatted });
   };
 
- const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digitsOnly = formData.phone.replace(/\D/g, "");
 
@@ -68,7 +68,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_SUSTAFLEX}/leads/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
             phone_number: `+${digitsOnly}`, // Backendga "+" bilan yuborish
             product_name: "Cardio Balance",
           }),
-        }
+        },
       );
 
       // --- STATUS KODLARINI TEKSHIRISH ---
@@ -87,7 +87,9 @@ export default function OrderModal({ isOpen, onClose }: OrderModalProps) {
       } else if (response.status === 429) {
         // --- LIMIT LOGIKASI (Too Many Requests) ---
         setStatus("idle");
-        showNotice("Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.");
+        showNotice(
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
+        );
       } else {
         // 400 yoki boshqa server xatolari
         throw new Error();

@@ -80,7 +80,7 @@ export const OrderModal = ({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        }
+        },
       );
 
       if (response.ok) {
@@ -88,7 +88,7 @@ export const OrderModal = ({
       } else if (response.status === 429) {
         // --- 429 TOO MANY REQUESTS LOGIKASI ---
         showNotice(
-          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring."
+          "Siz allaqachon ariza qoldirgansiz. Iltimos, 1 soatdan keyin qayta urinib ko'ring.",
         );
       } else {
         throw new Error();

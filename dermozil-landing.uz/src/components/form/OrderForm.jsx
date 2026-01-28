@@ -101,7 +101,7 @@ const OrderForm = ({ onCloseModal }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_DERMOZIL}/leads/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

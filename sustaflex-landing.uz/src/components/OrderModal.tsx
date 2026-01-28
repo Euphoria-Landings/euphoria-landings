@@ -74,7 +74,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_SUSTAFLEX}/leads/`,
+        `${process.env.NEXT_PUBLIC_API_URL}/leads/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
