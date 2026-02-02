@@ -19,7 +19,7 @@ Tizim quyidagi texnologiyalar asosida qurilgan:
 
 ## 📊 Monitoring Dashboard
 
-Dashboard serverning asosiy IP manzilida joylashgan: `http://95.217.191.63/`
+<!-- Dashboard serverning asosiy IP manzilida joylashgan: `http://95.217.191.63/` -->
 
 ### 🔹 Asosiy imkoniyatlari:
 1.  **Real-time Status:** Konteynerlar holatini (RUNNING/STOPPED) real vaqtda kuzatish.
