@@ -96,12 +96,3 @@ services:
     build: ./growx-landing.uz
     ports: ["3015:80"]
     <<: *default-deploy
-
-  # MONITORING DASHBOARD
-  dashboard:
-    image: nginx:alpine
-    ports: ["8080:80"]
-    volumes:
-      - /home/deploy/euphoria-landings/index.html:/usr/share/nginx/html/index.html:ro
-      - /home/deploy/euphoria-landings/data.json:/usr/share/nginx/html/data.json:ro
-    <<: *default-deploy
